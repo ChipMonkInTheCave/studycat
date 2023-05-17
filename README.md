@@ -1,6 +1,6 @@
 # studycat
 
-A new Flutter project.
+안녕하세요 studycat프로젝트입니다 ㅎωㅎ
 
 ## Getting Started
 
