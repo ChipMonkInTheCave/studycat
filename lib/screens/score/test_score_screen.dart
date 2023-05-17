@@ -22,6 +22,8 @@ class TestScoreState extends State<TestScore> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 103, 58, 183),
@@ -103,9 +105,11 @@ class TestScoreState extends State<TestScore> {
   }
 
   Widget buildButton1(int index) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return SizedBox(
       height: 65,
-      width: 140,
+      width: width * 0.333,
       child: ElevatedButton(
         onPressed: () {
           setState(() {

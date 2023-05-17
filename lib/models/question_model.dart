@@ -18,16 +18,16 @@ class QuestionModel {
     final data = snapshot.data();
     return QuestionModel(
       question: data?['question'],
-      rightAnswer: data?['rightAnswer'],
-      answer: data?['answer'],
+      rightAnswer: data?['answer'],
+      answer: data?['choice'],
     );
   }
 
   Map<String, dynamic> toFirestore() {
     return {
       'question': question,
-      'rightAnswer': rightAnswer,
-      'answer': answer,
+      'answer': rightAnswer,
+      'choice': answer,
     };
   }
 }

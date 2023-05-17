@@ -12,8 +12,8 @@ dBase myDataBase = dBase();
 Future<QuestionModel?> readQuestionData(
     String id, String subject, String difficulty) async {
   final ref = db
-      .collection('question')
-      .doc(id)
+      .collection(id)
+      .doc('question')
       .collection(subject)
       .doc(difficulty)
       .withConverter(

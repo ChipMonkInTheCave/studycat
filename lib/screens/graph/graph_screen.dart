@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:studycat/models/graph.dart';
 import 'package:studycat/screens/home_screen.dart';
 import 'package:studycat/widgets/menu_widget.dart';
 //import 'package:flutter_bezier_chart/flutter_bezier_chart.dart';
@@ -19,6 +20,8 @@ class _GraphState extends State<Graph> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 103, 58, 183),
@@ -46,97 +49,90 @@ class _GraphState extends State<Graph> {
               icon: const Icon(Icons.menu))
         ],
       ),
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ToggleButtons(
-                borderRadius: BorderRadius.circular(10),
-                isSelected: [isLineSelected, isBarSelected],
-                onPressed: toggleGraphType,
-                selectedColor: Colors.white.withOpacity(0.8),
-                fillColor:
-                    const Color.fromARGB(255, 148, 104, 225).withOpacity(1),
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 14),
-                    child: Text('꺾은선',
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w400,
-                        )),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Text('막대',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                        )),
-                  ),
-                ],
-              ),
-              ToggleButtons(
-                borderRadius: BorderRadius.circular(10),
-                isSelected: [
-                  isDailySelected,
-                  isWeeklySelected,
-                  isMonthlySelected
-                ],
-                onPressed: toggleTimeRange,
-                selectedColor: Colors.white.withOpacity(0.8),
-                fillColor:
-                    const Color.fromARGB(255, 148, 104, 225).withOpacity(1),
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    child: Text('D',
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ToggleButtons(
+                  borderRadius: BorderRadius.circular(10),
+                  isSelected: [isLineSelected, isBarSelected],
+                  onPressed: toggleGraphType,
+                  selectedColor: Colors.white.withOpacity(0.8),
+                  fillColor:
+                      const Color.fromARGB(255, 148, 104, 225).withOpacity(1),
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 14),
+                      child: Text('꺾은선',
+                          style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.w400,
+                          )),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Text('막대',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
+                          )),
+                    ),
+                  ],
+                ),
+                ToggleButtons(
+                  borderRadius: BorderRadius.circular(10),
+                  isSelected: [
+                    isDailySelected,
+                    isWeeklySelected,
+                    isMonthlySelected
+                  ],
+                  onPressed: toggleTimeRange,
+                  selectedColor: Colors.white.withOpacity(0.8),
+                  fillColor:
+                      const Color.fromARGB(255, 148, 104, 225).withOpacity(1),
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child: Text('D',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w400,
+                          )),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child: Text(
+                        'W',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w400,
-                        )),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    child: Text(
-                      'W',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400,
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    child: Text('M',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
-                        )),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const Column(
-            children: [
-              Text(
-                "성적그래프",
-                style: TextStyle(
-                  fontSize: 22,
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child: Text('M',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w400,
+                          )),
+                    ),
+                  ],
                 ),
-              ),
-              SizedBox(
-                height: 270,
-              ),
-              Text(
-                "학습비율",
-                style: TextStyle(fontSize: 22),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+            Column(
+              children: [
+                SizedBox(
+                  height: height * 0.33,
+                ),
+                LineChartSample1(),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

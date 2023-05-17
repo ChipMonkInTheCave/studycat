@@ -44,41 +44,39 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCrrR5G0lWze7m_c4F5qGx0CMBo9QhwBgo',
-    appId: '1:579904357106:web:0de5c152d04295ff98466b',
-    messagingSenderId: '579904357106',
-    projectId: 'myminsufirebase',
-    authDomain: 'myminsufirebase.firebaseapp.com',
-    storageBucket: 'myminsufirebase.appspot.com',
+    apiKey: 'AIzaSyB6IFkRjA5Ca9z1rpU4Ey6lKq20LGOb8H4',
+    appId: '1:483099337373:web:f7c19fc35135335d6daa74',
+    messagingSenderId: '483099337373',
+    projectId: 'studycat-ff601',
+    authDomain: 'studycat-ff601.firebaseapp.com',
+    storageBucket: 'studycat-ff601.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDR3szIwpzJ1XlY0c1_zeu6a4UPndKkCFo',
-    appId: '1:579904357106:android:d8ae77befd1b3ffb98466b',
-    messagingSenderId: '579904357106',
-    projectId: 'myminsufirebase',
-    storageBucket: 'myminsufirebase.appspot.com',
+    apiKey: 'AIzaSyAm2vuErI1lZVqsc2H1RX2OCwwUKt04RZc',
+    appId: '1:483099337373:android:d3b938c164070ccb6daa74',
+    messagingSenderId: '483099337373',
+    projectId: 'studycat-ff601',
+    storageBucket: 'studycat-ff601.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAk087jkxYeRWWOwDazQH6tL6orT_7QwWI',
-    appId: '1:579904357106:ios:d6e099c036bd48a798466b',
-    messagingSenderId: '579904357106',
-    projectId: 'myminsufirebase',
-    storageBucket: 'myminsufirebase.appspot.com',
-    iosClientId:
-        '579904357106-bpk1rvahcd7m5ledd5gv0v32o4mf3qbp.apps.googleusercontent.com',
-    iosBundleId: 'com.example.test',
+    apiKey: 'AIzaSyBeERlPBtydgscPFeOJImjhiKr_ELGfT2Q',
+    appId: '1:483099337373:ios:f062e09aefa39c886daa74',
+    messagingSenderId: '483099337373',
+    projectId: 'studycat-ff601',
+    storageBucket: 'studycat-ff601.appspot.com',
+    iosClientId: '483099337373-ip9hf50lbr0s2gn7fclqpu28sa46u1l8.apps.googleusercontent.com',
+    iosBundleId: 'com.example.studycat',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAk087jkxYeRWWOwDazQH6tL6orT_7QwWI',
-    appId: '1:579904357106:ios:d6e099c036bd48a798466b',
-    messagingSenderId: '579904357106',
-    projectId: 'myminsufirebase',
-    storageBucket: 'myminsufirebase.appspot.com',
-    iosClientId:
-        '579904357106-bpk1rvahcd7m5ledd5gv0v32o4mf3qbp.apps.googleusercontent.com',
-    iosBundleId: 'com.example.test',
+    apiKey: 'AIzaSyBeERlPBtydgscPFeOJImjhiKr_ELGfT2Q',
+    appId: '1:483099337373:ios:20969269e64737916daa74',
+    messagingSenderId: '483099337373',
+    projectId: 'studycat-ff601',
+    storageBucket: 'studycat-ff601.appspot.com',
+    iosClientId: '483099337373-hlvkvo6tdoljndcdhd7mgou8t55doglf.apps.googleusercontent.com',
+    iosBundleId: 'com.example.studycat.RunnerTests',
   );
 }
