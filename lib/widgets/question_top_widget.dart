@@ -21,7 +21,7 @@ class QuestionTopWidget extends StatelessWidget {
       padding: EdgeInsets.only(top: height * 0.025),
       height: height * 0.3,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.background,
+        color: Theme.of(context).backgroundColor,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
