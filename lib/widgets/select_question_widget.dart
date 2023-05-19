@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:studycat/database/db.dart';
+import 'package:studycat/models/question_model.dart';
 import 'package:studycat/screens/question/question_screen.dart';
+import 'package:transition/transition.dart';
 
 class SelectQuetionWidget extends StatefulWidget {
   final String id, subject, difficulty;
   final int num;
+  final QuestionModel data;
   const SelectQuetionWidget({
     super.key,
     required this.subject,
     required this.id,
     required this.difficulty,
     required this.num,
+    required this.data,
   });
 
   @override
@@ -25,58 +28,40 @@ class _SelectQuetionWidgetState extends State<SelectQuetionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: setQuestionData(widget.id, widget.subject, widget.difficulty),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          return ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => QuestionScreen(
-                    id: widget.id,
-                    subject: widget.subject,
-                    difficulty: widget.difficulty,
-                    num: widget.num,
-                    cat: 0,
-                    data: snapshot.data!,
-                  ),
-                ),
-              );
-            },
-            style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).focusColor,
-                padding: const EdgeInsets.symmetric(
-                  vertical: 50,
-                  horizontal: 40,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                )),
-            child: Text(
-              widget.subject == 'math' ? '수학' : '영어',
-              style: const TextStyle(
-                fontSize: 40,
-              ),
+    List<String> abc = ['math', 'eng'];
+
+    return ElevatedButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          Transition(
+            child: QuestionScreen(
+              id: widget.id,
+              subject: widget.subject,
+              difficulty: widget.difficulty,
+              num: widget.num,
+              cat: 0,
+              data: widget.data,
             ),
-          );
-        }
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: Text(
-              "불러오는중..",
-              style: TextStyle(
-                fontSize: 10,
-              ),
-            ),
-          );
-        }
-        if (snapshot.connectionState == ConnectionState.none) {
-          return Text('no');
-        }
-        return Text('why');
+            transitionEffect: TransitionEffect.FADE,
+          ),
+        );
       },
+      style: ElevatedButton.styleFrom(
+          backgroundColor: Theme.of(context).focusColor,
+          padding: const EdgeInsets.symmetric(
+            vertical: 50,
+            horizontal: 40,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          )),
+      child: Text(
+        widget.subject == 'math' ? '수학' : '영어',
+        style: const TextStyle(
+          fontSize: 40,
+        ),
+      ),
     );
   }
 }

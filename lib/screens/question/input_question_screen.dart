@@ -144,7 +144,7 @@ Future<dynamic> inputQuestion(BuildContext context) async {
     context: context,
     barrierDismissible: true,
     builder: ((context) {
-      return const AlertDialog(
+      return AlertDialog(
         title: Text('문제입력'),
         content: SingleChildScrollView(
           child: Column(

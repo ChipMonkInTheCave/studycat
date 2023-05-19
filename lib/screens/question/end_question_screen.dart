@@ -19,7 +19,7 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          const Column(
+          Column(
             children: [
               QuestionTopWidget(
                 screenName: "",

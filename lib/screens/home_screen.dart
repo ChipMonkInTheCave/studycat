@@ -6,6 +6,7 @@ import 'package:studycat/screens/profile_screen.dart';
 import 'package:studycat/screens/recommend_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:studycat/screens/score/test_score_screen.dart';
+import 'package:transition/transition.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -191,7 +192,7 @@ class HomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => TestScore(),
+                    builder: (context) => const TestScore(),
                   ),
                 );
               },
@@ -232,8 +233,10 @@ class HomeScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => const SelectQuestion()),
+                            Transition(
+                              child: const SelectQuestion(),
+                              transitionEffect: TransitionEffect.FADE,
+                            ),
                           );
                         },
                         style: ElevatedButton.styleFrom(
@@ -259,7 +262,8 @@ class HomeScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Graph()),
+                            MaterialPageRoute(
+                                builder: (context) => const Graph()),
                           );
                         },
                         style: ElevatedButton.styleFrom(
@@ -292,7 +296,7 @@ class HomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Graph(),
+                    builder: (context) => const Graph(),
                   ),
                 );
               },

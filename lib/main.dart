@@ -20,10 +20,10 @@ class MyApp extends StatelessWidget {
     SystemChrome.setEnabledSystemUIMode;
     return MaterialApp(
         theme: ThemeData(
-          backgroundColor: Color.fromARGB(255, 103, 58, 183),
-          focusColor: Color.fromARGB(255, 148, 104, 225),
+          focusColor: const Color.fromARGB(255, 148, 104, 225),
           cardColor: Colors.white.withOpacity(0.9),
+          primaryColor: const Color.fromARGB(255, 103, 58, 183),
         ),
-        home: HomeScreen());
+        home: const HomeScreen());
   }
 }
