@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:studycat/screens/home_screen.dart';
 import 'package:studycat/widgets/question_top_widget.dart';
@@ -20,7 +21,7 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
       body: Stack(
         children: [
           Column(
-            children: [
+            children: const [
               QuestionTopWidget(
                 screenName: "",
                 screenExplain: '정답률',
@@ -49,18 +50,9 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        ((widget.cat / widget.queLen) * 100).toInt().toString(),
-                        style: const TextStyle(
-                          fontSize: 200,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const Text('%',
-                          style: TextStyle(
-                            fontSize: 50,
-                            fontWeight: FontWeight.bold,
-                          ))
+                      AnimatedTextKit(animatedTexts: [
+                        ScaleAnimatedText("40%"),
+                      ])
                     ],
                   ),
                 ),

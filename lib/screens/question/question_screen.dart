@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:studycat/models/question_model.dart';
 import 'package:studycat/screens/question/end_question_screen.dart';
@@ -104,24 +105,30 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Center(
-                      child: Text(
-                        '다음 문제의 답을 선택하세요!!',
-                        style: TextStyle(
-                            fontSize: 25,
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.w600),
+                      child: BounceInDown(
+                        from: 30,
+                        child: Text(
+                          '다음 문제의 답을 선택하세요!!',
+                          style: TextStyle(
+                              fontSize: 25,
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.w600),
+                        ),
                       ),
                     ),
                     SizedBox(
                       height: height * 0.1,
                     ),
                     Center(
-                      child: Text(
-                        widget.data.question[widget.num],
-                        style: TextStyle(
-                            fontSize: 40,
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.w600),
+                      child: FadeIn(
+                        duration: const Duration(milliseconds: 700),
+                        child: Text(
+                          widget.data.question[widget.num],
+                          style: TextStyle(
+                              fontSize: 40,
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.w600),
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -130,66 +137,72 @@ class _QuestionScreenState extends State<QuestionScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ElevatedButton(
-                          //-----------1번 버튼 시작
-                          onPressed: () {
-                            toggleSelect(0);
-                          },
-                          style: ButtonStyle(
-                            minimumSize: MaterialStateProperty.all(
-                              Size(width * 0.4, height * 0.08),
-                            ),
-                            maximumSize: MaterialStateProperty.all(
-                              Size(width * 0.4, height * 0.08),
-                            ),
-                            backgroundColor: MaterialStateProperty.all(isOne
-                                ? Theme.of(context).primaryColor
-                                : Theme.of(context).focusColor),
-                            textStyle: MaterialStateProperty.all(
-                              const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.normal,
+                        FadeInDown(
+                          duration: const Duration(milliseconds: 250),
+                          child: ElevatedButton(
+                            //-----------1번 버튼 시작
+                            onPressed: () {
+                              toggleSelect(0);
+                            },
+                            style: ButtonStyle(
+                              minimumSize: MaterialStateProperty.all(
+                                Size(width * 0.4, height * 0.08),
+                              ),
+                              maximumSize: MaterialStateProperty.all(
+                                Size(width * 0.4, height * 0.08),
+                              ),
+                              backgroundColor: MaterialStateProperty.all(isOne
+                                  ? Theme.of(context).primaryColor
+                                  : Theme.of(context).focusColor),
+                              textStyle: MaterialStateProperty.all(
+                                const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
                               ),
                             ),
-                            shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                            ),
+                            child: Text(answers[0]),
                           ),
-                          child: Text(answers[0]),
                         ), //-----------1번 버튼 끝
                         SizedBox(
                           width: width * 0.05,
                         ),
-                        ElevatedButton(
-                          //-----------2번 버튼 시작
-                          onPressed: () {
-                            toggleSelect(1);
-                          },
-                          style: ButtonStyle(
-                            minimumSize: MaterialStateProperty.all(
-                              Size(width * 0.4, height * 0.08),
-                            ),
-                            maximumSize: MaterialStateProperty.all(
-                              Size(width * 0.4, height * 0.08),
-                            ),
-                            backgroundColor: MaterialStateProperty.all(isTwo
-                                ? Theme.of(context).primaryColor
-                                : Theme.of(context).focusColor),
-                            textStyle: MaterialStateProperty.all(
-                              const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.normal,
+                        FadeInRight(
+                          duration: const Duration(milliseconds: 250),
+                          child: ElevatedButton(
+                            //-----------2번 버튼 시작
+                            onPressed: () {
+                              toggleSelect(1);
+                            },
+                            style: ButtonStyle(
+                              minimumSize: MaterialStateProperty.all(
+                                Size(width * 0.4, height * 0.08),
+                              ),
+                              maximumSize: MaterialStateProperty.all(
+                                Size(width * 0.4, height * 0.08),
+                              ),
+                              backgroundColor: MaterialStateProperty.all(isTwo
+                                  ? Theme.of(context).primaryColor
+                                  : Theme.of(context).focusColor),
+                              textStyle: MaterialStateProperty.all(
+                                const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
                               ),
                             ),
-                            shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                            ),
+                            child: Text(answers[1]),
                           ),
-                          child: Text(answers[1]),
                         ), //-----------2번 버튼 끝
                       ],
                     ),
@@ -199,66 +212,72 @@ class _QuestionScreenState extends State<QuestionScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ElevatedButton(
-                          //-----------3번 버튼 시작
-                          onPressed: () {
-                            toggleSelect(2);
-                          },
-                          style: ButtonStyle(
-                            minimumSize: MaterialStateProperty.all(
-                              Size(width * 0.4, height * 0.08),
-                            ),
-                            maximumSize: MaterialStateProperty.all(
-                              Size(width * 0.4, height * 0.08),
-                            ),
-                            backgroundColor: MaterialStateProperty.all(isThree
-                                ? Theme.of(context).primaryColor
-                                : Theme.of(context).focusColor),
-                            textStyle: MaterialStateProperty.all(
-                              const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.normal,
+                        FadeInLeft(
+                          duration: const Duration(milliseconds: 250),
+                          child: ElevatedButton(
+                            //-----------3번 버튼 시작
+                            onPressed: () {
+                              toggleSelect(2);
+                            },
+                            style: ButtonStyle(
+                              minimumSize: MaterialStateProperty.all(
+                                Size(width * 0.4, height * 0.08),
+                              ),
+                              maximumSize: MaterialStateProperty.all(
+                                Size(width * 0.4, height * 0.08),
+                              ),
+                              backgroundColor: MaterialStateProperty.all(isThree
+                                  ? Theme.of(context).primaryColor
+                                  : Theme.of(context).focusColor),
+                              textStyle: MaterialStateProperty.all(
+                                const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
                               ),
                             ),
-                            shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                            ),
+                            child: Text(answers[2]),
                           ),
-                          child: Text(answers[2]),
                         ), //-----------3번 버튼 끝
                         SizedBox(
                           width: width * 0.05,
                         ),
-                        ElevatedButton(
-                          //-----------4번 버튼 시작
-                          onPressed: () {
-                            toggleSelect(3);
-                          },
-                          style: ButtonStyle(
-                            minimumSize: MaterialStateProperty.all(
-                              Size(width * 0.4, height * 0.08),
-                            ),
-                            maximumSize: MaterialStateProperty.all(
-                              Size(width * 0.4, height * 0.08),
-                            ),
-                            backgroundColor: MaterialStateProperty.all(isFour
-                                ? Theme.of(context).primaryColor
-                                : Theme.of(context).focusColor),
-                            textStyle: MaterialStateProperty.all(
-                              const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.normal,
+                        FadeInUp(
+                          duration: const Duration(milliseconds: 250),
+                          child: ElevatedButton(
+                            //-----------4번 버튼 시작
+                            onPressed: () {
+                              toggleSelect(3);
+                            },
+                            style: ButtonStyle(
+                              minimumSize: MaterialStateProperty.all(
+                                Size(width * 0.4, height * 0.08),
+                              ),
+                              maximumSize: MaterialStateProperty.all(
+                                Size(width * 0.4, height * 0.08),
+                              ),
+                              backgroundColor: MaterialStateProperty.all(isFour
+                                  ? Theme.of(context).primaryColor
+                                  : Theme.of(context).focusColor),
+                              textStyle: MaterialStateProperty.all(
+                                const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
                               ),
                             ),
-                            shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                            ),
+                            child: Text(answers[3]),
                           ),
-                          child: Text(answers[3]),
                         ), //-----------4번 버튼 끝
                       ],
                     ),
