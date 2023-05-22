@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:studycat/screens/calender/calender_screen.dart';
+import 'package:studycat/screens/auth/login_screen.dart';
 import 'package:studycat/screens/graph/graph_screen.dart';
 import 'package:studycat/screens/question/select_question_screen.dart';
 import 'package:studycat/screens/profile_screen.dart';
-import 'package:studycat/screens/recommend_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:studycat/screens/score/test_score_screen.dart';
 import 'package:transition/transition.dart';
@@ -162,7 +161,7 @@ class HomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const Calender(),
+                    builder: (context) => const LoginScreen(),
                   ),
                 );
               },

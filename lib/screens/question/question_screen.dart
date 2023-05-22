@@ -1,8 +1,10 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:studycat/models/question_model.dart';
 import 'package:studycat/screens/question/end_question_screen.dart';
 import 'package:studycat/screens/question/select_question_screen.dart';
+import 'package:studycat/widgets/question_bottom_widget.dart';
 import 'package:studycat/widgets/question_realtop_widget.dart';
 import 'package:transition/transition.dart';
 
@@ -30,6 +32,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
   bool isOne = true;
   bool isTwo = false, isThree = false, isFour = false;
   late List<bool> isSelected = [isOne, isTwo, isThree, isFour];
+  bool answerChk = false;
 
   @override
   void initState() {
@@ -72,6 +75,15 @@ class _QuestionScreenState extends State<QuestionScreen> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     List<dynamic> answers = widget.data.answer[widget.num].split(",");
+
+    Widget next() {
+      answerChk = true;
+      setState(() {
+        answerChk = true;
+      });
+      return const QuestionBottomWidget();
+    }
+
     return Scaffold(
       body: Stack(
         children: [
@@ -151,6 +163,22 @@ class _QuestionScreenState extends State<QuestionScreen> {
                               maximumSize: MaterialStateProperty.all(
                                 Size(width * 0.4, height * 0.08),
                               ),
+                              side: MaterialStateProperty.all(
+                                BorderSide(
+                                  color: answerChk &
+                                          (widget.data
+                                                  .rightAnswer[widget.num] ==
+                                              0)
+                                      ? Colors.green.shade400
+                                      : Colors.white,
+                                  width: answerChk &
+                                          (widget.data
+                                                  .rightAnswer[widget.num] ==
+                                              0)
+                                      ? 5
+                                      : 0,
+                                ),
+                              ),
                               backgroundColor: MaterialStateProperty.all(isOne
                                   ? Theme.of(context).primaryColor
                                   : Theme.of(context).focusColor),
@@ -166,7 +194,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                                 ),
                               ),
                             ),
-                            child: Text(answers[0]),
+                            child: AutoSizeText(answers[0], maxLines: 1),
                           ),
                         ), //-----------1번 버튼 끝
                         SizedBox(
@@ -195,13 +223,29 @@ class _QuestionScreenState extends State<QuestionScreen> {
                                   fontWeight: FontWeight.normal,
                                 ),
                               ),
+                              side: MaterialStateProperty.all(
+                                BorderSide(
+                                  color: answerChk &
+                                          (widget.data
+                                                  .rightAnswer[widget.num] ==
+                                              1)
+                                      ? Colors.green.shade400
+                                      : Colors.white,
+                                  width: answerChk &
+                                          (widget.data
+                                                  .rightAnswer[widget.num] ==
+                                              1)
+                                      ? 5
+                                      : 0,
+                                ),
+                              ),
                               shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                               ),
                             ),
-                            child: Text(answers[1]),
+                            child: AutoSizeText(answers[1], maxLines: 1),
                           ),
                         ), //-----------2번 버튼 끝
                       ],
@@ -235,13 +279,29 @@ class _QuestionScreenState extends State<QuestionScreen> {
                                   fontWeight: FontWeight.normal,
                                 ),
                               ),
+                              side: MaterialStateProperty.all(
+                                BorderSide(
+                                  color: answerChk &
+                                          (widget.data
+                                                  .rightAnswer[widget.num] ==
+                                              2)
+                                      ? Colors.green.shade400
+                                      : Colors.white,
+                                  width: answerChk &
+                                          (widget.data
+                                                  .rightAnswer[widget.num] ==
+                                              2)
+                                      ? 5
+                                      : 0,
+                                ),
+                              ),
                               shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                               ),
                             ),
-                            child: Text(answers[2]),
+                            child: AutoSizeText(answers[2], maxLines: 1),
                           ),
                         ), //-----------3번 버튼 끝
                         SizedBox(
@@ -270,13 +330,32 @@ class _QuestionScreenState extends State<QuestionScreen> {
                                   fontWeight: FontWeight.normal,
                                 ),
                               ),
+                              side: MaterialStateProperty.all(
+                                BorderSide(
+                                  color: answerChk &
+                                          (widget.data
+                                                  .rightAnswer[widget.num] ==
+                                              3)
+                                      ? Colors.green.shade400
+                                      : Colors.white,
+                                  width: answerChk &
+                                          (widget.data
+                                                  .rightAnswer[widget.num] ==
+                                              3)
+                                      ? 5
+                                      : 0,
+                                ),
+                              ),
                               shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                               ),
                             ),
-                            child: Text(answers[3]),
+                            child: AutoSizeText(
+                              answers[3],
+                              maxLines: 1,
+                            ),
                           ),
                         ), //-----------4번 버튼 끝
                       ],
@@ -300,34 +379,39 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 ),
                 child: TextButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      Transition(
-                        child: widget.num != widget.data.question.length - 1
-                            ? QuestionScreen(
-                                id: widget.id,
-                                subject: widget.subject,
-                                difficulty: widget.difficulty,
-                                num: widget.num + 1,
-                                cat: widget.data.rightAnswer[widget.num] ==
-                                        choice
-                                    ? widget.cat + 1
-                                    : widget.cat,
-                                data: widget.data,
-                              )
-                            : EndQuestionScreen(
-                                cat: widget.data.rightAnswer[widget.num] ==
-                                        choice
-                                    ? widget.cat + 1
-                                    : widget.cat,
-                                queLen: widget.data.question.length,
-                              ),
-                        transitionEffect: TransitionEffect.FADE,
-                      ),
-                    );
+                    answerChk
+                        ? Navigator.push(
+                            context,
+                            Transition(
+                              child: widget.num !=
+                                      widget.data.question.length - 1
+                                  ? QuestionScreen(
+                                      id: widget.id,
+                                      subject: widget.subject,
+                                      difficulty: widget.difficulty,
+                                      num: widget.num + 1,
+                                      cat:
+                                          widget.data.rightAnswer[widget.num] ==
+                                                  choice
+                                              ? widget.cat + 1
+                                              : widget.cat,
+                                      data: widget.data,
+                                    )
+                                  : EndQuestionScreen(
+                                      cat:
+                                          widget.data.rightAnswer[widget.num] ==
+                                                  choice
+                                              ? widget.cat + 1
+                                              : widget.cat,
+                                      queLen: widget.data.question.length,
+                                    ),
+                              transitionEffect: TransitionEffect.FADE,
+                            ),
+                          )
+                        : next();
                   },
                   child: Text(
-                    '확인',
+                    answerChk ? '다음 문제' : '확인',
                     style: TextStyle(
                       color: Theme.of(context).cardColor,
                       fontWeight: FontWeight.w600,

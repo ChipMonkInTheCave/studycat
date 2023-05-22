@@ -19,10 +19,17 @@ class QuestionTopWidget extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     return Container(
       padding: EdgeInsets.only(top: height * 0.025),
-      height: height * 0.3,
+      height: height * 0.5,
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
-      ),
+          gradient: LinearGradient(
+        colors: [
+          Theme.of(context).primaryColor,
+          Theme.of(context).focusColor,
+          Theme.of(context).cardColor,
+        ],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      )),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
