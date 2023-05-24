@@ -20,9 +20,9 @@ class MyApp extends StatelessWidget {
     SystemChrome.setEnabledSystemUIMode;
     return MaterialApp(
         theme: ThemeData(
-          backgroundColor: const Color.fromARGB(255, 103, 58, 183),
           focusColor: const Color.fromARGB(255, 148, 104, 225),
           cardColor: Colors.white.withOpacity(0.9),
+          primaryColor: const Color.fromARGB(255, 103, 58, 183),
         ),
         home: const HomeScreen());
   }

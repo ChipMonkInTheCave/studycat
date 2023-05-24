@@ -22,6 +22,7 @@ class TestScoreState extends State<TestScore> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -44,7 +45,7 @@ class TestScoreState extends State<TestScore> {
       ),
       body: Column(
         children: [
-          const SizedBox(height: 16),
+          SizedBox(height: height * 0.015),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -53,19 +54,19 @@ class TestScoreState extends State<TestScore> {
               buildButton1(2),
             ],
           ),
-          const SizedBox(height: 30),
+          SizedBox(height: height * 0.037),
           if (selectedButtonIndex == 0)
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 buildButton2(0),
-                const SizedBox(height: 10),
+                SizedBox(height: height * 0.012),
                 buildButton2(1),
-                const SizedBox(height: 10),
+                SizedBox(height: height * 0.012),
                 buildButton2(2),
-                const SizedBox(height: 10),
+                SizedBox(height: height * 0.012),
                 buildButton2(3),
-                const SizedBox(height: 10),
+                SizedBox(height: height * 0.012),
                 buildButton2(4),
               ],
             ),
@@ -74,13 +75,13 @@ class TestScoreState extends State<TestScore> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 buildButton3(0),
-                const SizedBox(height: 10),
+                SizedBox(height: height * 0.012),
                 buildButton3(1),
-                const SizedBox(height: 10),
+                SizedBox(height: height * 0.012),
                 buildButton3(2),
-                const SizedBox(height: 10),
+                SizedBox(height: height * 0.012),
                 buildButton3(3),
-                const SizedBox(height: 10),
+                SizedBox(height: height * 0.012),
                 buildButton3(4),
               ],
             ),
@@ -89,13 +90,13 @@ class TestScoreState extends State<TestScore> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 buildButton4(0),
-                const SizedBox(height: 10),
+                SizedBox(height: height * 0.012),
                 buildButton4(1),
-                const SizedBox(height: 10),
+                SizedBox(height: height * 0.012),
                 buildButton4(2),
-                const SizedBox(height: 10),
+                SizedBox(height: height * 0.012),
                 buildButton4(3),
-                const SizedBox(height: 10),
+                SizedBox(height: height * 0.012),
                 buildButton4(4),
               ],
             ),
@@ -108,8 +109,8 @@ class TestScoreState extends State<TestScore> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return SizedBox(
-      height: 65,
-      width: width * 0.333,
+      height: height * 0.076,
+      width: width * 0.32,
       child: ElevatedButton(
         onPressed: () {
           setState(() {
@@ -138,11 +139,13 @@ class TestScoreState extends State<TestScore> {
   }
 
   Widget buildButton2(int index2) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Column(
       children: [
         SizedBox(
-          height: 65,
-          width: 420,
+          height: height * 0.076,
+          width: width * 0.96,
           child: ElevatedButton(
             onPressed: () {
               setState(() {
@@ -158,11 +161,11 @@ class TestScoreState extends State<TestScore> {
             ),
           ),
         ),
-        const SizedBox(height: 2),
+        SizedBox(height: height * 0.002),
         if (showDetails1[index2])
           Container(
-            height: 100,
-            width: 420,
+            height: height * 0.115,
+            width: width * 0.96,
             color: Colors.blue,
             child: const Text('상세 내용'),
           ),
@@ -170,32 +173,34 @@ class TestScoreState extends State<TestScore> {
     );
   }
 
-  Widget buildButton3(int index2) {
+  Widget buildButton3(int index3) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Column(
       children: [
         SizedBox(
-          height: 65,
-          width: 420,
+          height: height * 0.076,
+          width: width * 0.96,
           child: ElevatedButton(
             onPressed: () {
               setState(() {
-                showDetails1[index2] = !showDetails1[index2];
+                showDetails1[index3] = !showDetails1[index3];
               });
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red,
             ),
             child: Text(
-              showDetails1[index2] ? '상세 내용' : '기록기록',
+              showDetails1[index3] ? '상세 내용' : '기록기록',
               style: const TextStyle(fontSize: 30),
             ),
           ),
         ),
-        const SizedBox(height: 2),
-        if (showDetails1[index2])
+        SizedBox(height: height * 0.002),
+        if (showDetails1[index3])
           Container(
-            height: 100,
-            width: 420,
+            height: height * 0.115,
+            width: width * 0.96,
             color: Colors.red,
             child: const Text('상세 내용'),
           ),
@@ -203,32 +208,34 @@ class TestScoreState extends State<TestScore> {
     );
   }
 
-  Widget buildButton4(int index2) {
+  Widget buildButton4(int index4) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Column(
       children: [
         SizedBox(
-          height: 65,
-          width: 420,
+          height: height * 0.076,
+          width: width * 0.96,
           child: ElevatedButton(
             onPressed: () {
               setState(() {
-                showDetails1[index2] = !showDetails1[index2];
+                showDetails1[index4] = !showDetails1[index4];
               });
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.black,
             ),
             child: Text(
-              showDetails1[index2] ? '상세 내용' : '기록기록',
+              showDetails1[index4] ? '상세 내용' : '기록기록',
               style: const TextStyle(fontSize: 30),
             ),
           ),
         ),
-        const SizedBox(height: 2),
-        if (showDetails1[index2])
+        SizedBox(height: height * 0.002),
+        if (showDetails1[index4])
           Container(
-            height: 100,
-            width: 420,
+            height: height * 0.115,
+            width: width * 0.96,
             color: Colors.black,
             child: const Text('상세 내용'),
           ),

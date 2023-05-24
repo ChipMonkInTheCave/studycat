@@ -9,7 +9,7 @@ class dBase {
 
 dBase myDataBase = dBase();
 
-Future<QuestionModel?> readQuestionData(
+Future<Map<String, QuestionModel?>> readQuestionData(
     String id, String subject, String difficulty) async {
   final ref = db
       .collection(id)
@@ -22,20 +22,33 @@ Future<QuestionModel?> readQuestionData(
       );
   final docSnap = await ref.get();
   final myInstance = docSnap.data();
+  final myMap = {subject: myInstance};
   if (myInstance != null) {
-    return myInstance;
+    return myMap;
   } else {
-    return QuestionModel(
-        question: ['error'], rightAnswer: [0], answer: ['error']);
+    return {
+      'error': QuestionModel(
+          question: ['error'], answer: [0, 0, 0, 0], rightAnswer: ['error'])
+    };
   }
 }
 
-Future<QuestionModel?> setQuestionData(
-    String id, String subject, String difficulty) async {
-  QuestionModel? myData = await readQuestionData(id, subject, difficulty);
+Future<List<Map<String, QuestionModel?>>> setQuestionData(
+    String id, List<String> subject, String difficulty) async {
+  print(db.collection("001").doc('question'));
+  List<Map<String, QuestionModel?>> myData = [];
+  for (var sub in subject) {
+    myData.add(await readQuestionData(id, sub, difficulty));
+  }
   if (myData != null) {
+    print(myData);
     return myData;
   } else {
-    return null;
+    return [
+      {
+        'error': QuestionModel(
+            question: ['error'], answer: [0, 0, 0, 0], rightAnswer: ['error'])
+      }
+    ];
   }
 }

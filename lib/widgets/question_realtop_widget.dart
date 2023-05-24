@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:studycat/widgets/iconbutton_widget.dart';
 
-class QuestionTopWidget extends StatelessWidget {
+class QuestionRealTopWidget extends StatelessWidget {
   final String screenName, screenExplain;
   final IconData icon;
   final Widget destination;
+  final int questionLength;
+  final int currentNum;
 
-  const QuestionTopWidget(
+  const QuestionRealTopWidget(
       {super.key,
       required this.screenName,
       required this.screenExplain,
       required this.icon,
-      required this.destination});
+      required this.destination,
+      required this.questionLength,
+      required this.currentNum});
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +23,10 @@ class QuestionTopWidget extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     return Container(
       padding: EdgeInsets.only(top: height * 0.025),
-      height: height * 0.5,
+      height: height * 0.3,
       decoration: BoxDecoration(
-          gradient: LinearGradient(
-        colors: [
-          Theme.of(context).primaryColor,
-          Theme.of(context).focusColor,
-          Theme.of(context).cardColor,
-        ],
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-      )),
+        color: Theme.of(context).primaryColor,
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -40,12 +37,27 @@ class QuestionTopWidget extends StatelessWidget {
                 icon: icon,
                 destination: destination,
               ),
-              Text(
-                screenName,
-                style: TextStyle(
-                  fontSize: 35,
-                  color: Theme.of(context).cardColor,
-                ),
+              Stack(
+                children: [
+                  Container(
+                    width: width * 0.7,
+                    height: height * 0.03,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: Theme.of(context).cardColor,
+                    ),
+                    child: const Text(''),
+                  ),
+                  Container(
+                    width: ((width * 0.7) / questionLength) * currentNum,
+                    height: height * 0.03,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: Theme.of(context).focusColor,
+                    ),
+                    child: const Text(''),
+                  ),
+                ],
               ),
               Container(
                 width: width * 0.12,

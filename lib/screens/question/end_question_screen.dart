@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:studycat/screens/home_screen.dart';
 import 'package:studycat/widgets/question_top_widget.dart';
@@ -15,6 +16,8 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    String per = '${((widget.cat / widget.queLen) * 100).toInt()}%';
+    List<Widget> pp = [];
 
     return Scaffold(
       body: Stack(
@@ -31,10 +34,10 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
           ),
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: width * 0.05,
+              horizontal: width * 0.10,
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
                   decoration: BoxDecoration(
@@ -45,30 +48,51 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                       width: 10,
                     ),
                   ),
-                  height: height * 0.5,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        ((widget.cat / widget.queLen) * 100).toInt().toString(),
+                        "${widget.cat}/${widget.queLen}",
                         style: const TextStyle(
-                          fontSize: 200,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
                         ),
                       ),
-                      const Text('%',
-                          style: TextStyle(
-                            fontSize: 50,
-                            fontWeight: FontWeight.bold,
-                          ))
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ZoomIn(
+                            child: Text(
+                              per.toString()[0],
+                              style: const TextStyle(
+                                fontSize: 100,
+                              ),
+                            ),
+                          ),
+                          ZoomIn(
+                            delay: const Duration(milliseconds: 500),
+                            child: Text(
+                              per.toString()[1],
+                              style: const TextStyle(
+                                fontSize: 100,
+                              ),
+                            ),
+                          ),
+                          ZoomIn(
+                            delay: const Duration(milliseconds: 1000),
+                            child: const Text(
+                              '%',
+                              style: TextStyle(
+                                fontSize: 100,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
-                Text(
-                  "${widget.cat}/${widget.queLen}",
-                  style: const TextStyle(
-                    fontSize: 20,
-                  ),
+                SizedBox(
+                  height: height * 0.1,
                 ),
               ],
             ),
@@ -80,10 +104,7 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                 height: height * 0.07,
                 width: width * 0.9,
                 decoration: BoxDecoration(
-                  color: Theme.of(context)
-                      .colorScheme
-                      .background
-                      .withOpacity(0.27),
+                  color: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: TextButton(
@@ -97,7 +118,7 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                   child: Text(
                     '확인',
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.background,
+                      color: Theme.of(context).cardColor,
                       fontWeight: FontWeight.w600,
                       fontSize: 16,
                     ),
