@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:studycat/provider/provider.dart';
 import 'package:studycat/widgets/iconbutton_widget.dart';
 
-class QuestionRealTopWidget extends StatelessWidget {
-  final String screenName, screenExplain;
+class QuestionScreenTopWidget extends StatelessWidget {
   final IconData icon;
   final Widget destination;
   final int questionLength;
   final int currentNum;
 
-  const QuestionRealTopWidget(
+  const QuestionScreenTopWidget(
       {super.key,
-      required this.screenName,
-      required this.screenExplain,
       required this.icon,
       required this.destination,
       required this.questionLength,
@@ -19,13 +18,14 @@ class QuestionRealTopWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var color = context.watch<ThemeColor>();
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
       padding: EdgeInsets.only(top: height * 0.025),
       height: height * 0.3,
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
+        color: color.background,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -44,18 +44,18 @@ class QuestionRealTopWidget extends StatelessWidget {
                     height: height * 0.03,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
-                      color: Theme.of(context).cardColor,
+                      color: color.text,
                     ),
-                    child: const Text(''),
+                    // child: const Text(''),
                   ),
                   Container(
                     width: ((width * 0.7) / questionLength) * currentNum,
                     height: height * 0.03,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
-                      color: Theme.of(context).focusColor,
+                      color: color.box,
                     ),
-                    child: const Text(''),
+                    // child: const Text(''),
                   ),
                 ],
               ),
@@ -66,15 +66,6 @@ class QuestionRealTopWidget extends StatelessWidget {
           ),
           SizedBox(
             height: height * 0.030,
-          ),
-          Center(
-            child: Text(
-              screenExplain,
-              style: TextStyle(
-                color: Theme.of(context).cardColor,
-                fontSize: 20,
-              ),
-            ),
           ),
         ],
       ),

@@ -1,17 +1,16 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:studycat/models/question_model.dart';
+import 'package:provider/provider.dart';
+import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/question/end_question_screen.dart';
 import 'package:studycat/screens/question/select_question_screen.dart';
-import 'package:studycat/widgets/question_bottom_widget.dart';
 import 'package:studycat/widgets/question_realtop_widget.dart';
 import 'package:transition/transition.dart';
 
 class QuestionScreen extends StatefulWidget {
   final String id, subject, difficulty;
   final int num, cat;
-  final QuestionModel data;
 
   const QuestionScreen({
     super.key,
@@ -20,7 +19,6 @@ class QuestionScreen extends StatefulWidget {
     required this.difficulty,
     required this.num,
     required this.cat,
-    required this.data,
   });
 
   @override
@@ -41,58 +39,78 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    void toggleSelect(value) {
-      if (value == 0) {
-        isOne = true;
-        isTwo = false;
-        isThree = false;
-        isFour = false;
-        choice = 0;
-      } else if (value == 1) {
-        isOne = false;
-        isTwo = true;
-        isThree = false;
-        isFour = false;
-        choice = 1;
-      } else if (value == 2) {
-        isOne = false;
-        isTwo = false;
-        isThree = true;
-        isFour = false;
-        choice = 2;
-      } else if (value == 3) {
-        isOne = false;
-        isTwo = false;
-        isThree = false;
-        isFour = true;
-        choice = 3;
-      }
-      setState(() {
-        isSelected = [isOne, isTwo, isThree, isFour];
-      });
-    }
-
+    var color = context.watch<ThemeColor>();
+    //--스크린 크기--//
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    List<dynamic> answers = widget.data.answer[widget.num].split(",");
+    var data = context.watch<CloudData>().myQuestion.question[widget.subject]
+        [widget.difficulty];
+    //--객관식 답안들
+    List<dynamic> answers = data['options'][widget.num].split(",");
+    //--버튼 클릭 시 그 버튼 선택
+    void toggleSelect(value) {
+      for (var i = 0; i < isSelected.length; i++) {
+        isSelected[i] = false;
+      }
+      isSelected[value] = true;
+      choice = value;
+      setState(() {});
+    }
 
-    Widget next() {
+    //--답안 버튼 디자인
+    ElevatedButton optionsButton(int num) {
+      return ElevatedButton(
+        onPressed: () {
+          toggleSelect(num);
+        },
+        style: ButtonStyle(
+          minimumSize: MaterialStateProperty.all(
+            Size(width * 0.4, height * 0.08),
+          ),
+          maximumSize: MaterialStateProperty.all(
+            Size(width * 0.4, height * 0.08),
+          ),
+          side: MaterialStateProperty.all(
+            BorderSide(
+              color: answerChk & (data['answers'][widget.num] == num)
+                  ? Colors.green.shade400
+                  : Colors.white,
+              width: answerChk & (data['answers'][widget.num] == num) ? 5 : 0,
+            ),
+          ),
+          backgroundColor: MaterialStateProperty.all(
+              isSelected[num] ? color.background : color.box),
+          textStyle: MaterialStateProperty.all(
+            const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.normal,
+            ),
+          ),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
+        ),
+        child: AutoSizeText(answers[num], maxLines: 1),
+      );
+    }
+
+    //--확인 버튼 클릭 시 실행
+    void next() {
       answerChk = true;
       setState(() {
         answerChk = true;
       });
-      return const QuestionBottomWidget();
     }
 
     return Scaffold(
       body: Stack(
         children: [
-          QuestionRealTopWidget(
-            screenName: widget.subject,
-            screenExplain: widget.data.question[widget.num],
+          QuestionScreenTopWidget(
             icon: Icons.arrow_back,
             destination: const SelectQuestion(),
-            questionLength: widget.data.question.length,
+            questionLength: data['questions'].length,
             currentNum: widget.num,
           ),
           Padding(
@@ -119,11 +137,11 @@ class _QuestionScreenState extends State<QuestionScreen> {
                     Center(
                       child: BounceInDown(
                         from: 30,
-                        child: Text(
+                        child: AutoSizeText(
                           '다음 문제의 답을 선택하세요!!',
                           style: TextStyle(
                               fontSize: 25,
-                              color: Theme.of(context).primaryColor,
+                              color: color.background,
                               fontWeight: FontWeight.w600),
                         ),
                       ),
@@ -134,11 +152,11 @@ class _QuestionScreenState extends State<QuestionScreen> {
                     Center(
                       child: FadeIn(
                         duration: const Duration(milliseconds: 700),
-                        child: Text(
-                          widget.data.question[widget.num],
+                        child: AutoSizeText(
+                          data['questions'][widget.num],
                           style: TextStyle(
                               fontSize: 40,
-                              color: Theme.of(context).primaryColor,
+                              color: color.background,
                               fontWeight: FontWeight.w600),
                         ),
                       ),
@@ -151,103 +169,14 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       children: [
                         FadeInDown(
                           duration: const Duration(milliseconds: 250),
-                          child: ElevatedButton(
-                            //-----------1번 버튼 시작
-                            onPressed: () {
-                              toggleSelect(0);
-                            },
-                            style: ButtonStyle(
-                              minimumSize: MaterialStateProperty.all(
-                                Size(width * 0.4, height * 0.08),
-                              ),
-                              maximumSize: MaterialStateProperty.all(
-                                Size(width * 0.4, height * 0.08),
-                              ),
-                              side: MaterialStateProperty.all(
-                                BorderSide(
-                                  color: answerChk &
-                                          (widget.data
-                                                  .rightAnswer[widget.num] ==
-                                              0)
-                                      ? Colors.green.shade400
-                                      : Colors.white,
-                                  width: answerChk &
-                                          (widget.data
-                                                  .rightAnswer[widget.num] ==
-                                              0)
-                                      ? 5
-                                      : 0,
-                                ),
-                              ),
-                              backgroundColor: MaterialStateProperty.all(isOne
-                                  ? Theme.of(context).primaryColor
-                                  : Theme.of(context).focusColor),
-                              textStyle: MaterialStateProperty.all(
-                                const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                              shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                              ),
-                            ),
-                            child: AutoSizeText(answers[0], maxLines: 1),
-                          ),
+                          child: optionsButton(0),
                         ), //-----------1번 버튼 끝
                         SizedBox(
                           width: width * 0.05,
                         ),
                         FadeInRight(
-                          duration: const Duration(milliseconds: 250),
-                          child: ElevatedButton(
-                            //-----------2번 버튼 시작
-                            onPressed: () {
-                              toggleSelect(1);
-                            },
-                            style: ButtonStyle(
-                              minimumSize: MaterialStateProperty.all(
-                                Size(width * 0.4, height * 0.08),
-                              ),
-                              maximumSize: MaterialStateProperty.all(
-                                Size(width * 0.4, height * 0.08),
-                              ),
-                              backgroundColor: MaterialStateProperty.all(isTwo
-                                  ? Theme.of(context).primaryColor
-                                  : Theme.of(context).focusColor),
-                              textStyle: MaterialStateProperty.all(
-                                const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                              side: MaterialStateProperty.all(
-                                BorderSide(
-                                  color: answerChk &
-                                          (widget.data
-                                                  .rightAnswer[widget.num] ==
-                                              1)
-                                      ? Colors.green.shade400
-                                      : Colors.white,
-                                  width: answerChk &
-                                          (widget.data
-                                                  .rightAnswer[widget.num] ==
-                                              1)
-                                      ? 5
-                                      : 0,
-                                ),
-                              ),
-                              shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                              ),
-                            ),
-                            child: AutoSizeText(answers[1], maxLines: 1),
-                          ),
-                        ), //-----------2번 버튼 끝
+                            duration: const Duration(milliseconds: 250),
+                            child: optionsButton(1)), //-----------2번 버튼 끝
                       ],
                     ),
                     SizedBox(
@@ -258,105 +187,14 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       children: [
                         FadeInLeft(
                           duration: const Duration(milliseconds: 250),
-                          child: ElevatedButton(
-                            //-----------3번 버튼 시작
-                            onPressed: () {
-                              toggleSelect(2);
-                            },
-                            style: ButtonStyle(
-                              minimumSize: MaterialStateProperty.all(
-                                Size(width * 0.4, height * 0.08),
-                              ),
-                              maximumSize: MaterialStateProperty.all(
-                                Size(width * 0.4, height * 0.08),
-                              ),
-                              backgroundColor: MaterialStateProperty.all(isThree
-                                  ? Theme.of(context).primaryColor
-                                  : Theme.of(context).focusColor),
-                              textStyle: MaterialStateProperty.all(
-                                const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                              side: MaterialStateProperty.all(
-                                BorderSide(
-                                  color: answerChk &
-                                          (widget.data
-                                                  .rightAnswer[widget.num] ==
-                                              2)
-                                      ? Colors.green.shade400
-                                      : Colors.white,
-                                  width: answerChk &
-                                          (widget.data
-                                                  .rightAnswer[widget.num] ==
-                                              2)
-                                      ? 5
-                                      : 0,
-                                ),
-                              ),
-                              shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                              ),
-                            ),
-                            child: AutoSizeText(answers[2], maxLines: 1),
-                          ),
+                          child: optionsButton(2),
                         ), //-----------3번 버튼 끝
                         SizedBox(
                           width: width * 0.05,
                         ),
                         FadeInUp(
                           duration: const Duration(milliseconds: 250),
-                          child: ElevatedButton(
-                            //-----------4번 버튼 시작
-                            onPressed: () {
-                              toggleSelect(3);
-                            },
-                            style: ButtonStyle(
-                              minimumSize: MaterialStateProperty.all(
-                                Size(width * 0.4, height * 0.08),
-                              ),
-                              maximumSize: MaterialStateProperty.all(
-                                Size(width * 0.4, height * 0.08),
-                              ),
-                              backgroundColor: MaterialStateProperty.all(isFour
-                                  ? Theme.of(context).primaryColor
-                                  : Theme.of(context).focusColor),
-                              textStyle: MaterialStateProperty.all(
-                                const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                              side: MaterialStateProperty.all(
-                                BorderSide(
-                                  color: answerChk &
-                                          (widget.data
-                                                  .rightAnswer[widget.num] ==
-                                              3)
-                                      ? Colors.green.shade400
-                                      : Colors.white,
-                                  width: answerChk &
-                                          (widget.data
-                                                  .rightAnswer[widget.num] ==
-                                              3)
-                                      ? 5
-                                      : 0,
-                                ),
-                              ),
-                              shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                              ),
-                            ),
-                            child: AutoSizeText(
-                              answers[3],
-                              maxLines: 1,
-                            ),
-                          ),
+                          child: optionsButton(3),
                         ), //-----------4번 버튼 끝
                       ],
                     ),
@@ -374,7 +212,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
               child: Container(
                 width: width * 0.9,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
+                  color: color.background,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: TextButton(
@@ -383,37 +221,32 @@ class _QuestionScreenState extends State<QuestionScreen> {
                         ? Navigator.push(
                             context,
                             Transition(
-                              child: widget.num !=
-                                      widget.data.question.length - 1
+                              child: widget.num != data['questions'].length - 1
                                   ? QuestionScreen(
                                       id: widget.id,
                                       subject: widget.subject,
                                       difficulty: widget.difficulty,
                                       num: widget.num + 1,
-                                      cat:
-                                          widget.data.rightAnswer[widget.num] ==
-                                                  choice
-                                              ? widget.cat + 1
-                                              : widget.cat,
-                                      data: widget.data,
+                                      cat: data['answers'][widget.num] == choice
+                                          ? widget.cat + 1
+                                          : widget.cat,
                                     )
                                   : EndQuestionScreen(
-                                      cat:
-                                          widget.data.rightAnswer[widget.num] ==
-                                                  choice
-                                              ? widget.cat + 1
-                                              : widget.cat,
-                                      queLen: widget.data.question.length,
+                                      cat: data['answers'][widget.num] == choice
+                                          ? widget.cat + 1
+                                          : widget.cat,
+                                      queLen: data['questions'].length,
+                                      subject: widget.subject,
                                     ),
                               transitionEffect: TransitionEffect.FADE,
                             ),
                           )
                         : next();
                   },
-                  child: Text(
+                  child: AutoSizeText(
                     answerChk ? '다음 문제' : '확인',
                     style: TextStyle(
-                      color: Theme.of(context).cardColor,
+                      color: color.text,
                       fontWeight: FontWeight.w600,
                       fontSize: 16,
                     ),

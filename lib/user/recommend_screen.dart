@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:studycat/widgets/question_top_widget.dart';
+import '../screens/home_screen.dart';
 
-class Profileset extends StatelessWidget {
-  const Profileset({super.key});
+class Recommend extends StatelessWidget {
+  const Recommend({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,13 +12,14 @@ class Profileset extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).focusColor,
-        centerTitle: true,
-        elevation: 0.0,
-      ),
       body: Stack(
         children: [
+          const QuestionTopWidget(
+            screenName: '',
+            screenExplain: '',
+            icon: Icons.home,
+            destination: HomeScreen(),
+          ),
           Container(
             padding: EdgeInsets.fromLTRB(
               width * 0.13,
@@ -24,11 +27,11 @@ class Profileset extends StatelessWidget {
               width * 0.1,
               height * 0.1,
             ),
-            child: const Center(
+            child: Center(
               child: Column(
                 children: [
                   Row(
-                    children: [],
+                    children: const [],
                   ),
                 ],
               ),

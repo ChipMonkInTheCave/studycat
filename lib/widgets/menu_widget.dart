@@ -1,4 +1,7 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/graph/graph_screen.dart';
 
 class Menu extends StatelessWidget {
@@ -8,6 +11,7 @@ class Menu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var color = context.watch<ThemeColor>();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -32,12 +36,12 @@ class Menu extends StatelessWidget {
         child: ListView(
           children: [
             ListTile(
-              title: const Text('공부기록'),
+              title: const AutoSizeText('공부기록'),
               onTap: () {},
             ),
             ListTile(
               leading: const Icon(Icons.settings),
-              title: const Text('설정'),
+              title: const AutoSizeText('설정'),
               onTap: () {},
             ),
           ],

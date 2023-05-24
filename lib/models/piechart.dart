@@ -1,5 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:studycat/provider/provider.dart';
 
 class PieChartSample2 extends StatefulWidget {
   const PieChartSample2({Key? key});
@@ -13,6 +15,7 @@ class PieChart2State extends State<PieChartSample2> {
 
   @override
   Widget build(BuildContext context) {
+    var color = context.watch<ThemeColor>();
     return AspectRatio(
       aspectRatio: 1.5,
       child: Column(

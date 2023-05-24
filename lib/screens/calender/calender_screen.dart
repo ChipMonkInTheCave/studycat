@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:studycat/provider/provider.dart';
 import 'package:studycat/widgets/question_top_widget.dart';
 import '/screens/home_screen.dart';
 
@@ -8,6 +10,7 @@ class Calender extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var color = context.watch<ThemeColor>();
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
@@ -27,11 +30,11 @@ class Calender extends StatelessWidget {
               width * 0.1,
               height * 0.1,
             ),
-            child: const Center(
+            child: Center(
               child: Column(
                 children: [
                   Row(
-                    children: [],
+                    children: const [],
                   ),
                 ],
               ),

@@ -1,19 +1,19 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:studycat/models/question_model.dart';
+import 'package:provider/provider.dart';
+import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/question/question_screen.dart';
 import 'package:transition/transition.dart';
 
 class SelectQuetionWidget extends StatefulWidget {
   final String id, subject, difficulty;
   final int num;
-  final QuestionModel data;
   const SelectQuetionWidget({
     super.key,
     required this.subject,
     required this.id,
     required this.difficulty,
     required this.num,
-    required this.data,
   });
 
   @override
@@ -28,7 +28,7 @@ class _SelectQuetionWidgetState extends State<SelectQuetionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> abc = ['math', 'eng'];
+    var color = context.watch<ThemeColor>();
 
     return ElevatedButton(
       onPressed: () {
@@ -41,14 +41,13 @@ class _SelectQuetionWidgetState extends State<SelectQuetionWidget> {
               difficulty: widget.difficulty,
               num: widget.num,
               cat: 0,
-              data: widget.data,
             ),
             transitionEffect: TransitionEffect.FADE,
           ),
         );
       },
       style: ElevatedButton.styleFrom(
-          backgroundColor: Theme.of(context).focusColor,
+          backgroundColor: color.box,
           padding: const EdgeInsets.symmetric(
             vertical: 50,
             horizontal: 40,
@@ -56,7 +55,7 @@ class _SelectQuetionWidgetState extends State<SelectQuetionWidget> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           )),
-      child: Text(
+      child: AutoSizeText(
         widget.subject == 'math' ? '수학' : '영어',
         style: const TextStyle(
           fontSize: 40,

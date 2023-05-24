@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/home_screen.dart';
 
 class InputQuestion extends StatelessWidget {
@@ -6,6 +8,7 @@ class InputQuestion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var color = context.watch<ThemeColor>();
     return Scaffold(
       body: SingleChildScrollView(
         child: SizedBox(
@@ -18,7 +21,7 @@ class InputQuestion extends StatelessWidget {
                     flex: 1,
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.background,
+                        color: color.background,
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -39,7 +42,7 @@ class InputQuestion extends StatelessWidget {
                                   );
                                 },
                                 iconSize: 40,
-                                color: Theme.of(context).cardColor,
+                                color: color.text,
                                 icon: const Icon(Icons.home),
                               ),
                               const SizedBox(
@@ -49,7 +52,7 @@ class InputQuestion extends StatelessWidget {
                                 '문제 입력',
                                 style: TextStyle(
                                   fontSize: 35,
-                                  color: Theme.of(context).cardColor,
+                                  color: color.text,
                                 ),
                               ),
                             ],
@@ -63,7 +66,7 @@ class InputQuestion extends StatelessWidget {
                               Text(
                                 '입력할 과목을 선택해주세요.',
                                 style: TextStyle(
-                                  color: Theme.of(context).cardColor,
+                                  color: color.text,
                                   fontSize: 20,
                                 ),
                               ),
@@ -92,7 +95,7 @@ class InputQuestion extends StatelessWidget {
                           inputQuestion(context);
                         },
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Theme.of(context).primaryColor,
+                            backgroundColor: color.background,
                             padding: const EdgeInsets.symmetric(
                               vertical: 10,
                               horizontal: 100,
@@ -112,7 +115,7 @@ class InputQuestion extends StatelessWidget {
                           inputQuestion(context);
                         },
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Theme.of(context).primaryColor,
+                            backgroundColor: color.background,
                             padding: const EdgeInsets.symmetric(
                               vertical: 10,
                               horizontal: 100,
@@ -144,7 +147,7 @@ Future<dynamic> inputQuestion(BuildContext context) async {
     context: context,
     barrierDismissible: true,
     builder: ((context) {
-      return const AlertDialog(
+      return AlertDialog(
         title: Text('문제입력'),
         content: SingleChildScrollView(
           child: Column(
