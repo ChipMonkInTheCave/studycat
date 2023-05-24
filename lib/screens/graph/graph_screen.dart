@@ -22,8 +22,6 @@ class _GraphState extends State<Graph> {
 
   @override
   Widget build(BuildContext context) {
-    //double width = MediaQuery.of(context).size.width;
-    //double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 103, 58, 183),
@@ -127,19 +125,23 @@ class _GraphState extends State<Graph> {
             ),
             Column(
               children: [
-                // SizedBox(
-                //   height: height * 0.33,
-                // ),
+                const SizedBox(height: 20),
+                const Text(
+                  textAlign: TextAlign.center,
+                  '성적 그래프',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 25,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
                 if (isLineSelected) const LineChartSample1(),
                 if (isBarSelected) const BarChartSample2(),
-
-                // SizedBox(
-                //   height: 5,
-                // ),
                 const Text(
+                  textAlign: TextAlign.center,
                   "학습 비율",
                   style: TextStyle(
-                    fontSize: 30,
+                    fontSize: 25,
                     fontWeight: FontWeight.w600,
                   ),
                 ),

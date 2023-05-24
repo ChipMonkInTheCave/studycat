@@ -92,26 +92,13 @@ class PieChart2State extends State<PieChartSample2> {
                 ),
               ),
               const SizedBox(
-                height: 4,
-              ),
-              Container(
-                color: const Color.fromARGB(255, 160, 64, 239),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  child: Text(
-                    '몰라',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 18,
+                height: 15,
               ),
             ],
           ),
           const SizedBox(
-            height: 5,
-            width: 20,
+            height: 10,
+            width: 25,
           ),
         ],
       ),

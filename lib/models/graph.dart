@@ -10,8 +10,6 @@ class _LineChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return LineChart(
       sampleData1,
-      //isShowingMainData ? sampleData1 : sampleData2,
-      //swapAnimationDuration: const Duration(milliseconds: 250),
     );
   }
 
@@ -26,18 +24,6 @@ class _LineChart extends StatelessWidget {
         maxY: 5,
         minY: 0,
       );
-
-  // LineChartData get sampleData2 => LineChartData(
-  //       lineTouchData: lineTouchData2,
-  //       gridData: gridData,
-  //       titlesData: titlesData2,
-  //       borderData: borderData,
-  //       lineBarsData: lineBarsData2,
-  //       minX: 0,
-  //       maxX: 14,
-  //       maxY: 5,
-  //       minY: 0,
-  //     );
 
   LineTouchData get lineTouchData1 => LineTouchData(
         handleBuiltInTouches: true,
@@ -66,12 +52,7 @@ class _LineChart extends StatelessWidget {
         lineChartBarData1_1,
         lineChartBarData1_2,
         lineChartBarData1_3,
-        lineChartBarData1_4
       ];
-
-  // LineTouchData get lineTouchData2 => LineTouchData(
-  //       enabled: false,
-  //     );
 
   FlTitlesData get titlesData2 => FlTitlesData(
         bottomTitles: AxisTitles(
@@ -87,12 +68,6 @@ class _LineChart extends StatelessWidget {
           sideTitles: leftTitles(),
         ),
       );
-
-  // List<LineChartBarData> get lineBarsData2 => [
-  //       //lineChartBarData2_1,
-  //       //lineChartBarData2_2,
-  //       //lineChartBarData2_3,
-  //     ];
 
   Widget leftTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(
@@ -157,6 +132,7 @@ class _LineChart extends StatelessWidget {
         break;
       case 13:
         text = const Text('Sun', style: style);
+        break;
       default:
         text = const Text('');
         break;
@@ -245,76 +221,6 @@ class _LineChart extends StatelessWidget {
           FlSpot(13, 3),
         ],
       );
-  LineChartBarData get lineChartBarData1_4 => LineChartBarData(
-        isCurved: true,
-        color: const Color.fromARGB(255, 160, 64, 239),
-        barWidth: 7,
-        isStrokeCapRound: true,
-        dotData: FlDotData(show: false),
-        belowBarData: BarAreaData(show: false),
-        spots: const [
-          FlSpot(1, 3.3),
-          FlSpot(3, 2.1),
-          FlSpot(5, 4.2),
-          FlSpot(7, 2.0),
-          FlSpot(9, 3.5),
-          FlSpot(11, 3.8),
-          FlSpot(13, 3),
-        ],
-      );
-
-  // LineChartBarData get lineChartBarData2_1 => LineChartBarData(
-  //       isCurved: true,
-  //       curveSmoothness: 0,
-  //       color: const Color(0xff6C2DC7),
-  //       barWidth: 7,
-  //       isStrokeCapRound: true,
-  //       dotData: FlDotData(show: false),
-  //       belowBarData: BarAreaData(show: false),
-  //       spots: const [
-  //         FlSpot(1, 1),
-  //         FlSpot(3, 4),
-  //         FlSpot(5, 1.8),
-  //         FlSpot(7, 5),
-  //         FlSpot(10, 2),
-  //         FlSpot(12, 2.2),
-  //         FlSpot(13, 1.8),
-  //       ],
-  //     );
-
-  // LineChartBarData get lineChartBarData2_2 => LineChartBarData(
-  //       isCurved: true,
-  //       color: Colors.redAccent,
-  //       barWidth: 4,
-  //       isStrokeCapRound: true,
-  //       dotData: FlDotData(show: false),
-  //       belowBarData: BarAreaData(show: true, color: Colors.deepPurple),
-  //       spots: const [
-  //         FlSpot(1, 1),
-  //         FlSpot(3, 2.8),
-  //         FlSpot(7, 1.2),
-  //         FlSpot(10, 2.8),
-  //         FlSpot(12, 2.6),
-  //         FlSpot(13, 3.9),
-  //       ],
-  //     );
-
-  // LineChartBarData get lineChartBarData2_3 => LineChartBarData(
-  //       isCurved: true,
-  //       curveSmoothness: 0,
-  //       color: Colors.blue,
-  //       barWidth: 2,
-  //       isStrokeCapRound: true,
-  //       dotData: FlDotData(show: true),
-  //       belowBarData: BarAreaData(show: false),
-  //       spots: const [
-  //         FlSpot(1, 3.8),
-  //         FlSpot(3, 1.9),
-  //         FlSpot(6, 5),
-  //         FlSpot(10, 3.3),
-  //         FlSpot(13, 4.5),
-  //       ],
-  //     );
 }
 
 class LineChartSample1 extends StatefulWidget {
@@ -344,16 +250,6 @@ class LineChartSample1State extends State<LineChartSample1> {
             children: <Widget>[
               const SizedBox(
                 height: 10,
-              ),
-              const Text(
-                '성적 그래프',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 2,
-                ),
-                textAlign: TextAlign.center,
               ),
               const SizedBox(
                 height: 15,

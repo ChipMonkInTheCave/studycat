@@ -6,7 +6,6 @@ class BarChartSample2 extends StatefulWidget {
   final Color firstBarColor = const Color.fromARGB(255, 119, 66, 243);
   final Color secondBarColor = const Color.fromARGB(255, 67, 26, 147);
   final Color thirdBarColor = const Color.fromARGB(255, 35, 44, 150);
-  final Color fourthBarColor = const Color.fromARGB(255, 10, 50, 230);
   final Color avgColor = Colors.black87;
   @override
   State<StatefulWidget> createState() => BarChartSample2State();
@@ -23,13 +22,13 @@ class BarChartSample2State extends State<BarChartSample2> {
   @override
   void initState() {
     super.initState();
-    final barGroup1 = makeGroupData(0, 5, 12, 13, 11);
-    final barGroup2 = makeGroupData(1, 16, 12, 10, 17);
-    final barGroup3 = makeGroupData(2, 18, 5, 10, 8);
-    final barGroup4 = makeGroupData(3, 20, 16, 14, 10);
-    final barGroup5 = makeGroupData(4, 17, 6, 9, 14);
-    final barGroup6 = makeGroupData(5, 19, 8, 19, 13);
-    final barGroup7 = makeGroupData(6, 10, 9, 15, 12);
+    final barGroup1 = makeGroupData(0, 5, 12, 13);
+    final barGroup2 = makeGroupData(1, 16, 12, 10);
+    final barGroup3 = makeGroupData(2, 18, 5, 10);
+    final barGroup4 = makeGroupData(3, 20, 16, 14);
+    final barGroup5 = makeGroupData(4, 17, 6, 9);
+    final barGroup6 = makeGroupData(5, 19, 8, 19);
+    final barGroup7 = makeGroupData(6, 10, 9, 15);
 
     final items = [
       barGroup1,
@@ -57,28 +56,11 @@ class BarChartSample2State extends State<BarChartSample2> {
           children: <Widget>[
             const Row(
               mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                SizedBox(
-                  width: 38,
-                ),
-                Text(
-                  '성적 그래프',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 30,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 38,
             ),
             Expanded(
               child: BarChart(
                 BarChartData(
-                  maxY: 20,
+                  maxY: 25,
                   barTouchData: BarTouchData(
                     touchTooltipData: BarTouchTooltipData(
                       tooltipBgColor: Colors.grey,
@@ -218,10 +200,9 @@ class BarChartSample2State extends State<BarChartSample2> {
     double y1,
     double y2,
     double y3,
-    double y4,
   ) {
     return BarChartGroupData(
-      barsSpace: 5,
+      barsSpace: 4,
       x: x,
       barRods: [
         BarChartRodData(
@@ -239,59 +220,7 @@ class BarChartSample2State extends State<BarChartSample2> {
           color: widget.thirdBarColor,
           width: width,
         ),
-        BarChartRodData(
-          toY: y4,
-          color: widget.fourthBarColor,
-          width: width,
-        ),
       ],
     );
   }
-
-//   Widget makeTransactionsIcon() {
-//     const width = 4.5;
-//     const space = 3.5;
-//     return Row(
-//       mainAxisSize: MainAxisSize.min,
-//       children: <Widget>[
-//         Container(
-//           width: width,
-//           height: 10,
-//           color: Colors.white.withOpacity(0.4),
-//         ),
-//         const SizedBox(
-//           width: space,
-//         ),
-//         Container(
-//           width: width,
-//           height: 28,
-//           color: Colors.white.withOpacity(0.8),
-//         ),
-//         const SizedBox(
-//           width: space,
-//         ),
-//         Container(
-//           width: width,
-//           height: 42,
-//           color: Colors.white.withOpacity(1),
-//         ),
-//         const SizedBox(
-//           width: space,
-//         ),
-//         Container(
-//           width: width,
-//           height: 28,
-//           color: Colors.white.withOpacity(0.8),
-//         ),
-//         const SizedBox(
-//           width: space,
-//         ),
-//         Container(
-//           width: width,
-//           height: 10,
-//           color: Colors.white.withOpacity(0.4),
-//         ),
-//       ],
-//     );
-//   }
 }

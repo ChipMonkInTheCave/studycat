@@ -43,7 +43,7 @@ dependencies:
   flutter_staggered_animations: ^1.1.1
   animate_do: ^3.0.2
   auto_size_text: ^3.0.0
-  firebase_auth: ^4.6.1
+  # firebase_auth: ^4.6.1
   google_sign_in: ^6.1.0
 
 dev_dependencies:
