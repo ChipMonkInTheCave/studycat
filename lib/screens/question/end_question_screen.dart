@@ -22,8 +22,8 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          Column(
-            children: const [
+          const Column(
+            children: [
               QuestionTopWidget(
                 screenName: "",
                 screenExplain: '정답률',

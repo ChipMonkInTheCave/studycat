@@ -1,8 +1,10 @@
+//import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:studycat/models/barchart.dart';
 import 'package:studycat/models/graph.dart';
+import 'package:studycat/models/piechart.dart';
 import 'package:studycat/screens/home_screen.dart';
 import 'package:studycat/widgets/menu_widget.dart';
-//import 'package:flutter_bezier_chart/flutter_bezier_chart.dart';
 
 class Graph extends StatefulWidget {
   const Graph({Key? key}) : super(key: key);
@@ -20,8 +22,8 @@ class _GraphState extends State<Graph> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    //double width = MediaQuery.of(context).size.width;
+    //double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 103, 58, 183),
@@ -67,16 +69,16 @@ class _GraphState extends State<Graph> {
                       padding: EdgeInsets.symmetric(horizontal: 14),
                       child: Text('꺾은선',
                           style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w400,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
                           )),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: Text('막대',
                           style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
+                            fontSize: 19,
+                            fontWeight: FontWeight.w500,
                           )),
                     ),
                   ],
@@ -98,7 +100,7 @@ class _GraphState extends State<Graph> {
                       child: Text('D',
                           style: TextStyle(
                             fontSize: 20,
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.w500,
                           )),
                     ),
                     Padding(
@@ -107,7 +109,7 @@ class _GraphState extends State<Graph> {
                         'W',
                         style: TextStyle(
                           fontSize: 20,
-                          fontWeight: FontWeight.w400,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
@@ -116,7 +118,7 @@ class _GraphState extends State<Graph> {
                       child: Text('M',
                           style: TextStyle(
                             fontSize: 20,
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.w500,
                           )),
                     ),
                   ],
@@ -125,10 +127,23 @@ class _GraphState extends State<Graph> {
             ),
             Column(
               children: [
-                SizedBox(
-                  height: height * 0.33,
+                // SizedBox(
+                //   height: height * 0.33,
+                // ),
+                if (isLineSelected) const LineChartSample1(),
+                if (isBarSelected) const BarChartSample2(),
+
+                // SizedBox(
+                //   height: 5,
+                // ),
+                const Text(
+                  "학습 비율",
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                LineChartSample1(),
+                const PieChartSample2()
               ],
             ),
           ],

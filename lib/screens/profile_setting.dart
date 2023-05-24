@@ -24,11 +24,11 @@ class Profileset extends StatelessWidget {
               width * 0.1,
               height * 0.1,
             ),
-            child: Center(
+            child: const Center(
               child: Column(
                 children: [
                   Row(
-                    children: const [],
+                    children: [],
                   ),
                 ],
               ),
