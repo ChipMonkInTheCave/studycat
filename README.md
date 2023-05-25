@@ -18,7 +18,8 @@
   2. UserData : UserId나 스크린 크기, 유저가 만든 과목 리스트 등 (스크린 크기 width,heigth는 기존에 쓰던 대로 써도 상관없음)
   3. CloudData : 현재 유저의 학습데이터, 학습기록데이터 등
 
-사용법 
+사용법 :
+
   context.watch<사용할 프로바이더 클래스 이름>().클래스에 들어있는 변수 혹은 메서드 이름;
   
   ThemeColor를 사용하는 예제 : color: context.watch<ThemeColor>().box; (ThemeColor에 있는 box변수를 가져온다)
