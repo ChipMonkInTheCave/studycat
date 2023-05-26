@@ -38,6 +38,9 @@ class _MyAppState extends State<MyApp> {
     if (update) {
     } else {
       context.watch<CloudData>().fetchData();
+      // context.watch<UserData>().addSubject(
+      //     context.watch<CloudData>().myQuestion.question.keys.elementAt(0),
+      //     context.watch<CloudData>().myQuestion.question.keys.elementAt(0));
       update = true;
     }
     return const MaterialApp(home: HomeScreen());

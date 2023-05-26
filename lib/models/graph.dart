@@ -198,13 +198,13 @@ class _LineChartState extends State<_LineChart> {
         belowBarData: BarAreaData(show: false),
         spots: [
           //1~5
-          FlSpot(1, (widget.kor[0] / 20).toDouble()),
-          FlSpot(3, (widget.kor[1] / 20).toDouble()),
-          FlSpot(5, (widget.kor[2] / 20).toDouble()),
-          FlSpot(7, (widget.kor[3] / 20).toDouble()),
-          FlSpot(9, (widget.kor[4] / 20).toDouble()),
-          FlSpot(11, (widget.kor[5] / 20).toDouble()),
-          FlSpot(13, (widget.kor[6] / 20).toDouble()),
+          const FlSpot(1, 3),
+          const FlSpot(3, 2),
+          const FlSpot(5, 1),
+          const FlSpot(7, 2),
+          const FlSpot(9, 4),
+          const FlSpot(11, 3),
+          const FlSpot(13, 2),
         ],
       );
 
@@ -219,13 +219,13 @@ class _LineChartState extends State<_LineChart> {
           color: Colors.greenAccent,
         ),
         spots: [
-          FlSpot(1, widget.eng[0] / 20.toDouble()),
-          FlSpot(3, widget.eng[1] / 20.toDouble()),
-          FlSpot(5, widget.eng[2] / 20.toDouble()),
-          FlSpot(7, widget.eng[3] / 20.toDouble()),
-          FlSpot(9, widget.eng[4] / 20.toDouble()),
-          FlSpot(11, widget.eng[5] / 20.toDouble()),
-          FlSpot(13, widget.eng[6] / 20.toDouble()),
+          const FlSpot(1, 2),
+          const FlSpot(3, 3),
+          const FlSpot(5, 5),
+          const FlSpot(7, 4),
+          const FlSpot(9, 3),
+          const FlSpot(11, 2),
+          const FlSpot(13, 1),
         ],
       );
 
@@ -237,13 +237,13 @@ class _LineChartState extends State<_LineChart> {
         dotData: FlDotData(show: false),
         belowBarData: BarAreaData(show: false),
         spots: [
-          FlSpot(1, widget.math[0] / 20.toDouble()),
-          FlSpot(3, widget.math[1] / 20.toDouble()),
-          FlSpot(5, widget.math[2] / 20.toDouble()),
-          FlSpot(7, widget.math[3] / 20.toDouble()),
-          FlSpot(9, widget.math[4] / 20.toDouble()),
-          FlSpot(11, widget.math[5] / 20.toDouble()),
-          FlSpot(13, widget.math[6] / 20.toDouble()),
+          const FlSpot(1, 2),
+          const FlSpot(3, 3),
+          const FlSpot(5, 4),
+          const FlSpot(7, 3),
+          const FlSpot(9, 4),
+          const FlSpot(11, 3),
+          const FlSpot(13, 5),
         ],
       );
 
@@ -335,11 +335,11 @@ class LineChartSample1State extends State<LineChartSample1> {
               );
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
+              return const Center(
                 child: Text('wating'),
               );
             }
-            return Center(
+            return const Center(
               child: Text('none'),
             );
           }),

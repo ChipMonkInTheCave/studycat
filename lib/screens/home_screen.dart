@@ -200,7 +200,7 @@ class HomeScreen extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 elevation: 4,
-                backgroundColor: color.box,
+                backgroundColor: color.background,
                 fixedSize: Size(width * 0.9, height * 0.15),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
