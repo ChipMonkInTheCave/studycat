@@ -54,8 +54,25 @@ class BarChartSample2State extends State<BarChartSample2> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            const Row(
+            Row(
               mainAxisSize: MainAxisSize.min,
+              children: const <Widget>[
+                SizedBox(
+                  width: 38,
+                ),
+                Text(
+                  '성적 그래프',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 30,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 38,
             ),
             Expanded(
               child: BarChart(

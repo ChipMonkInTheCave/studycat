@@ -1,4 +1,7 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:studycat/provider/provider.dart';
 import 'package:studycat/widgets/iconbutton_widget.dart';
 
 class QuestionTopWidget extends StatelessWidget {
@@ -15,21 +18,24 @@ class QuestionTopWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var color = context.watch<ThemeColor>();
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
       padding: EdgeInsets.only(top: height * 0.025),
-      height: height * 0.5,
+      height: height * 0.35,
       decoration: BoxDecoration(
-          gradient: LinearGradient(
-        colors: [
-          Theme.of(context).primaryColor,
-          Theme.of(context).focusColor,
-          Theme.of(context).cardColor,
-        ],
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-      )),
+        gradient: LinearGradient(
+          colors: [
+            const Color.fromARGB(255, 127, 134, 220),
+            const Color.fromARGB(255, 125, 135, 222),
+            const Color.fromARGB(255, 157, 164, 232),
+            color.text,
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -40,11 +46,11 @@ class QuestionTopWidget extends StatelessWidget {
                 icon: icon,
                 destination: destination,
               ),
-              Text(
+              AutoSizeText(
                 screenName,
                 style: TextStyle(
                   fontSize: 35,
-                  color: Theme.of(context).cardColor,
+                  color: color.text,
                 ),
               ),
               Container(
@@ -56,10 +62,10 @@ class QuestionTopWidget extends StatelessWidget {
             height: height * 0.030,
           ),
           Center(
-            child: Text(
+            child: AutoSizeText(
               screenExplain,
               style: TextStyle(
-                color: Theme.of(context).cardColor,
+                color: color.text,
                 fontSize: 20,
               ),
             ),

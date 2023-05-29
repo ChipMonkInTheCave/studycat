@@ -1,8 +1,10 @@
 //import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:studycat/models/barchart.dart';
 import 'package:studycat/models/graph.dart';
 import 'package:studycat/models/piechart.dart';
+import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/home_screen.dart';
 import 'package:studycat/widgets/menu_widget.dart';
 
@@ -22,9 +24,12 @@ class _GraphState extends State<Graph> {
 
   @override
   Widget build(BuildContext context) {
+    var color = context.watch<ThemeColor>();
+    //double width = MediaQuery.of(context).size.width;
+    //double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 103, 58, 183),
+        backgroundColor: color.background,
         centerTitle: true,
         titleTextStyle: const TextStyle(
           fontWeight: FontWeight.w600,

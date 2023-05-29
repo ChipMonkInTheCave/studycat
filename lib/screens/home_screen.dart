@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/calender/calender_screen.dart';
-// import 'package:studycat/screens/auth/login_screen.dart';
 import 'package:studycat/screens/graph/graph_screen.dart';
-import 'package:studycat/screens/graph/graph_test.dart';
 import 'package:studycat/screens/question/select_question_screen.dart';
-import 'package:studycat/screens/profile_screen.dart';
+import 'package:studycat/user/profile_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:studycat/screens/score/test_score_screen.dart';
 import 'package:transition/transition.dart';
@@ -14,12 +14,13 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var color = context.watch<ThemeColor>();
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).focusColor,
+        backgroundColor: color.box,
         centerTitle: true,
         elevation: 0.0,
         // actions: <Widget>[
@@ -64,7 +65,7 @@ class HomeScreen extends StatelessWidget {
                 // 계정변경버튼
               },
               decoration: BoxDecoration(
-                  color: Theme.of(context).focusColor,
+                  color: color.box,
                   borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(15.0),
                       bottomRight: Radius.circular(15.0))),
@@ -139,7 +140,7 @@ class HomeScreen extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 elevation: 4,
-                backgroundColor: Theme.of(context).focusColor,
+                backgroundColor: context.watch<ThemeColor>().box,
                 fixedSize: Size(width * 0.45, height * 0.20),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(100),
@@ -163,13 +164,13 @@ class HomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const GraphTest(),
+                    builder: (context) => const Calender(),
                   ),
                 );
               },
               style: ElevatedButton.styleFrom(
                 elevation: 4,
-                backgroundColor: Theme.of(context).focusColor,
+                backgroundColor: color.box,
                 fixedSize: Size(width * 0.45, height * 0.20),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -199,7 +200,7 @@ class HomeScreen extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 elevation: 4,
-                backgroundColor: Theme.of(context).focusColor,
+                backgroundColor: color.background,
                 fixedSize: Size(width * 0.9, height * 0.15),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -242,7 +243,7 @@ class HomeScreen extends StatelessWidget {
                         },
                         style: ElevatedButton.styleFrom(
                             elevation: 4,
-                            backgroundColor: Theme.of(context).focusColor,
+                            backgroundColor: color.box,
                             fixedSize: Size(width * 0.32, height * 0.15),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -269,7 +270,7 @@ class HomeScreen extends StatelessWidget {
                         },
                         style: ElevatedButton.styleFrom(
                             elevation: 4,
-                            backgroundColor: Theme.of(context).focusColor,
+                            backgroundColor: color.box,
                             fixedSize: Size(width * 0.32, height * 0.15),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -303,7 +304,7 @@ class HomeScreen extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 elevation: 4,
-                backgroundColor: Theme.of(context).focusColor,
+                backgroundColor: color.box,
                 fixedSize: Size(width * 0.8, height * 0.25),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),

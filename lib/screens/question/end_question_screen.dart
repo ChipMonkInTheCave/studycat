@@ -1,11 +1,20 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/home_screen.dart';
-import 'package:studycat/widgets/question_top_widget.dart';
 
 class EndQuestionScreen extends StatefulWidget {
   final int cat, queLen;
-  const EndQuestionScreen({super.key, required this.cat, required this.queLen});
+  final String subject;
+  const EndQuestionScreen(
+      {super.key,
+      required this.cat,
+      required this.queLen,
+      required this.subject});
 
   @override
   State<EndQuestionScreen> createState() => _EndQuestionScreenState();
@@ -14,24 +23,18 @@ class EndQuestionScreen extends StatefulWidget {
 class _EndQuestionScreenState extends State<EndQuestionScreen> {
   @override
   Widget build(BuildContext context) {
+    var color = context.watch<ThemeColor>();
+    var now = DateTime.now();
+    String nowDate = DateFormat('yyyy-MM-dd').format(now);
+    String nowWeek = DateFormat('E').format(now);
+    //yy 23 yyyy 2023 M 8 MM 08 MMM Aug MMMM August dd 31 EEEE Tuesday E Tue mm 15 ss 45
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     String per = '${((widget.cat / widget.queLen) * 100).toInt()}%';
-    List<Widget> pp = [];
 
     return Scaffold(
       body: Stack(
         children: [
-          const Column(
-            children: [
-              QuestionTopWidget(
-                screenName: "",
-                screenExplain: '정답률',
-                icon: Icons.home,
-                destination: HomeScreen(),
-              ),
-            ],
-          ),
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: width * 0.10,
@@ -60,32 +63,16 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          ZoomIn(
-                            child: Text(
-                              per.toString()[0],
-                              style: const TextStyle(
-                                fontSize: 100,
+                          for (var i = 0; i < per.length; i++)
+                            ZoomIn(
+                              delay: Duration(milliseconds: 500 * i),
+                              child: AutoSizeText(
+                                per.toString()[i],
+                                style: const TextStyle(
+                                  fontSize: 100,
+                                ),
                               ),
-                            ),
-                          ),
-                          ZoomIn(
-                            delay: const Duration(milliseconds: 500),
-                            child: Text(
-                              per.toString()[1],
-                              style: const TextStyle(
-                                fontSize: 100,
-                              ),
-                            ),
-                          ),
-                          ZoomIn(
-                            delay: const Duration(milliseconds: 1000),
-                            child: const Text(
-                              '%',
-                              style: TextStyle(
-                                fontSize: 100,
-                              ),
-                            ),
-                          ),
+                            )
                         ],
                       ),
                     ],
@@ -104,11 +91,26 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                 height: height * 0.07,
                 width: width * 0.9,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
+                  color: color.background,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: TextButton(
                   onPressed: () {
+                    //col 001 doc score {data :{ nowDate : [{eng : 90}, {kor : 80}, {math: 100}]}}
+                    FirebaseFirestore.instance
+                        .collection('001')
+                        .doc('score')
+                        .set({
+                      'data': {
+                        nowDate: {
+                          widget.subject:
+                              ((widget.cat / widget.queLen) * 100).toInt(),
+                          'date': nowDate,
+                          'week': nowWeek,
+                        }
+                      }
+                    }, SetOptions(merge: true)).onError((error, _) =>
+                            print('end question screen 확인 버튼error났어요'));
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -118,7 +120,7 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                   child: Text(
                     '확인',
                     style: TextStyle(
-                      color: Theme.of(context).cardColor,
+                      color: color.text,
                       fontWeight: FontWeight.w600,
                       fontSize: 16,
                     ),
