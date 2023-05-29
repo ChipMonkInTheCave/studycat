@@ -1,13 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:studycat/models/graph_model.dart';
 import 'package:studycat/models/question_model.dart';
+import 'package:studycat/screens/graph/graph_screen.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
-
-class dBase {
-  QuestionModel? question;
-}
-
-dBase myDataBase = dBase();
 
 Future<Map<String, QuestionModel?>> readQuestionData(
     String id, String subject, String difficulty) async {
@@ -35,7 +31,6 @@ Future<Map<String, QuestionModel?>> readQuestionData(
 
 Future<List<Map<String, QuestionModel?>>> setQuestionData(
     String id, List<String> subject, String difficulty) async {
-  print(db.collection("001").doc('question'));
   List<Map<String, QuestionModel?>> myData = [];
   for (var sub in subject) {
     myData.add(await readQuestionData(id, sub, difficulty));
@@ -50,5 +45,43 @@ Future<List<Map<String, QuestionModel?>>> setQuestionData(
             question: ['error'], answer: [0, 0, 0, 0], rightAnswer: ['error'])
       }
     ];
+  }
+}
+
+Future<GraphModel?> readGraphData(String id) async {
+  final ref = db.collection(id).doc('record').withConverter(
+        fromFirestore: GraphModel.fromFirestore,
+        toFirestore: (GraphModel graph, _) => graph.toFirestore(),
+      );
+  final docSnap = await ref.get();
+  final myInstance = docSnap.data();
+  print(myInstance.toString());
+  if (myInstance != null) {
+    return myInstance;
+  } else {
+    return GraphModel(
+      date: ['error'],
+      eng: [0],
+      kor: [0],
+      math: [0],
+    );
+  }
+}
+
+Future<GraphModel?> setGraphData(String id) async {
+  print(db.collection(id).doc('record'));
+  GraphModel? myData;
+  myData = await readGraphData(id);
+
+  if (myData != null) {
+    print('1111' + myData.date.toString());
+    return myData;
+  } else {
+    return GraphModel(
+      date: ['error'],
+      eng: [0],
+      kor: [0],
+      math: [0],
+    );
   }
 }

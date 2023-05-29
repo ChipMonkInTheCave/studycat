@@ -1,11 +1,30 @@
+import 'dart:ffi';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:studycat/database/db.dart';
 
-class _LineChart extends StatelessWidget {
-  const _LineChart({required this.isShowingMainData});
+class _LineChart extends StatefulWidget {
+  List<dynamic> date;
+  List<dynamic> kor;
+  List<dynamic> eng;
+  List<dynamic> math;
+
+  _LineChart({
+    required this.isShowingMainData,
+    required this.date,
+    required this.kor,
+    required this.eng,
+    required this.math,
+  });
 
   final bool isShowingMainData;
 
+  @override
+  State<_LineChart> createState() => _LineChartState();
+}
+
+class _LineChartState extends State<_LineChart> {
   @override
   Widget build(BuildContext context) {
     return LineChart(
@@ -25,6 +44,7 @@ class _LineChart extends StatelessWidget {
         minY: 0,
       );
 
+  // LineChartData get sampleData2 => LineChartData(
   LineTouchData get lineTouchData1 => LineTouchData(
         handleBuiltInTouches: true,
         touchTooltipData: LineTouchTooltipData(
@@ -54,6 +74,7 @@ class _LineChart extends StatelessWidget {
         lineChartBarData1_3,
       ];
 
+  // LineTouchData get lineTouchData2 => LineTouchData(
   FlTitlesData get titlesData2 => FlTitlesData(
         bottomTitles: AxisTitles(
           sideTitles: bottomTitles,
@@ -69,6 +90,7 @@ class _LineChart extends StatelessWidget {
         ),
       );
 
+  // List<LineChartBarData> get lineBarsData2 => [
   Widget leftTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(
       fontWeight: FontWeight.bold,
@@ -171,15 +193,15 @@ class _LineChart extends StatelessWidget {
         isStrokeCapRound: true,
         dotData: FlDotData(show: false),
         belowBarData: BarAreaData(show: false),
-        spots: const [
+        spots: [
           //1~5
-          FlSpot(1, 4),
-          FlSpot(3, 1.5),
-          FlSpot(5, 1.4),
-          FlSpot(7, 3.4),
-          FlSpot(9, 2),
-          FlSpot(11, 2.2),
-          FlSpot(13, 1.8),
+          FlSpot(1, (widget.kor[0] / 20).toDouble()),
+          FlSpot(3, (widget.kor[1] / 20).toDouble()),
+          FlSpot(5, (widget.kor[2] / 20).toDouble()),
+          FlSpot(7, (widget.kor[3] / 20).toDouble()),
+          FlSpot(9, (widget.kor[4] / 20).toDouble()),
+          FlSpot(11, (widget.kor[5] / 20).toDouble()),
+          FlSpot(13, (widget.kor[6] / 20).toDouble()),
         ],
       );
 
@@ -193,14 +215,14 @@ class _LineChart extends StatelessWidget {
           show: false,
           color: Colors.greenAccent,
         ),
-        spots: const [
-          FlSpot(1, 1),
-          FlSpot(3, 4.3),
-          FlSpot(5, 2.5),
-          FlSpot(7, 1.2),
-          FlSpot(9, 2.8),
-          FlSpot(11, 2.6),
-          FlSpot(13, 3.9),
+        spots: [
+          FlSpot(1, widget.eng[0] / 20.toDouble()),
+          FlSpot(3, widget.eng[1] / 20.toDouble()),
+          FlSpot(5, widget.eng[2] / 20.toDouble()),
+          FlSpot(7, widget.eng[3] / 20.toDouble()),
+          FlSpot(9, widget.eng[4] / 20.toDouble()),
+          FlSpot(11, widget.eng[5] / 20.toDouble()),
+          FlSpot(13, widget.eng[6] / 20.toDouble()),
         ],
       );
 
@@ -211,14 +233,14 @@ class _LineChart extends StatelessWidget {
         isStrokeCapRound: true,
         dotData: FlDotData(show: false),
         belowBarData: BarAreaData(show: false),
-        spots: const [
-          FlSpot(1, 2.8),
-          FlSpot(3, 1.9),
-          FlSpot(5, 3),
-          FlSpot(7, 1.6),
-          FlSpot(9, 2.5),
-          FlSpot(11, 3.5),
-          FlSpot(13, 3),
+        spots: [
+          FlSpot(1, widget.math[0] / 20.toDouble()),
+          FlSpot(3, widget.math[1] / 20.toDouble()),
+          FlSpot(5, widget.math[2] / 20.toDouble()),
+          FlSpot(7, widget.math[3] / 20.toDouble()),
+          FlSpot(9, widget.math[4] / 20.toDouble()),
+          FlSpot(11, widget.math[5] / 20.toDouble()),
+          FlSpot(13, widget.math[6] / 20.toDouble()),
         ],
       );
 }
@@ -232,6 +254,10 @@ class LineChartSample1 extends StatefulWidget {
 
 class LineChartSample1State extends State<LineChartSample1> {
   late bool isShowingMainData;
+  List<dynamic> date = [];
+  List<dynamic> kor = [];
+  List<dynamic> eng = [];
+  List<dynamic> math = [];
 
   @override
   void initState() {
@@ -243,30 +269,49 @@ class LineChartSample1State extends State<LineChartSample1> {
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 1.23,
-      child: Stack(
-        children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              const SizedBox(
-                height: 10,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 14, left: 6),
-                  child: _LineChart(isShowingMainData: isShowingMainData),
-                ),
-              ),
-              const SizedBox(
-                height: 25, //
-              ),
-            ],
-          ),
-        ],
-      ),
+      child: FutureBuilder(
+          future: setGraphData('001'),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return Stack(
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 14, left: 6),
+                          child: _LineChart(
+                              date: snapshot.data!.date,
+                              kor: snapshot.data!.kor,
+                              eng: snapshot.data!.eng,
+                              math: snapshot.data!.math,
+                              isShowingMainData: isShowingMainData),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 25, //
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: Text('wating'),
+              );
+            }
+            return const Center(
+              child: Text('none'),
+            );
+          }),
     );
   }
 }
