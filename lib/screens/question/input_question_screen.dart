@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
@@ -14,13 +15,24 @@ class InputQuestion extends StatefulWidget {
 }
 
 class _InputQuestionState extends State<InputQuestion> {
-  final _valueList = ['01', '02', '03'];
-  String? _selectValue = '01';
+  TextEditingController inputSubject = TextEditingController();
+  TextEditingController inputquestion = TextEditingController();
+  TextEditingController inputoptions = TextEditingController();
+  TextEditingController inputanswer = TextEditingController();
+  String subject = "math";
+  String question = "";
+  String options = "";
+  int answer = 0;
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     var color = context.watch<ThemeColor>();
+    var questions = context.watch<CloudData>().myQuestion.question;
+    var list1;
+    var list2;
+    var list3;
     return Scaffold(
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -29,7 +41,7 @@ class _InputQuestionState extends State<InputQuestion> {
           children: [
             const QuestionTopWidget(
                 screenName: '문제 입력하기',
-                screenExplain: '과목과 난이도를 입력하고 다음을 눌러주세요!',
+                screenExplain: '과목과 난이도를 입력하고\n     다음을 눌러주세요!',
                 icon: Icons.arrow_back,
                 destination: SelectQuestion()),
             Center(
@@ -62,6 +74,7 @@ class _InputQuestionState extends State<InputQuestion> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: TextField(
+                            controller: inputSubject,
                             decoration:
                                 TextFieldDeco('과목을 입력해주세요', '기존 과목이나 새 과목 입력'),
                             style: TextStyle(
@@ -71,52 +84,57 @@ class _InputQuestionState extends State<InputQuestion> {
                           ),
                         ),
                         SizedBox(
-                          height: height * 0.03,
+                          height: height * 0.01,
                         ),
                         Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          child: ListTile(
-                              contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 30,
-                                vertical: 5,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(color: color.box, width: 2),
-                                borderRadius: BorderRadius.circular(17),
-                              ),
-                              tileColor: color.text,
-                              title: AutoSizeText(
-                                '난이도',
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  color: color.box,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              trailing: DropdownButton(
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: color.box,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                borderRadius: BorderRadius.circular(17),
-                                dropdownColor: color.text,
-                                value: _selectValue,
-                                items: _valueList
-                                    .map((value) => DropdownMenuItem(
-                                          value: value,
-                                          child: Text(value),
-                                        ))
-                                    .toList(),
-                                onChanged: (value) {
-                                  setState(() {
-                                    _selectValue = value;
-                                  });
-                                },
-                              )),
+                          child: TextField(
+                            controller: inputquestion,
+                            decoration:
+                                TextFieldDeco('문제를 입력해주세요', 'ex) 1 + 1 = ??'),
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: color.box,
+                            ),
+                          ),
                         ),
+                        SizedBox(
+                          height: height * 0.01,
+                        ),
+                        Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: TextField(
+                            controller: inputoptions,
+                            decoration: TextFieldDeco(
+                                '선택지를 4개 입력해주세요', 'ex) 1,2,3,4(쉼표로 구분)'),
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: color.box,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: height * 0.01,
+                        ),
+                        Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: TextField(
+                            controller: inputanswer,
+                            decoration:
+                                TextFieldDeco('답의 번호를 입력해주세요', '1번이 답이면 1'),
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: color.box,
+                            ),
+                          ),
+                        ),
+                        Text(subject),
                         SizedBox(
                           height: height * 0.03,
                         ),
@@ -144,7 +162,53 @@ class _InputQuestionState extends State<InputQuestion> {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        subject = inputSubject.text;
+                        question = inputquestion.text;
+                        options = inputoptions.text;
+                        answer = int.parse(inputanswer.text);
+                        list1 = questions[subject]['01']['questions'];
+                        list2 = questions[subject]['01']['options'];
+                        list3 = questions[subject]['01']['answers'];
+                        list1.add(inputquestion.text);
+                        list2.add(inputoptions.text);
+                        list3.add(int.parse(inputanswer.text) - 1);
+                      });
+                      if (questions.keys.contains(subject)) {
+                        FirebaseFirestore.instance
+                            .collection('001')
+                            .doc('question')
+                            .set({
+                          subject: {
+                            "01": {
+                              "questions": list1,
+                              "options": list2,
+                              "answers": list3,
+                            },
+                          }
+                        }, SetOptions(merge: true)).onError((error, _) =>
+                                print('input question screen 확인 버튼error났어요'));
+                      } else {
+                        FirebaseFirestore.instance
+                            .collection('001')
+                            .doc('question')
+                            .set({
+                          subject: {
+                            "01": {
+                              "questions": list1,
+                              "options": list2,
+                              "answers": list3,
+                            },
+                            "kor": subject,
+                          }
+                        }, SetOptions(merge: true)).onError((error, _) =>
+                                print('input question screen 확인 버튼error났어요'));
+                      }
+                      inputQuestion(
+                        context,
+                      );
+                    },
                     child: AutoSizeText(
                       '확인',
                       style: TextStyle(
@@ -164,23 +228,24 @@ class _InputQuestionState extends State<InputQuestion> {
   }
 }
 
-Future<dynamic> inputQuestion(BuildContext context) async {
-  return showDialog(
+void inputQuestion(
+  BuildContext context,
+) async {
+  showDialog(
     context: context,
     barrierDismissible: true,
     builder: ((context) {
-      return AlertDialog(
-        title: const Text('문제입력'),
-        content: SingleChildScrollView(
-          child: Column(
-            children: const [
-              TextField(
-                decoration: InputDecoration(
-                  labelText: '과목',
-                  hintText: '과목을 입력해주세요.',
-                ),
-              ),
-            ],
+      return SizedBox(
+        width: 300,
+        height: 200,
+        child: AlertDialog(
+          title: const Text('입력 완료!'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: const [
+                Text('123'),
+              ],
+            ),
           ),
         ),
       );

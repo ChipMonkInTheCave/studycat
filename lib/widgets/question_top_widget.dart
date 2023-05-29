@@ -7,7 +7,7 @@ import 'package:studycat/widgets/iconbutton_widget.dart';
 class QuestionTopWidget extends StatelessWidget {
   final String screenName, screenExplain;
   final IconData icon;
-  final Widget destination;
+  final dynamic destination;
 
   const QuestionTopWidget(
       {super.key,
