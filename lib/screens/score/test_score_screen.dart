@@ -187,7 +187,7 @@ class TestScoreState extends State<TestScore> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
               ),
-              child: Text(data['수학'][index2].keys.toString(),
+              child: Text(data['section1'][index2].values.first[1],
                   style: const TextStyle(fontSize: 30)))),
       SizedBox(height: height * 0.002),
       if (showDetails1[index2])
@@ -195,7 +195,7 @@ class TestScoreState extends State<TestScore> {
             height: height * 0.115,
             width: width * 0.96,
             color: Colors.blue,
-            child: Text(data['수학'][index2].keys.elementAt(0).toString(),
+            child: Text(data['section1'][index2].keys.elementAt(0).toString(),
                 style: const TextStyle(fontSize: 30)))
     ]);
   }
