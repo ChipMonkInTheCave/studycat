@@ -157,6 +157,7 @@ class _LineChart extends StatelessWidget {
         break;
       case 13:
         text = const Text('Sun', style: style);
+        break;
       default:
         text = const Text('');
         break;
