@@ -169,7 +169,7 @@ class _LineChartState extends State<_LineChart> {
 
   SideTitles get bottomTitles => SideTitles(
         showTitles: true,
-        reservedSize: 22,
+        reservedSize: 25,
         interval: 1,
         getTitlesWidget: bottomTitleWidgets,
       );
@@ -189,26 +189,20 @@ class _LineChartState extends State<_LineChart> {
   LineChartBarData get lineChartBarData1_1 => LineChartBarData(
         isCurved: true,
         color: const Color.fromARGB(255, 119, 66, 243),
-        barWidth: 7,
+        barWidth: 5,
         isStrokeCapRound: true,
         dotData: FlDotData(show: false),
         belowBarData: BarAreaData(show: false),
         spots: [
           //1~5
-          const FlSpot(1, 3),
-          const FlSpot(3, 2),
-          const FlSpot(5, 1),
-          const FlSpot(7, 2),
-          const FlSpot(9, 4),
-          const FlSpot(11, 3),
-          const FlSpot(13, 2),
+          for (double i = 0; i < 7; i++) FlSpot(1 + (2 * i), 3),
         ],
       );
 
   LineChartBarData get lineChartBarData1_2 => LineChartBarData(
         isCurved: true,
         color: const Color.fromARGB(255, 67, 26, 147),
-        barWidth: 7,
+        barWidth: 5,
         isStrokeCapRound: true,
         dotData: FlDotData(show: false),
         belowBarData: BarAreaData(
@@ -229,7 +223,7 @@ class _LineChartState extends State<_LineChart> {
   LineChartBarData get lineChartBarData1_3 => LineChartBarData(
         isCurved: true,
         color: const Color.fromARGB(255, 35, 44, 150),
-        barWidth: 7,
+        barWidth: 5,
         isStrokeCapRound: true,
         dotData: FlDotData(show: false),
         belowBarData: BarAreaData(show: false),
@@ -305,7 +299,7 @@ class LineChartSample1State extends State<LineChartSample1> {
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
-                child: Text('wating'),
+                child: Text('loading'),
               );
             }
             return const Center(

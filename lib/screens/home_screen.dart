@@ -548,29 +548,6 @@ class Page extends StatelessWidget {
   }
 }
 
-<<<<<<< HEAD
-Future<dynamic> inputQuestion(BuildContext context) async {
-  return showDialog(
-    context: context,
-    builder: ((context) {
-      return const AlertDialog(
-        title: Text('문제입력'),
-        content: SingleChildScrollView(
-          child: Column(
-            children: [
-              TextField(
-                decoration: InputDecoration(
-                  labelText: '과목',
-                  hintText: '과목을 입력해주세요.',
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    }),
-  );
-=======
 class Calendar extends StatefulWidget {
   const Calendar({super.key});
 
@@ -589,5 +566,4 @@ class _CalendarState extends State<Calendar> {
       daysOfWeekHeight: 30,
     );
   }
->>>>>>> 84067617bc70e3520d4f38962ae44a06461ff732
 }

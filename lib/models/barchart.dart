@@ -54,30 +54,21 @@ class BarChartSample2State extends State<BarChartSample2> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Row(
+            const Row(
               mainAxisSize: MainAxisSize.min,
-              children: const <Widget>[
+              children: <Widget>[
                 SizedBox(
                   width: 38,
-                ),
-                Text(
-                  '성적 그래프',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 30,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  textAlign: TextAlign.center,
                 ),
               ],
             ),
             const SizedBox(
-              height: 38,
+              height: 30,
             ),
             Expanded(
               child: BarChart(
                 BarChartData(
-                  maxY: 25,
+                  maxY: 20, /////////////////////
                   barTouchData: BarTouchData(
                     touchTooltipData: BarTouchTooltipData(
                       tooltipBgColor: Colors.grey,
@@ -137,7 +128,7 @@ class BarChartSample2State extends State<BarChartSample2> {
                       sideTitles: SideTitles(
                         showTitles: true,
                         getTitlesWidget: bottomTitles,
-                        reservedSize: 42,
+                        reservedSize: 100,
                       ),
                     ),
                     leftTitles: AxisTitles(
@@ -158,7 +149,7 @@ class BarChartSample2State extends State<BarChartSample2> {
               ),
             ),
             const SizedBox(
-              height: 12,
+              height: 20,
             ),
           ],
         ),
