@@ -33,7 +33,7 @@ class _SelectQuestionState extends State<SelectQuestion> {
           children: [
             const QuestionTopWidget(
               screenName: '문제 풀기',
-              screenExplain: '과목을 선택해주세요',
+              screenExplain: '어떤 문제를 풀까요?',
               icon: Icons.home,
               destination: HomeScreen(),
             ),

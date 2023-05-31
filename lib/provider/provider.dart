@@ -17,7 +17,7 @@ class ThemeColor with ChangeNotifier {
   Color get color => _color;
 
   Color background = const Color.fromARGB(
-      255, 92, 102, 201); //Color.fromARGB(255, 103, 58, 183);
+      255, 113, 124, 219); //Color.fromARGB(255, 103, 58, 183);
   Color box = const Color.fromARGB(
       255, 157, 164, 232); //Color.fromARGB(255, 148, 104, 225);
   Color text = Colors.white.withOpacity(0.9);
