@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
+import 'package:studycat/widgets/background_widget.dart';
 
 class Profileset extends StatelessWidget {
   const Profileset({super.key});
@@ -27,11 +28,11 @@ class Profileset extends StatelessWidget {
               width * 0.1,
               height * 0.1,
             ),
-            child: Center(
+            child: const Center(
               child: Column(
                 children: [
                   Row(
-                    children: const [],
+                    children: [],
                   ),
                 ],
               ),

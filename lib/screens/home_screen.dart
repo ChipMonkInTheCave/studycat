@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/graph/graph_screen.dart';
+import 'package:studycat/screens/score/test_score_screen.dart';
+import 'package:studycat/user/profile_screen.dart';
 import 'question/select_question_screen.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:studycat/widgets/background_widget.dart';
@@ -67,9 +67,9 @@ class _HomeState extends State<HomeScreen> {
               onDetailsPressed: () {
                 // 계정변경버튼
               },
-              decoration: BoxDecoration(
-                  color: context.watch<ThemeColor>().background,
-                  borderRadius: const BorderRadius.only(
+              decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 140, 97, 213),
+                  borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(15.0),
                       bottomRight: Radius.circular(15.0))),
             ),
@@ -86,7 +86,52 @@ class _HomeState extends State<HomeScreen> {
                 ),
               ),
               onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const HomeScreen(),
+                  ),
+                );
                 // Home
+              },
+              trailing: const Icon(Icons.add),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.people,
+                size: 30,
+                color: Colors.grey[850],
+              ),
+              title: const Text(
+                '프로필',
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+              onTap: () {
+                // Q&A창으로
+              },
+              trailing: const Icon(Icons.add),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.book,
+                size: 30,
+                color: Colors.grey[850],
+              ),
+              title: const Text(
+                '학습기록',
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const TestScore(),
+                  ),
+                );
               },
               trailing: const Icon(Icons.add),
             ),
@@ -103,6 +148,12 @@ class _HomeState extends State<HomeScreen> {
                 ),
               ),
               onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ProfileScreen(),
+                  ),
+                );
                 // 설정창으로
               },
               trailing: const Icon(Icons.add),
@@ -133,7 +184,7 @@ class _HomeState extends State<HomeScreen> {
         currentIndex: _currentSelected,
         showUnselectedLabels: true,
         unselectedItemColor: Colors.grey[800],
-        selectedItemColor: const Color.fromARGB(255, 103, 58, 183),
+        selectedItemColor: const Color.fromARGB(255, 150, 105, 227),
         iconSize: 40,
         selectedFontSize: 20,
         unselectedFontSize: 15,
