@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/graph/graph_screen.dart';
 import 'question/select_question_screen.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:studycat/widgets/background_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeState extends State<HomeScreen> {
   final List<Widget> _widgetOptions = <Widget>[
     const Page(),
-    const Page(),
+    const SelectQuestion(),
     const Graph(),
   ];
   int _currentSelected = 0;
@@ -65,7 +68,7 @@ class _HomeState extends State<HomeScreen> {
                 // 계정변경버튼
               },
               decoration: BoxDecoration(
-                  color: backgroundColor.box,
+                  color: context.watch<ThemeColor>().background,
                   borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(15.0),
                       bottomRight: Radius.circular(15.0))),
@@ -130,7 +133,7 @@ class _HomeState extends State<HomeScreen> {
         currentIndex: _currentSelected,
         showUnselectedLabels: true,
         unselectedItemColor: Colors.grey[800],
-        selectedItemColor: Theme.of(context).focusColor,
+        selectedItemColor: const Color.fromARGB(255, 103, 58, 183),
         iconSize: 40,
         selectedFontSize: 20,
         unselectedFontSize: 15,
@@ -173,13 +176,7 @@ class Page extends StatelessWidget {
             width: width,
             color: Colors.white,
           ),
-          CustomPaint(
-            painter: BackgroundPainter(),
-            child: SizedBox(
-              height: height * 0.3,
-              width: width,
-            ),
-          ),
+          const BackgroundWidget(num: 0.35),
           SingleChildScrollView(
             child: Container(
               padding: EdgeInsets.fromLTRB(
@@ -497,84 +494,6 @@ class Page extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class BackgroundPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    Path path1 = Path();
-    path1.moveTo(0, size.height);
-    path1.quadraticBezierTo(size.width * 0.25, size.height * 0.9,
-        size.width * 0.5, size.height * 0.9);
-    path1.quadraticBezierTo(
-        size.width * 0.75, size.height * 0.9, size.width, size.height);
-    path1.lineTo(size.width, 0);
-    path1.lineTo(0, 0);
-    path1.close();
-
-    Paint paint1 = Paint();
-    paint1.shader = const LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      colors: [
-        Color(0xFF7B73FF),
-        Color(0xFFC499FF),
-      ],
-    ).createShader(path1.getBounds());
-
-    canvas.drawPath(path1, paint1);
-
-    Path path2 = Path();
-    path2.moveTo(0, size.height); // Update starting point
-    path2.quadraticBezierTo(size.width * 0.15, size.height * 0.7,
-        size.width * 0.3, size.height * 0.8);
-    path2.quadraticBezierTo(size.width * 0.45, size.height * 0.9,
-        size.width * 0.6, size.height * 0.6);
-    path2.lineTo(size.width, size.height * 0.6); // Update ending point
-    path2.lineTo(size.width, 0);
-    path2.lineTo(0, 0);
-    path2.close();
-
-    Paint paint2 = Paint();
-    paint2.shader = const LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      colors: [
-        Color(0xFFB992FF),
-        Color(0xFF7B73FF),
-      ],
-    ).createShader(path2.getBounds());
-
-    //canvas.drawPath(path2, paint2);
-
-    Path path3 = Path();
-    path3.moveTo(0, size.height); // Update starting point
-    path3.quadraticBezierTo(size.width * 0.45, size.height * 0.7,
-        size.width * 0.6, size.height * 0.8);
-    path3.quadraticBezierTo(
-        size.width * 0.75, size.height * 0.9, size.width, size.height * 0.6);
-    path3.lineTo(size.width, size.height * 0.6); // Update ending point
-    path3.lineTo(size.width, 0);
-    path3.lineTo(0, 0);
-    path3.close();
-
-    Paint paint3 = Paint();
-    paint3.shader = const LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      colors: [
-        Color(0xFF7B73FF),
-        Color(0xFF3E0DFF),
-      ],
-    ).createShader(path3.getBounds());
-
-    //canvas.drawPath(path3, paint3);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return false;
   }
 }
 
