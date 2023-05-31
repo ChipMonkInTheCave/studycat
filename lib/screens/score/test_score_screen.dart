@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/home_screen.dart';
 
 class TestScore extends StatefulWidget {
@@ -27,7 +29,7 @@ class TestScoreState extends State<TestScore> {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 103, 58, 183),
+        backgroundColor: context.watch<ThemeColor>().color,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {

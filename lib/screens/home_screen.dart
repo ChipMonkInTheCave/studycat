@@ -65,7 +65,7 @@ class _HomeState extends State<HomeScreen> {
                 // 계정변경버튼
               },
               decoration: BoxDecoration(
-                  color: Theme.of(context).focusColor,
+                  color: backgroundColor.box,
                   borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(15.0),
                       bottomRight: Radius.circular(15.0))),

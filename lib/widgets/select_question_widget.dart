@@ -1,19 +1,17 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:studycat/models/question_model.dart';
+import 'package:provider/provider.dart';
+import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/question/question_screen.dart';
+import 'package:studycat/screens/question/show_question_screen.dart';
 import 'package:transition/transition.dart';
 
 class SelectQuetionWidget extends StatefulWidget {
-  final String id, subject, difficulty;
-  final int num;
-  final QuestionModel data;
+  final int num, nn;
   const SelectQuetionWidget({
     super.key,
-    required this.subject,
-    required this.id,
-    required this.difficulty,
     required this.num,
-    required this.data,
+    required this.nn,
   });
 
   @override
@@ -28,40 +26,87 @@ class _SelectQuetionWidgetState extends State<SelectQuetionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> abc = ['math', 'eng'];
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    var color = context.watch<ThemeColor>();
+    var question = context.watch<CloudData>().myQuestion.question;
 
-    return ElevatedButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          Transition(
-            child: QuestionScreen(
-              id: widget.id,
-              subject: widget.subject,
-              difficulty: widget.difficulty,
-              num: widget.num,
-              cat: 0,
-              data: widget.data,
-            ),
-            transitionEffect: TransitionEffect.FADE,
-          ),
-        );
-      },
-      style: ElevatedButton.styleFrom(
-          backgroundColor: Theme.of(context).focusColor,
-          padding: const EdgeInsets.symmetric(
-            vertical: 50,
-            horizontal: 40,
-          ),
+    return Column(
+      children: [
+        Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
-          )),
-      child: Text(
-        widget.subject == 'math' ? '수학' : '영어',
-        style: const TextStyle(
-          fontSize: 40,
+          ),
+          child: ListTile(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  Transition(
+                    child: QuestionScreen(
+                      id: context.read<UserData>().id,
+                      subject: context
+                          .read<CloudData>()
+                          .myQuestion
+                          .question
+                          .keys
+                          .elementAt(widget.nn),
+                      difficulty: '01',
+                      num: 0,
+                      cat: 0,
+                    ),
+                    transitionEffect: TransitionEffect.RIGHT_TO_LEFT,
+                  ),
+                );
+              },
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 5,
+                horizontal: 10,
+              ),
+              leading: Icon(
+                Icons.book,
+                size: 45,
+                color: color.background,
+              ),
+              title: AutoSizeText(
+                question[question.keys.elementAt(widget.nn)]['kor'],
+                style: TextStyle(
+                  color: color.background,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: AutoSizeText(
+                '총 ${question[question.keys.elementAt(widget.nn)]['01']['questions'].length}문제',
+                style: TextStyle(
+                  color: color.background,
+                ),
+              ),
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: color.background, width: 7),
+                borderRadius: BorderRadius.circular(17),
+              ),
+              tileColor: color.text,
+              trailing: IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    Transition(
+                      child: ShowQuestionScreen(subjectnum: widget.nn),
+                      transitionEffect: TransitionEffect.FADE,
+                    ),
+                  );
+                },
+                icon: Icon(
+                  Icons.menu,
+                  size: 35,
+                  color: color.background,
+                ),
+              )),
         ),
-      ),
+        SizedBox(
+          height: height * 0.02,
+        ),
+      ],
     );
   }
 }
