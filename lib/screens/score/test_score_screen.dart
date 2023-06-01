@@ -19,36 +19,10 @@ class TestScoreState extends State<TestScore> {
     const Color.fromARGB(255, 148, 104, 225)
   ];
   List<String> buttonLabels = ['1주차', '2주차', '3주차', '4주차'];
-  List<bool> showDetails1 = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false
-  ];
-  List<bool> showDetails2 = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false
-  ];
-  List<bool> showDetails3 = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false
-  ];
+  List<bool> showDetails1 = [false, false, false, false, false, false, false];
+  List<bool> showDetails2 = [false, false, false, false, false, false, false];
+  List<bool> showDetails3 = [false, false, false, false, false, false, false];
+  List<bool> showDetails4 = [false, false, false, false, false, false, false];
 
   @override
   Widget build(BuildContext context) {
@@ -113,9 +87,7 @@ class TestScoreState extends State<TestScore> {
               SizedBox(height: height * 0.012),
               buildButton3(5),
               SizedBox(height: height * 0.012),
-              buildButton3(6),
-              SizedBox(height: height * 0.012),
-              buildButton3(7)
+              buildButton3(6)
             ]),
           if (selectedButtonIndex == 2)
             Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -131,9 +103,23 @@ class TestScoreState extends State<TestScore> {
               SizedBox(height: height * 0.012),
               buildButton4(5),
               SizedBox(height: height * 0.012),
-              buildButton4(6),
+              buildButton4(6)
+            ]),
+          if (selectedButtonIndex == 3)
+            Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              buildButton5(0),
               SizedBox(height: height * 0.012),
-              buildButton4(7)
+              buildButton5(1),
+              SizedBox(height: height * 0.012),
+              buildButton5(2),
+              SizedBox(height: height * 0.012),
+              buildButton5(3),
+              SizedBox(height: height * 0.012),
+              buildButton5(4),
+              SizedBox(height: height * 0.012),
+              buildButton5(5),
+              SizedBox(height: height * 0.012),
+              buildButton5(6)
             ]),
           SizedBox(height: height * 0.08)
         ]));
@@ -174,6 +160,8 @@ class TestScoreState extends State<TestScore> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     var data = context.watch<CloudData>().myScore.score;
+    // ignore: unused_local_variable
+    var list1 = data['section1'][index2].values.first;
     return Column(children: [
       SizedBox(
           height: height * 0.076,
@@ -187,7 +175,7 @@ class TestScoreState extends State<TestScore> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
               ),
-              child: Text(data['section1'][index2].values.first[1],
+              child: Text(data['section1'][index2].keys.elementAt(0).toString(),
                   style: const TextStyle(fontSize: 30)))),
       SizedBox(height: height * 0.002),
       if (showDetails1[index2])
@@ -195,7 +183,7 @@ class TestScoreState extends State<TestScore> {
             height: height * 0.115,
             width: width * 0.96,
             color: Colors.blue,
-            child: Text(data['section1'][index2].keys.elementAt(0).toString(),
+            child: Text("Score : ${list1[0].toString()}",
                 style: const TextStyle(fontSize: 30)))
     ]);
   }
@@ -204,6 +192,7 @@ class TestScoreState extends State<TestScore> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     var data = context.watch<CloudData>().myScore.score;
+    var list2 = data['section1'][index3 + 7].values.first;
     return Column(
       children: [
         SizedBox(
@@ -218,7 +207,8 @@ class TestScoreState extends State<TestScore> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red,
               ),
-              child: Text(data['수학'][index3].keys.toString(),
+              child: Text(
+                  data['section1'][index3 + 7].keys.elementAt(0).toString(),
                   style: const TextStyle(fontSize: 30))),
         ),
         SizedBox(height: height * 0.002),
@@ -227,7 +217,7 @@ class TestScoreState extends State<TestScore> {
             height: height * 0.115,
             width: width * 0.96,
             color: Colors.red,
-            child: Text(data['수학'][index3].keys.elementAt(0).toString(),
+            child: Text("Score : ${list2[0].toString()}",
                 style: const TextStyle(fontSize: 30)),
           ),
       ],
@@ -238,6 +228,7 @@ class TestScoreState extends State<TestScore> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     var data = context.watch<CloudData>().myScore.score;
+    var list3 = data['section1'][index4 + 14].values.first;
     return Column(
       children: [
         SizedBox(
@@ -252,7 +243,8 @@ class TestScoreState extends State<TestScore> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.black,
               ),
-              child: Text(data['수학'][index4].keys.toString(),
+              child: Text(
+                  data['section1'][index4 + 14].keys.elementAt(0).toString(),
                   style: const TextStyle(fontSize: 30))),
         ),
         SizedBox(height: height * 0.002),
@@ -261,7 +253,43 @@ class TestScoreState extends State<TestScore> {
             height: height * 0.115,
             width: width * 0.96,
             color: Colors.black,
-            child: Text(data['수학'][index4].keys.elementAt(0).toString(),
+            child: Text("Score : ${list3[0].toString()}",
+                style: const TextStyle(fontSize: 30)),
+          ),
+      ],
+    );
+  }
+
+  Widget buildButton5(int index5) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    var data = context.watch<CloudData>().myScore.score;
+    var list4 = data['section1'][index5 + 21].values.first;
+    return Column(
+      children: [
+        SizedBox(
+          height: height * 0.076,
+          width: width * 0.96,
+          child: ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  showDetails4[index5] = !showDetails4[index5];
+                });
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+              ),
+              child: Text(
+                  data['section1'][index5 + 21].keys.elementAt(0).toString(),
+                  style: const TextStyle(fontSize: 30))),
+        ),
+        SizedBox(height: height * 0.002),
+        if (showDetails4[index5])
+          Container(
+            height: height * 0.115,
+            width: width * 0.96,
+            color: Colors.green,
+            child: Text("Score : ${list4[0].toString()}",
                 style: const TextStyle(fontSize: 30)),
           ),
       ],
