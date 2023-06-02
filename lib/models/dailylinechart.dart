@@ -1,21 +1,22 @@
 import 'dart:ffi';
+import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:studycat/database/db.dart';
+import 'package:studycat/provider/provider.dart';
 
 class _LineChart extends StatefulWidget {
   List<dynamic> date;
-  List<dynamic> kor;
-  List<dynamic> eng;
-  List<dynamic> math;
+  List<dynamic> score;
+  List<dynamic> day;
 
   _LineChart({
     required this.isShowingMainData,
     required this.date,
-    required this.kor,
-    required this.eng,
-    required this.math,
+    required this.score,
+    required this.day,
   });
 
   final bool isShowingMainData;
@@ -40,16 +41,15 @@ class _LineChartState extends State<_LineChart> {
         lineBarsData: lineBarsData1,
         minX: 0,
         maxX: 14,
-        maxY: 5,
+        maxY: 100,
         minY: 0,
       );
 
-  // LineChartData get sampleData2 => LineChartData(
   LineTouchData get lineTouchData1 => LineTouchData(
         handleBuiltInTouches: true,
         touchTooltipData: LineTouchTooltipData(
           tooltipBgColor:
-              const Color.fromARGB(255, 216, 224, 227).withOpacity(0.8),
+              const Color.fromARGB(255, 127, 75, 239).withOpacity(0.9),
         ),
       );
 
@@ -70,11 +70,8 @@ class _LineChartState extends State<_LineChart> {
 
   List<LineChartBarData> get lineBarsData1 => [
         lineChartBarData1_1,
-        lineChartBarData1_2,
-        lineChartBarData1_3,
       ];
 
-  // LineTouchData get lineTouchData2 => LineTouchData(
   FlTitlesData get titlesData2 => FlTitlesData(
         bottomTitles: AxisTitles(
           sideTitles: bottomTitles,
@@ -90,7 +87,6 @@ class _LineChartState extends State<_LineChart> {
         ),
       );
 
-  // List<LineChartBarData> get lineBarsData2 => [
   Widget leftTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(
       fontWeight: FontWeight.bold,
@@ -98,26 +94,29 @@ class _LineChartState extends State<_LineChart> {
     );
     String text;
     switch (value.toInt()) {
-      case 1:
+      case 20:
         text = '20';
         break;
-      case 2:
+      case 40:
         text = '40';
         break;
-      case 3:
+      case 60:
         text = '60';
         break;
-      case 4:
+      case 80:
         text = '80';
         break;
-      case 5:
+      case 100:
         text = '100';
         break;
       default:
         return Container();
     }
-
-    return Text(text, style: style, textAlign: TextAlign.center);
+    return Text(
+      text,
+      style: style,
+      textAlign: TextAlign.center,
+    );
   }
 
   SideTitles leftTitles() => SideTitles(
@@ -130,30 +129,30 @@ class _LineChartState extends State<_LineChart> {
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(
       fontWeight: FontWeight.w600,
-      fontSize: 16,
+      fontSize: 15,
     );
     Widget text;
     switch (value.toInt()) {
       case 1:
-        text = const Text('Mon', style: style);
+        text = const Text('M', style: style);
         break;
       case 3:
-        text = const Text('Tue', style: style);
+        text = const Text('T', style: style);
         break;
       case 5:
-        text = const Text('Wed', style: style);
+        text = const Text('W', style: style);
         break;
       case 7:
-        text = const Text('Thu', style: style);
+        text = const Text('T', style: style);
         break;
       case 9:
-        text = const Text('Fri', style: style);
+        text = const Text('F', style: style);
         break;
       case 11:
-        text = const Text('Sat', style: style);
+        text = const Text('S', style: style);
         break;
       case 13:
-        text = const Text('Sun', style: style);
+        text = const Text('S', style: style);
         break;
       default:
         text = const Text('');
@@ -162,7 +161,7 @@ class _LineChartState extends State<_LineChart> {
 
     return SideTitleWidget(
       axisSide: meta.axisSide,
-      space: 0, //차트와 레이블 사이 공간
+      space: 10, //차트와 레이블 사이 공간
       child: text,
     );
   }
@@ -188,53 +187,21 @@ class _LineChartState extends State<_LineChart> {
 
   LineChartBarData get lineChartBarData1_1 => LineChartBarData(
         isCurved: true,
-        color: const Color.fromARGB(255, 119, 66, 243),
-        barWidth: 5,
+        color: const Color.fromARGB(255, 13, 0, 255).withOpacity(0.45),
+        barWidth: 6,
         isStrokeCapRound: true,
-        dotData: FlDotData(show: false),
+        dotData: FlDotData(show: true),
         belowBarData: BarAreaData(show: false),
         spots: [
           //1~5
-          for (double i = 0; i < 7; i++) FlSpot(1 + (2 * i), 3),
-        ],
-      );
-
-  LineChartBarData get lineChartBarData1_2 => LineChartBarData(
-        isCurved: true,
-        color: const Color.fromARGB(255, 67, 26, 147),
-        barWidth: 5,
-        isStrokeCapRound: true,
-        dotData: FlDotData(show: false),
-        belowBarData: BarAreaData(
-          show: false,
-          color: Colors.greenAccent,
-        ),
-        spots: [
-          const FlSpot(1, 2),
-          const FlSpot(3, 3),
-          const FlSpot(5, 5),
-          const FlSpot(7, 4),
-          const FlSpot(9, 3),
-          const FlSpot(11, 2),
-          const FlSpot(13, 1),
-        ],
-      );
-
-  LineChartBarData get lineChartBarData1_3 => LineChartBarData(
-        isCurved: true,
-        color: const Color.fromARGB(255, 35, 44, 150),
-        barWidth: 5,
-        isStrokeCapRound: true,
-        dotData: FlDotData(show: false),
-        belowBarData: BarAreaData(show: false),
-        spots: [
-          const FlSpot(1, 2),
-          const FlSpot(3, 3),
-          const FlSpot(5, 4),
-          const FlSpot(7, 3),
-          const FlSpot(9, 4),
-          const FlSpot(11, 3),
-          const FlSpot(13, 5),
+          //context.watch<CloudData>().myScore.score['section1'][0]['2023-05-01'],
+          for (double i = 0; i < 7; i++)
+            // FlSpot(
+            //     context.watch<CloudData>().myScore.score['section1'][0]
+            //         ['2023-05-01'][1],
+            //     context.watch<CloudData>().myScore.score['section1'][0]
+            //         ['2023-05-01'][0])
+            FlSpot(1 + (2 * i), Random().nextInt(5).toDouble() * 20),
         ],
       );
 }
@@ -249,9 +216,8 @@ class LineChartSample1 extends StatefulWidget {
 class LineChartSample1State extends State<LineChartSample1> {
   late bool isShowingMainData;
   List<dynamic> date = [];
-  List<dynamic> kor = [];
-  List<dynamic> eng = [];
-  List<dynamic> math = [];
+  List<dynamic> score = [];
+  List<dynamic> day = [];
 
   @override
   void initState() {
@@ -261,51 +227,72 @@ class LineChartSample1State extends State<LineChartSample1> {
 
   @override
   Widget build(BuildContext context) {
+    var data = context.watch<CloudData>().myScore.score;
+    var list1 = data['section1'][0]['2023-05-01'][0];
     return AspectRatio(
-      aspectRatio: 1.23,
+      aspectRatio: 1.03,
       child: FutureBuilder(
-          future: setGraphData('001'),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return Stack(
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      const SizedBox(
-                        height: 10,
+        future: setGraphData('001'),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Stack(
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    const Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          Text(
+                            '성적 그래프',
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 46, 5, 77),
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            '일주일 기록',
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 104, 70, 200),
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                        ],
                       ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 14, left: 6),
-                          child: _LineChart(
-                              date: snapshot.data!.date,
-                              kor: snapshot.data!.kor,
-                              eng: snapshot.data!.eng,
-                              math: snapshot.data!.math,
-                              isShowingMainData: isShowingMainData),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 14, left: 6),
+                        child: _LineChart(
+                          date: snapshot.data!.date,
+                          score: snapshot.data!.eng,
+                          day: snapshot.data!.math,
+                          isShowingMainData: isShowingMainData,
                         ),
                       ),
-                      const SizedBox(
-                        height: 25, //
-                      ),
-                    ],
-                  ),
-                ],
-              );
-            }
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: Text('loading'),
-              );
-            }
-            return const Center(
-              child: Text('none'),
+                    ),
+                    const SizedBox(height: 25),
+                  ],
+                ),
+              ],
             );
-          }),
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: Text('loading'),
+            );
+          }
+          return const Center(
+            child: Text('none'),
+          );
+        },
+      ),
     );
   }
 }

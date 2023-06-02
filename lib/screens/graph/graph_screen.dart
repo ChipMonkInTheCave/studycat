@@ -1,9 +1,10 @@
 //import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:studycat/models/barchart.dart';
-import 'package:studycat/models/graph.dart';
+import 'package:studycat/models/dailybarchart.dart';
+import 'package:studycat/models/dailylinechart.dart';
 import 'package:studycat/models/piechart.dart';
+import 'package:studycat/models/weeklybarchart.dart';
 import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/home_screen.dart';
 import 'package:studycat/widgets/background_widget.dart';
@@ -21,52 +22,17 @@ class _GraphState extends State<Graph> {
   bool isBarSelected = false;
   bool isDailySelected = true;
   bool isWeeklySelected = false;
-  // bool isMonthlySelected = false;
 
   @override
   Widget build(BuildContext context) {
-    var color = context.watch<ThemeColor>();
-    //double width = MediaQuery.of(context).size.width;
-    //double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Stack(
         children: [
-          const BackgroundWidget(num: 0.13),
-          // appBar: AppBar(
-          //   backgroundColor: color.background,
-          //   centerTitle: true,
-          //   titleTextStyle: const TextStyle(
-          //     fontWeight: FontWeight.w600,
-          //     fontSize: 22,
-          //   ),
-          //   title: const Text("학습 그래프"),
-          //   leading: IconButton(
-          //     icon: const Icon(Icons.arrow_back_ios_rounded),
-          //     onPressed: () {
-          //       Navigator.push(
-          //         context,
-          //         MaterialPageRoute(builder: (context) => const HomeScreen()),
-          //       );
-          //     },
-          //   ),
-          //   actions: [
-          //     IconButton(
-          //         onPressed: () {
-          //           Navigator.push(context,
-          //               MaterialPageRoute(builder: (context) => const Menu()));
-          //         },
-          //         icon: const Icon(Icons.menu))
-          //   ],
-          // ),
+          const BackgroundWidget(num: 0.3),
           SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 50),
-                const Text(
-                  "학습 그래프",
-                  style: TextStyle(fontSize: 27, fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 60),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -75,7 +41,7 @@ class _GraphState extends State<Graph> {
                       isSelected: [isLineSelected, isBarSelected],
                       onPressed: toggleGraphType,
                       selectedColor: Colors.white.withOpacity(0.8),
-                      fillColor: const Color.fromARGB(255, 148, 104, 225)
+                      fillColor: const Color.fromARGB(255, 107, 45, 213)
                           .withOpacity(1),
                       children: const [
                         Padding(
@@ -101,12 +67,11 @@ class _GraphState extends State<Graph> {
                       isSelected: [
                         isDailySelected,
                         isWeeklySelected,
-                        // isMonthlySelected
                       ],
                       onPressed: toggleTimeRange,
                       selectedColor: Colors.white.withOpacity(0.8),
-                      fillColor: const Color.fromARGB(255, 148, 104, 225)
-                          .withOpacity(1),
+                      fillColor:
+                          Color.fromARGB(255, 107, 45, 213).withOpacity(1),
                       children: const [
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8),
@@ -126,41 +91,15 @@ class _GraphState extends State<Graph> {
                             ),
                           ),
                         ),
-                        // Padding(
-                        //   padding: EdgeInsets.symmetric(horizontal: 8),
-                        //   child: Text('M',
-                        //       style: TextStyle(
-                        //         fontSize: 20,
-                        //         fontWeight: FontWeight.w500,
-                        //       )),
-                        // ),
                       ],
                     ),
                   ],
                 ),
                 Column(
                   children: [
-                    const SizedBox(height: 20),
-                    const Text(
-                      textAlign: TextAlign.center,
-                      '성적 그래프',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
                     if (isLineSelected) const LineChartSample1(),
-                    if (isBarSelected) const BarChartSample2(),
-                    const Text(
-                      textAlign: TextAlign.center,
-                      "학습 비율",
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const PieChartSample2()
+                    if (isBarSelected && isDailySelected) DailyChart(),
+                    if (isBarSelected && isWeeklySelected) WeeklyChart(),
                   ],
                 ),
               ],
@@ -187,15 +126,11 @@ class _GraphState extends State<Graph> {
     setState(() {
       isDailySelected = false;
       isWeeklySelected = false;
-      // isMonthlySelected = false;
       if (index == 0) {
         isDailySelected = true;
       } else if (index == 1) {
         isWeeklySelected = true;
       }
-      // else if (index == 2) {
-      //   isMonthlySelected = true;
-      // }
     });
   }
 }
