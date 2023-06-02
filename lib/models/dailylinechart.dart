@@ -8,15 +8,8 @@ import 'package:studycat/database/db.dart';
 import 'package:studycat/provider/provider.dart';
 
 class _LineChart extends StatefulWidget {
-  List<dynamic> date;
-  List<dynamic> score;
-  List<dynamic> day;
-
   _LineChart({
     required this.isShowingMainData,
-    required this.date,
-    required this.score,
-    required this.day,
   });
 
   final bool isShowingMainData;
@@ -195,13 +188,62 @@ class _LineChartState extends State<_LineChart> {
         spots: [
           //1~5
           //context.watch<CloudData>().myScore.score['section1'][0]['2023-05-01'],
-          for (double i = 0; i < 7; i++)
-            // FlSpot(
-            //     context.watch<CloudData>().myScore.score['section1'][0]
-            //         ['2023-05-01'][1],
-            //     context.watch<CloudData>().myScore.score['section1'][0]
-            //         ['2023-05-01'][0])
-            FlSpot(1 + (2 * i), Random().nextInt(5).toDouble() * 20),
+          //for (double i = 0; i < 7; i++)
+          // FlSpot(
+          //     context.watch<CloudData>().myScore.score['section1'][0]
+          //         ['2023-05-01'][1],
+          //     context.watch<CloudData>().myScore.score['section1'][0]
+          //         ['2023-05-01'][0])
+          //FlSpot(1 + (2 * i), Random().nextInt(99 + 1).toDouble()),
+          FlSpot(
+              1,
+              context
+                  .watch<CloudData>()
+                  .myScore
+                  .score['section3'][49]['2023-05-22'][0]
+                  .toDouble()),
+          FlSpot(
+              3,
+              context
+                  .watch<CloudData>()
+                  .myScore
+                  .score['section3'][50]['2023-05-23'][0]
+                  .toDouble()),
+          FlSpot(
+              5,
+              context
+                  .watch<CloudData>()
+                  .myScore
+                  .score['section3'][51]['2023-05-24'][0]
+                  .toDouble()),
+          FlSpot(
+              7,
+              context
+                  .watch<CloudData>()
+                  .myScore
+                  .score['section3'][52]['2023-05-25'][0]
+                  .toDouble()),
+          FlSpot(
+              9,
+              context
+                  .watch<CloudData>()
+                  .myScore
+                  .score['section3'][53]['2023-05-26'][0]
+                  .toDouble()),
+          FlSpot(
+              11,
+              context
+                  .watch<CloudData>()
+                  .myScore
+                  .score['section3'][54]['2023-05-27'][0]
+                  .toDouble()),
+          FlSpot(
+              13,
+              context
+                  .watch<CloudData>()
+                  .myScore
+                  .score['section3'][55]['2023-05-28'][0]
+                  .toDouble()),
         ],
       );
 }
@@ -215,9 +257,6 @@ class LineChartSample1 extends StatefulWidget {
 
 class LineChartSample1State extends State<LineChartSample1> {
   late bool isShowingMainData;
-  List<dynamic> date = [];
-  List<dynamic> score = [];
-  List<dynamic> day = [];
 
   @override
   void initState() {
@@ -227,8 +266,6 @@ class LineChartSample1State extends State<LineChartSample1> {
 
   @override
   Widget build(BuildContext context) {
-    var data = context.watch<CloudData>().myScore.score;
-    var list1 = data['section1'][0]['2023-05-01'][0];
     return AspectRatio(
       aspectRatio: 1.03,
       child: FutureBuilder(
@@ -270,9 +307,6 @@ class LineChartSample1State extends State<LineChartSample1> {
                       child: Padding(
                         padding: const EdgeInsets.only(right: 14, left: 6),
                         child: _LineChart(
-                          date: snapshot.data!.date,
-                          score: snapshot.data!.eng,
-                          day: snapshot.data!.math,
                           isShowingMainData: isShowingMainData,
                         ),
                       ),
