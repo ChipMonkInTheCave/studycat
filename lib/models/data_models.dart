@@ -1,5 +1,5 @@
 class QuestionModel {
-  Map<String, dynamic> question;
+  List<dynamic> question;
 
   QuestionModel({required this.question});
 }

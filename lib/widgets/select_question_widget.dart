@@ -45,7 +45,7 @@ class _SelectQuetionWidgetState extends State<SelectQuetionWidget> {
                   context,
                   Transition(
                     child: QuestionScreen(
-                      id: context.read<UserData>().id,
+                      id: context.read<CloudData>().id,
                       subject: widget.sub,
                       section: widget.nn,
                       difficulty: '01',
@@ -66,7 +66,7 @@ class _SelectQuetionWidgetState extends State<SelectQuetionWidget> {
                 color: Color.fromARGB(255, 163, 129, 255),
               ),
               title: AutoSizeText(
-                question['menu'][widget.nn].keys.elementAt(0).toString(),
+                question[widget.nn].keys.elementAt(0).toString(),
                 style: TextStyle(
                   color: color.box,
                   fontSize: 30,
@@ -74,7 +74,7 @@ class _SelectQuetionWidgetState extends State<SelectQuetionWidget> {
                 ),
               ),
               subtitle: AutoSizeText(
-                '단어 ${question['menu'][widget.nn][question['menu'][widget.nn].keys.elementAt(0)].length}개',
+                '단어 ${question[widget.nn][question[widget.nn].keys.elementAt(0)].length}개',
                 style: TextStyle(
                   color: color.box,
                 ),

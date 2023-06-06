@@ -397,35 +397,33 @@ void checkAlert(BuildContext context, List eng, List kor, String sub) async {
                             context
                                 .read<CloudData>()
                                 .myQuestion
-                                .question['menu']
+                                .question
                                 .length;
                         i++) {
                       keylist.add(context
                           .read<CloudData>()
                           .myQuestion
-                          .question['menu'][i]
+                          .question[i]
                           .keys
                           .elementAt(0));
                     }
                     if (keylist.contains(sub)) {
-                      var list1 =
-                          context.read<CloudData>().myQuestion.question['menu'];
+                      var list1 = context.read<CloudData>().myQuestion.question;
                       var map1 = context
                           .read<CloudData>()
                           .myQuestion
-                          .question['menu'][keylist.indexOf(sub)][sub];
+                          .question[keylist.indexOf(sub)][sub];
                       for (var j = 0; j < eng.length; j++) {
                         map1[eng[j].toString()] = kor[j].toString();
                       }
                       list1[keylist.indexOf(sub)] = {sub: map1};
                       print(list1[keylist.indexOf(sub)]);
                       FirebaseFirestore.instance
-                          .collection('001')
-                          .doc('question')
-                          .set({'menu': list1});
+                          .collection('users')
+                          .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
+                          .update({'question': list1});
                     } else {
-                      var list1 =
-                          context.read<CloudData>().myQuestion.question['menu'];
+                      var list1 = context.read<CloudData>().myQuestion.question;
                       var map1 = {};
                       for (var j = 0; j < eng.length; j++) {
                         map1[eng[j].toString()] = kor[j].toString();
@@ -434,9 +432,9 @@ void checkAlert(BuildContext context, List eng, List kor, String sub) async {
                       map2[sub] = map1;
                       list1.add(map2);
                       FirebaseFirestore.instance
-                          .collection('001')
-                          .doc('question')
-                          .set({'menu': list1});
+                          .collection('users')
+                          .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
+                          .update({'question': list1});
                     }
                     context.read<CloudData>().fetchData();
                     Navigator.pop(context);

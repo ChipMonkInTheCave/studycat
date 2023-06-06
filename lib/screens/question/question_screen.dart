@@ -48,8 +48,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
     //--스크린 크기--//
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    var data =
-        context.watch<CloudData>().myQuestion.question['menu'][widget.section];
+    var data = context.watch<CloudData>().myQuestion.question[widget.section];
     //--객관식 답안들
     var list1 = data[data.keys.elementAt(0)].keys;
     var options = data[data.keys.elementAt(0)].values;

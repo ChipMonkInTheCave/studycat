@@ -97,11 +97,11 @@ class _SelectQuestionState extends State<SelectQuestion> {
                   SizedBox(
                     height: height * 0.05,
                   ),
-                  for (var i = 0; i < question['menu'].length; i++)
+                  for (var i = 0; i < question.length; i++)
                     SelectQuetionWidget(
                         num: 0,
                         nn: i,
-                        sub: question['menu'][i].keys.elementAt(0).toString()),
+                        sub: question[i].keys.elementAt(0).toString()),
                   Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),

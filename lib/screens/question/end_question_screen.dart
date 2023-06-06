@@ -130,54 +130,89 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                 ),
                 child: TextButton(
                   onPressed: () {
+                    var keylist = context.read<CloudData>().myScore.score.keys;
                     var list1 =
                         context.read<CloudData>().myScore.score[widget.subject];
+                    var map1 = context.read<CloudData>().myScore.score;
                     list1 ??= [];
-                    list1.add({
-                      nowDate: [
-                        ((widget.cat / widget.queLen) * 100).toInt(),
-                        nowWeek
-                      ]
+                    if (keylist.contains(widget.subject)) {
+                      if (list1.last.keys.elementAt(0) == nowDate) {
+                        list1.last = {
+                          nowDate: [
+                            ((widget.cat / widget.queLen) * 100).toInt(),
+                            nowWeek
+                          ]
+                        };
+                      } else {
+                        list1.add({
+                          nowDate: [
+                            ((widget.cat / widget.queLen) * 100).toInt(),
+                            nowWeek
+                          ]
+                        });
+                      }
+                    } else {
+                      list1.add({
+                        nowDate: [
+                          ((widget.cat / widget.queLen) * 100).toInt(),
+                          nowWeek
+                        ]
+                      });
+                    }
+                    map1[widget.subject] = list1;
+                    FirebaseFirestore.instance
+                        .collection('users')
+                        .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
+                        .update({
+                      'score': map1,
                     });
                     FirebaseFirestore.instance
-                        .collection('001')
-                        .doc('score')
-                        .set({
-                      widget.subject: list1
-                    }, SetOptions(merge: true)).onError((error, _) =>
-                            print('end question screen 확인 버튼error났어요'));
-                    FirebaseFirestore.instance
-                        .collection('001')
-                        .doc('userdata')
+                        .collection('users')
+                        .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
                         .update({
-                      'exp': exp + ((widget.cat / widget.queLen) * 100).toInt()
+                      'userdata': {
+                        'exp':
+                            exp + ((widget.cat / widget.queLen) * 100).toInt(),
+                        'level': context
+                            .read<CloudData>()
+                            .myUserData
+                            .userdata['level'],
+                      }
                     });
                     if (context.read<CloudData>().myUserData.userdata['exp'] +
                             (widget.cat / widget.queLen) * 100 >=
                         100) {
                       FirebaseFirestore.instance
-                          .collection('001')
-                          .doc('userdata')
+                          .collection('users')
+                          .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
                           .update({
-                        'exp': exp +
-                            ((widget.cat / widget.queLen) * 100).toInt() -
-                            100,
-                        'level': context
-                                .read<CloudData>()
-                                .myUserData
-                                .userdata['level'] +
-                            1
+                        'userdata': {
+                          'exp': exp +
+                              ((widget.cat / widget.queLen) * 100).toInt() -
+                              100,
+                          'level': context
+                                  .read<CloudData>()
+                                  .myUserData
+                                  .userdata['level'] +
+                              1
+                        }
                       });
                     } else {
                       FirebaseFirestore.instance
-                          .collection('001')
-                          .doc('userdata')
+                          .collection('users')
+                          .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
                           .update({
-                        'exp': (context
-                                .read<CloudData>()
-                                .myUserData
-                                .userdata['exp'] +
-                            (widget.cat / widget.queLen) * 100),
+                        'userdata': {
+                          'exp': (context
+                                  .read<CloudData>()
+                                  .myUserData
+                                  .userdata['exp'] +
+                              (widget.cat / widget.queLen) * 100),
+                          'level': context
+                              .read<CloudData>()
+                              .myUserData
+                              .userdata['level'],
+                        }
                       });
                     }
                     context.read<CloudData>().fetchData();

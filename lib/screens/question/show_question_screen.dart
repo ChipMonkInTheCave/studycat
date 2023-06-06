@@ -38,10 +38,8 @@ class _ShowQuestionScreenState extends State<ShowQuestionScreen> {
                 children: [
                   for (var i = 0;
                       i <
-                          question['menu'][widget.subjectnum][question['menu']
-                                      [widget.subjectnum]
-                                  .keys
-                                  .elementAt(0)]
+                          question[widget.subjectnum][
+                                  question[widget.subjectnum].keys.elementAt(0)]
                               .length;
                       i++)
                     FadeIn(
@@ -70,10 +68,10 @@ class _ShowQuestionScreenState extends State<ShowQuestionScreen> {
                             ),
                           ),
                           title: AutoSizeText(
-                            question['menu'][widget.subjectnum][question['menu']
-                                        [widget.subjectnum]
-                                    .keys
-                                    .elementAt(0)]
+                            question[widget.subjectnum][
+                                    question[widget.subjectnum]
+                                        .keys
+                                        .elementAt(0)]
                                 .keys
                                 .elementAt(i)
                                 .toString(),
@@ -83,10 +81,10 @@ class _ShowQuestionScreenState extends State<ShowQuestionScreen> {
                             ),
                           ),
                           subtitle: AutoSizeText(
-                            question['menu'][widget.subjectnum][question['menu']
-                                        [widget.subjectnum]
-                                    .keys
-                                    .elementAt(0)]
+                            question[widget.subjectnum][
+                                    question[widget.subjectnum]
+                                        .keys
+                                        .elementAt(0)]
                                 .values
                                 .elementAt(i)
                                 .toString(),
@@ -100,8 +98,8 @@ class _ShowQuestionScreenState extends State<ShowQuestionScreen> {
                                 context,
                                 i,
                                 widget.subjectnum,
-                                question['menu'][widget.subjectnum][
-                                        question['menu'][widget.subjectnum]
+                                question[widget.subjectnum][
+                                        question[widget.subjectnum]
                                             .keys
                                             .elementAt(0)]
                                     .keys
@@ -335,10 +333,10 @@ void removeWordAlert(
                     context
                         .watch<CloudData>()
                         .myQuestion
-                        .question['menu'][subjectnum][context
+                        .question[subjectnum.toInt()][context
                             .watch<CloudData>()
                             .myQuestion
-                            .question['menu'][subjectnum]
+                            .question[subjectnum.toInt()]
                             .keys
                             .elementAt(0)]
                         .keys
@@ -362,14 +360,14 @@ void removeWordAlert(
                       onPressed: () {
                         var menu =
                             context.read<CloudData>().myQuestion.question;
-                        var keys = menu['menu'][subjectnum].keys.elementAt(0);
-                        var list1 = menu['menu'][subjectnum][keys];
+                        var keys = menu[subjectnum.toInt()].keys.elementAt(0);
+                        var list1 = menu[subjectnum.toInt()][keys];
                         list1.remove(word);
-                        menu['menu'][subjectnum][keys] = list1;
+                        menu[subjectnum.toInt()][keys] = list1;
                         FirebaseFirestore.instance
-                            .collection('001')
-                            .doc('question')
-                            .update(menu);
+                            .collection('users')
+                            .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
+                            .update({'question': menu});
                         context.read<CloudData>().fetchData();
                       },
                       child: Text(
