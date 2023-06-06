@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -102,25 +104,30 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                 child: TextButton(
                   onPressed: () {
                     //col 001 doc score {data :{ nowDate : [{eng : 90}, {kor : 80}, {math: 100}]}}
-                    FirebaseFirestore.instance
-                        .collection('001')
-                        .doc('score')
-                        .set({
-                      'data': {
-                        nowDate: {
-                          widget.subject:
-                              ((widget.cat / widget.queLen) * 100).toInt(),
-                          'date': nowDate,
-                          'week': nowWeek,
-                        }
-                      }
-                    }, SetOptions(merge: true)).onError((error, _) =>
-                            print('end question screen 확인 버튼error났어요'));
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomeScreen()),
-                    );
+                    for (var i = 15; i < 30; i++) {
+                      int day11 = 0 + i;
+                      var then =
+                          new DateTime(2023, 05, day11, 15, 23, 58, 0, 0);
+                      var then2 = DateFormat('yyyy-MM-dd').format(then);
+                      var ww = DateFormat('E').format(then);
+                      List list1 =
+                          context.read<CloudData>().myScore.score['수학'];
+                      list1.add({then2: Random().nextInt(99) + 1, 'week': ww});
+
+                      FirebaseFirestore.instance
+                          .collection('001')
+                          .doc('score')
+                          .set({
+                        "민수": list1,
+                      }, SetOptions(merge: true)).onError((error, _) =>
+                              print('end question screen 확인 버튼error났어요'));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeScreen()),
+                      );
+                    }
+                    ;
                   },
                   child: Text(
                     '확인',

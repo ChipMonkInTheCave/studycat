@@ -1,8 +1,19 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:studycat/database/db.dart';
 
 class BarChartSample2 extends StatefulWidget {
-  const BarChartSample2({super.key});
+  final List<String> date;
+  final List<int> kor;
+  final List<int> eng;
+  final List<int> math;
+
+  const BarChartSample2(
+      {super.key,
+      required this.date,
+      required this.kor,
+      required this.eng,
+      required this.math});
   final Color firstBarColor = const Color.fromARGB(255, 119, 66, 243);
   final Color secondBarColor = const Color.fromARGB(255, 67, 26, 147);
   final Color thirdBarColor = const Color.fromARGB(255, 35, 44, 150);
@@ -23,7 +34,7 @@ class BarChartSample2State extends State<BarChartSample2> {
   @override
   void initState() {
     super.initState();
-    final barGroup1 = makeGroupData(0, 5, 12, 13, 11);
+    final barGroup1 = makeGroupData(0, widget.kor[0].toDouble(), 12, 13, 11);
     final barGroup2 = makeGroupData(1, 16, 12, 10, 17);
     final barGroup3 = makeGroupData(2, 18, 5, 10, 8);
     final barGroup4 = makeGroupData(3, 20, 16, 14, 10);
@@ -50,119 +61,140 @@ class BarChartSample2State extends State<BarChartSample2> {
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 1,
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: const <Widget>[
-                SizedBox(
-                  width: 38,
-                ),
-                Text(
-                  '성적 그래프',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 30,
-                    fontWeight: FontWeight.w600,
+      child: FutureBuilder(
+        future: setGraphData('001'),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            dynamic minsu = snapshot.data!.date;
+            print(minsu[0]);
+
+            return Padding(
+              padding: const EdgeInsets.all(8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 38,
+                      ),
+                      Text(
+                        '성적 그래프',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 38,
-            ),
-            Expanded(
-              child: BarChart(
-                BarChartData(
-                  maxY: 20,
-                  barTouchData: BarTouchData(
-                    touchTooltipData: BarTouchTooltipData(
-                      tooltipBgColor: Colors.grey,
-                      getTooltipItem: (a, b, c, d) => null,
-                    ),
-                    touchCallback: (FlTouchEvent event, response) {
-                      if (response == null || response.spot == null) {
-                        setState(() {
-                          touchedGroupIndex = -1;
-                          showingBarGroups = List.of(rawBarGroups);
-                        });
-                        return;
-                      }
-
-                      touchedGroupIndex = response.spot!.touchedBarGroupIndex;
-
-                      setState(() {
-                        if (!event.isInterestedForInteractions) {
-                          touchedGroupIndex = -1;
-                          showingBarGroups = List.of(rawBarGroups);
-                          return;
-                        }
-                        showingBarGroups = List.of(rawBarGroups);
-                        if (touchedGroupIndex != -1) {
-                          var sum = 0.0;
-                          for (final rod
-                              in showingBarGroups[touchedGroupIndex].barRods) {
-                            sum += rod.toY;
-                          }
-                          final avg = sum /
-                              showingBarGroups[touchedGroupIndex]
-                                  .barRods
-                                  .length;
-
-                          showingBarGroups[touchedGroupIndex] =
-                              showingBarGroups[touchedGroupIndex].copyWith(
-                            barRods: showingBarGroups[touchedGroupIndex]
-                                .barRods
-                                .map((rod) {
-                              return rod.copyWith(
-                                  toY: avg, color: widget.avgColor);
-                            }).toList(),
-                          );
-                        }
-                      });
-                    },
+                  const SizedBox(
+                    height: 38,
                   ),
-                  titlesData: FlTitlesData(
-                    show: true,
-                    rightTitles: AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
-                    ),
-                    topTitles: AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
-                    ),
-                    bottomTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: true,
-                        getTitlesWidget: bottomTitles,
-                        reservedSize: 42,
+                  Expanded(
+                    child: BarChart(
+                      BarChartData(
+                        maxY: 20,
+                        barTouchData: BarTouchData(
+                          touchTooltipData: BarTouchTooltipData(
+                            tooltipBgColor: Colors.grey,
+                            getTooltipItem: (a, b, c, d) => null,
+                          ),
+                          touchCallback: (FlTouchEvent event, response) {
+                            if (response == null || response.spot == null) {
+                              setState(() {
+                                touchedGroupIndex = -1;
+                                showingBarGroups = List.of(rawBarGroups);
+                              });
+                              return;
+                            }
+
+                            touchedGroupIndex =
+                                response.spot!.touchedBarGroupIndex;
+
+                            setState(() {
+                              if (!event.isInterestedForInteractions) {
+                                touchedGroupIndex = -1;
+                                showingBarGroups = List.of(rawBarGroups);
+                                return;
+                              }
+                              showingBarGroups = List.of(rawBarGroups);
+                              if (touchedGroupIndex != -1) {
+                                var sum = 0.0;
+                                for (final rod
+                                    in showingBarGroups[touchedGroupIndex]
+                                        .barRods) {
+                                  sum += rod.toY;
+                                }
+                                final avg = sum /
+                                    showingBarGroups[touchedGroupIndex]
+                                        .barRods
+                                        .length;
+
+                                showingBarGroups[touchedGroupIndex] =
+                                    showingBarGroups[touchedGroupIndex]
+                                        .copyWith(
+                                  barRods: showingBarGroups[touchedGroupIndex]
+                                      .barRods
+                                      .map((rod) {
+                                    return rod.copyWith(
+                                        toY: avg, color: widget.avgColor);
+                                  }).toList(),
+                                );
+                              }
+                            });
+                          },
+                        ),
+                        titlesData: FlTitlesData(
+                          show: true,
+                          rightTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: false),
+                          ),
+                          topTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: false),
+                          ),
+                          bottomTitles: AxisTitles(
+                            sideTitles: SideTitles(
+                              showTitles: true,
+                              getTitlesWidget: bottomTitles,
+                              reservedSize: 42,
+                            ),
+                          ),
+                          leftTitles: AxisTitles(
+                            sideTitles: SideTitles(
+                              showTitles: true,
+                              reservedSize: 28,
+                              interval: 1,
+                              getTitlesWidget: leftTitles,
+                            ),
+                          ),
+                        ),
+                        borderData: FlBorderData(
+                          show: false,
+                        ),
+                        barGroups: showingBarGroups,
+                        gridData: FlGridData(show: false),
                       ),
                     ),
-                    leftTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: true,
-                        reservedSize: 28,
-                        interval: 1,
-                        getTitlesWidget: leftTitles,
-                      ),
-                    ),
                   ),
-                  borderData: FlBorderData(
-                    show: false,
+                  const SizedBox(
+                    height: 12,
                   ),
-                  barGroups: showingBarGroups,
-                  gridData: FlGridData(show: false),
-                ),
+                ],
               ),
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-          ],
-        ),
+            );
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: Text('waiting..'),
+            );
+          }
+          return Center(
+            child: Text('none'),
+          );
+        },
       ),
     );
   }

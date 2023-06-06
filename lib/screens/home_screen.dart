@@ -17,6 +17,11 @@ class HomeScreen extends StatelessWidget {
     var color = context.watch<ThemeColor>();
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    // var a = context.watch<CloudData>().myScore.score['수학'][0].keys;
+    var b = [];
+    // b.add(a.elementAt(0));
+    // b.add(a.elementAt(1));
+    // b.sort();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     return Scaffold(
       appBar: AppBar(
@@ -146,8 +151,8 @@ class HomeScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(100),
                 ),
               ),
-              child: const Text(
-                '프로필',
+              child: Text(
+                b.toString(),
                 style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,

@@ -31,8 +31,23 @@ class _SelectQuestionState extends State<SelectQuestion> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            const QuestionTopWidget(
-              screenName: '문제 풀기',
+            QuestionTopWidget(
+              screenName: context
+                  .watch<CloudData>()
+                  .myScore
+                  .score['section1'][context
+                      .watch<CloudData>()
+                      .myScore
+                      .score['section1']
+                      .keys
+                      .elementAt(context
+                              .watch<CloudData>()
+                              .myScore
+                              .score['section1']
+                              .keys
+                              .length -
+                          1)]['score']
+                  .toString(),
               screenExplain: '어떤 문제를 풀까요?',
               icon: Icons.home,
               destination: HomeScreen(),
