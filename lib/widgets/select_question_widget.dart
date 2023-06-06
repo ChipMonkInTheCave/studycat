@@ -8,10 +8,12 @@ import 'package:transition/transition.dart';
 
 class SelectQuetionWidget extends StatefulWidget {
   final int num, nn;
+  final String sub;
   const SelectQuetionWidget({
     super.key,
     required this.num,
     required this.nn,
+    required this.sub,
   });
 
   @override
@@ -44,12 +46,8 @@ class _SelectQuetionWidgetState extends State<SelectQuetionWidget> {
                   Transition(
                     child: QuestionScreen(
                       id: context.read<UserData>().id,
-                      subject: context
-                          .read<CloudData>()
-                          .myQuestion
-                          .question
-                          .keys
-                          .elementAt(widget.nn),
+                      subject: widget.sub,
+                      section: widget.nn,
                       difficulty: '01',
                       num: 0,
                       cat: 0,
@@ -62,27 +60,27 @@ class _SelectQuetionWidgetState extends State<SelectQuetionWidget> {
                 vertical: 5,
                 horizontal: 10,
               ),
-              leading: Icon(
+              leading: const Icon(
                 Icons.book,
                 size: 45,
-                color: color.background,
+                color: Color.fromARGB(255, 163, 129, 255),
               ),
               title: AutoSizeText(
-                question[question.keys.elementAt(widget.nn)]['kor'],
+                question['menu'][widget.nn].keys.elementAt(0).toString(),
                 style: TextStyle(
-                  color: color.background,
+                  color: color.box,
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               subtitle: AutoSizeText(
-                '총 ${question[question.keys.elementAt(widget.nn)]['01']['questions'].length}문제',
+                '단어 ${question['menu'][widget.nn][question['menu'][widget.nn].keys.elementAt(0)].length}개',
                 style: TextStyle(
-                  color: color.background,
+                  color: color.box,
                 ),
               ),
               shape: RoundedRectangleBorder(
-                side: BorderSide(color: color.background, width: 7),
+                side: BorderSide(color: color.box, width: 7),
                 borderRadius: BorderRadius.circular(17),
               ),
               tileColor: color.text,
@@ -99,7 +97,7 @@ class _SelectQuetionWidgetState extends State<SelectQuetionWidget> {
                 icon: Icon(
                   Icons.menu,
                   size: 35,
-                  color: color.background,
+                  color: color.box,
                 ),
               )),
         ),

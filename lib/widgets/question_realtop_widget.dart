@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
+import 'package:studycat/widgets/background_widget.dart';
 import 'package:studycat/widgets/iconbutton_widget.dart';
 
 class QuestionScreenTopWidget extends StatelessWidget {
@@ -21,15 +22,14 @@ class QuestionScreenTopWidget extends StatelessWidget {
     var color = context.watch<ThemeColor>();
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return Container(
-      padding: EdgeInsets.only(top: height * 0.025),
-      height: height * 0.3,
-      decoration: BoxDecoration(
-        color: color.background,
-      ),
-      child: Column(
+    return Stack(children: [
+      const BackgroundWidget(num: 0.2),
+      Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          SizedBox(
+            height: height * 0.02,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -69,6 +69,6 @@ class QuestionScreenTopWidget extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ]);
   }
 }

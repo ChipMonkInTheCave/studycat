@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/graph/graph_screen.dart';
 import 'package:studycat/screens/score/test_score_screen.dart';
 import 'package:studycat/user/profile_screen.dart';
 import 'question/select_question_screen.dart';
-import 'package:table_calendar/table_calendar.dart';
 import 'package:studycat/widgets/background_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -218,6 +219,7 @@ class Page extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    num? exp = context.watch<CloudData>().myUserData.userdata['exp'];
 
     return Scaffold(
       body: Stack(
@@ -296,21 +298,25 @@ class Page extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            child: const Align(
+                            child: Align(
                               alignment: Alignment.center,
                               child: Column(
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   Text(
-                                    '23',
-                                    style: TextStyle(
+                                    context
+                                        .watch<CloudData>()
+                                        .myUserData
+                                        .userdata['level']
+                                        .toString(),
+                                    style: const TextStyle(
                                       fontSize: 30,
                                       color: Colors.black,
                                     ),
                                   ),
-                                  Text(
+                                  const Text(
                                     'Level',
                                     style: TextStyle(
                                       fontSize: 20,
@@ -339,10 +345,10 @@ class Page extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            child: const Align(
+                            child: Align(
                               alignment: Alignment.center,
                               child: Column(
-                                children: [
+                                children: const [
                                   SizedBox(
                                     height: 5,
                                   ),
@@ -382,21 +388,21 @@ class Page extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            child: const Align(
+                            child: Align(
                               alignment: Alignment.center,
                               child: Column(
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   Text(
-                                    '70%',
-                                    style: TextStyle(
+                                    exp != null ? '${exp.toInt()}%' : '0%',
+                                    style: const TextStyle(
                                       fontSize: 30,
                                       color: Colors.black,
                                     ),
                                   ),
-                                  Text(
+                                  const Text(
                                     'EXP',
                                     style: TextStyle(
                                       fontSize: 20,
@@ -548,22 +554,22 @@ class Page extends StatelessWidget {
   }
 }
 
-class Calendar extends StatefulWidget {
-  const Calendar({super.key});
+// class Calendar extends StatefulWidget {
+//   const Calendar({super.key});
 
-  @override
-  _CalendarState createState() => _CalendarState();
-}
+//   @override
+//   _CalendarState createState() => _CalendarState();
+// }
 
-class _CalendarState extends State<Calendar> {
-  @override
-  Widget build(BuildContext context) {
-    return TableCalendar(
-      focusedDay: DateTime.now(),
-      firstDay: DateTime(2023, 1, 1),
-      lastDay: DateTime(2023, 1, 31),
-      locale: 'ko-KR',
-      daysOfWeekHeight: 30,
-    );
-  }
-}
+// class _CalendarState extends State<Calendar> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return TableCalendar(
+//       focusedDay: DateTime.now(),
+//       firstDay: DateTime(2023, 1, 1),
+//       lastDay: DateTime(2023, 1, 31),
+//       locale: 'ko-KR',
+//       daysOfWeekHeight: 30,
+//     );
+//   }
+// }

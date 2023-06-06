@@ -5,9 +5,7 @@ import 'package:studycat/models/barchart.dart';
 import 'package:studycat/models/graph.dart';
 import 'package:studycat/models/piechart.dart';
 import 'package:studycat/provider/provider.dart';
-import 'package:studycat/screens/home_screen.dart';
 import 'package:studycat/widgets/background_widget.dart';
-import 'package:studycat/widgets/menu_widget.dart';
 
 class Graph extends StatefulWidget {
   const Graph({Key? key}) : super(key: key);

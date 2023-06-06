@@ -16,10 +16,11 @@ class ThemeColor with ChangeNotifier {
   Color _color = const Color.fromARGB(255, 103, 58, 183);
   Color get color => _color;
 
-  Color background = const Color.fromARGB(
-      255, 113, 124, 219); //Color.fromARGB(255, 103, 58, 183);
-  Color box = const Color.fromARGB(
-      255, 157, 164, 232); //Color.fromARGB(255, 148, 104, 225);
+  Color background = const Color.fromARGB(255, 135, 74, 248)
+      .withOpacity(0.9); //Color.fromARGB(
+  //255, 113, 124, 219); //Color.fromARGB(255, 103, 58, 183);
+  Color box = const Color.fromARGB(255, 156, 120, 255); // Color.fromARGB(
+  //255, 157, 164, 232); //Color.fromARGB(255, 148, 104, 225);
   Color text = Colors.white.withOpacity(0.9);
 
   void changeColor(Color color) {
@@ -69,16 +70,18 @@ class UserData with ChangeNotifier {
 //---클라우드 데이터--------------------
 class CloudData with ChangeNotifier {
   late QuestionModel _myQuestion = QuestionModel(question: {'error': 321});
-
   late ScoreModel _myScore = ScoreModel(score: {'error': 123});
+  late UserDataModel _myUserData = UserDataModel(userdata: {'error': 123});
 
   QuestionModel get myQuestion => _myQuestion;
   ScoreModel get myScore => _myScore;
+  UserDataModel get myUserData => _myUserData;
 
   Future<void> fetchData() async {
     var data = await fetchDataFromFirestore('001');
     _myQuestion = data['question'];
     _myScore = data['score'];
+    _myUserData = data['userdata'];
     notifyListeners();
   }
 }
@@ -99,8 +102,15 @@ Future<Map<String, dynamic>> fetchDataFromFirestore(String id) async {
 
   Map<String, dynamic> scoreData = scoreSnapshot.data() as Map<String, dynamic>;
 
+  DocumentSnapshot userDataSnapshot =
+      await FirebaseFirestore.instance.collection(id).doc('userdata').get();
+
+  Map<String, dynamic> userData =
+      userDataSnapshot.data() as Map<String, dynamic>;
+
   return {
     'question': QuestionModel(question: questionData),
-    'score': ScoreModel(score: scoreData)
+    'score': ScoreModel(score: scoreData),
+    'userdata': UserDataModel(userdata: userData),
   };
 }

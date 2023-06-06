@@ -9,3 +9,9 @@ class ScoreModel {
 
   ScoreModel({required this.score});
 }
+
+class UserDataModel {
+  Map<String, dynamic> userdata;
+
+  UserDataModel({required this.userdata});
+}
