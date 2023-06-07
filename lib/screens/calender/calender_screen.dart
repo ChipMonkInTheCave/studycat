@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
-import 'package:studycat/widgets/question_top_widget.dart';
-import '/screens/home_screen.dart';
+import 'package:studycat/widgets/background_widget.dart';
 
 class Calender extends StatelessWidget {
   const Calender({super.key});
@@ -17,12 +16,7 @@ class Calender extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          const QuestionTopWidget(
-            screenName: '',
-            screenExplain: '',
-            icon: Icons.home,
-            destination: HomeScreen(),
-          ),
+          const BackgroundWidget(num: 0.2),
           Container(
             padding: EdgeInsets.fromLTRB(
               width * 0.13,

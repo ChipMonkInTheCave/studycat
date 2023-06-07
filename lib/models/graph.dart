@@ -2,20 +2,13 @@ import 'dart:ffi';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:studycat/database/db.dart';
+import 'package:studycat/provider/provider.dart';
 
 class _LineChart extends StatefulWidget {
-  List<dynamic> date;
-  List<dynamic> kor;
-  List<dynamic> eng;
-  List<dynamic> math;
-
   _LineChart({
     required this.isShowingMainData,
-    required this.date,
-    required this.kor,
-    required this.eng,
-    required this.math,
   });
 
   final bool isShowingMainData;
@@ -198,13 +191,11 @@ class _LineChartState extends State<_LineChart> {
         belowBarData: BarAreaData(show: false),
         spots: [
           //1~5
-          const FlSpot(1, 3),
-          const FlSpot(3, 2),
-          const FlSpot(5, 1),
-          const FlSpot(7, 2),
-          const FlSpot(9, 4),
-          const FlSpot(11, 3),
-          const FlSpot(13, 2),
+          //(context.watch<CloudData>().myScore.score['eng']['score']
+          //     ['2023-05-30'] /
+          // 20)
+
+          for (double i = 0; i < 7; i++) FlSpot(1 + (2 * i), (100 / 20)),
         ],
       );
 
@@ -289,60 +280,40 @@ class LineChartSample1State extends State<LineChartSample1> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 1.23,
-      child: FutureBuilder(
-          future: setGraphData('001'),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return Stack(
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Text(
-                        '성적 그래프',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 2,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 14, left: 6),
-                          child: _LineChart(
-                              date: snapshot.data!.date,
-                              kor: snapshot.data!.kor,
-                              eng: snapshot.data!.eng,
-                              math: snapshot.data!.math,
-                              isShowingMainData: isShowingMainData),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 25, //
-                      ),
-                    ],
+        aspectRatio: 1.23,
+        child: Stack(
+          children: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  '성적 그래프',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 2,
                   ),
-                ],
-              );
-            }
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: Text('wating'),
-              );
-            }
-            return const Center(
-              child: Text('none'),
-            );
-          }),
-    );
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 14, left: 6),
+                    child: _LineChart(isShowingMainData: isShowingMainData),
+                  ),
+                ),
+                const SizedBox(
+                  height: 25, //
+                ),
+              ],
+            ),
+          ],
+        ));
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +12,7 @@ import 'package:transition/transition.dart';
 
 class QuestionScreen extends StatefulWidget {
   final String id, subject, difficulty;
-  final int num, cat;
+  final int num, cat, section;
 
   const QuestionScreen({
     super.key,
@@ -19,6 +21,7 @@ class QuestionScreen extends StatefulWidget {
     required this.difficulty,
     required this.num,
     required this.cat,
+    required this.section,
   });
 
   @override
@@ -31,6 +34,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
   bool isTwo = false, isThree = false, isFour = false;
   late List<bool> isSelected = [isOne, isTwo, isThree, isFour];
   bool answerChk = false;
+  bool setting = false;
+  var list = [];
 
   @override
   void initState() {
@@ -43,10 +48,30 @@ class _QuestionScreenState extends State<QuestionScreen> {
     //--스크린 크기--//
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    var data = context.watch<CloudData>().myQuestion.question[widget.subject]
-        [widget.difficulty];
+    var data = context.watch<CloudData>().myQuestion.question[widget.section];
     //--객관식 답안들
-    List<dynamic> answers = data['options'][widget.num].split(",");
+    var list1 = data[data.keys.elementAt(0)].keys;
+    var options = data[data.keys.elementAt(0)].values;
+    var answer = data[data.keys.elementAt(0)]
+        [data[data.keys.elementAt(0)].keys.elementAt(widget.num)];
+
+    if (setting == false) {
+      list.add(answer);
+      while (true) {
+        int num = Random().nextInt(options.length);
+        String a = options.elementAt(num).toString();
+
+        if (list.contains(a) == false) {
+          list.add(options.elementAt(num));
+        }
+        if (list.length == 4) {
+          setting = true;
+          break;
+        }
+      }
+      list.shuffle();
+    }
+
     //--버튼 클릭 시 그 버튼 선택
     void toggleSelect(value) {
       for (var i = 0; i < isSelected.length; i++) {
@@ -72,10 +97,10 @@ class _QuestionScreenState extends State<QuestionScreen> {
           ),
           side: MaterialStateProperty.all(
             BorderSide(
-              color: answerChk & (data['answers'][widget.num] == num)
+              color: answerChk & (answer == list[num])
                   ? Colors.green.shade400
                   : Colors.white,
-              width: answerChk & (data['answers'][widget.num] == num) ? 5 : 0,
+              width: answerChk & (answer == list[num]) ? 5 : 0,
             ),
           ),
           backgroundColor: MaterialStateProperty.all(
@@ -92,7 +117,11 @@ class _QuestionScreenState extends State<QuestionScreen> {
             ),
           ),
         ),
-        child: AutoSizeText(answers[num], maxLines: 1),
+        child: AutoSizeText(
+          list[num],
+          maxLines: 2,
+          textAlign: TextAlign.center,
+        ),
       );
     }
 
@@ -110,7 +139,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
           QuestionScreenTopWidget(
             icon: Icons.arrow_back,
             destination: const SelectQuestion(),
-            questionLength: data['questions'].length,
+            //question['menu'][widget.nn][question['menu'][widget.nn].keys.elementAt(0)].length
+            questionLength: data[data.keys.elementAt(0)].length,
             currentNum: widget.num,
           ),
           Padding(
@@ -138,7 +168,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       child: BounceInDown(
                         from: 30,
                         child: AutoSizeText(
-                          '다음 문제의 답을 선택하세요!!',
+                          '다음 단어의 뜻을 고르세요!!',
                           style: TextStyle(
                               fontSize: 25,
                               color: color.background,
@@ -153,7 +183,10 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       child: FadeIn(
                         duration: const Duration(milliseconds: 700),
                         child: AutoSizeText(
-                          data['questions'][widget.num],
+                          data[data.keys.elementAt(0)]
+                              .keys
+                              .elementAt(widget.num)
+                              .toString(),
                           style: TextStyle(
                               fontSize: 40,
                               color: color.background,
@@ -221,21 +254,26 @@ class _QuestionScreenState extends State<QuestionScreen> {
                         ? Navigator.push(
                             context,
                             Transition(
-                              child: widget.num != data['questions'].length - 1
+                              child: widget.num !=
+                                      data[data.keys.elementAt(0)].length - 1
                                   ? QuestionScreen(
                                       id: widget.id,
                                       subject: widget.subject,
                                       difficulty: widget.difficulty,
                                       num: widget.num + 1,
-                                      cat: data['answers'][widget.num] == choice
+                                      cat: answer.toString() ==
+                                              list[choice].toString()
                                           ? widget.cat + 1
                                           : widget.cat,
+                                      section: widget.section,
                                     )
                                   : EndQuestionScreen(
-                                      cat: data['answers'][widget.num] == choice
+                                      cat: answer.toString() ==
+                                              list[choice].toString()
                                           ? widget.cat + 1
                                           : widget.cat,
-                                      queLen: data['questions'].length,
+                                      queLen:
+                                          data[data.keys.elementAt(0)].length,
                                       subject: widget.subject,
                                     ),
                               transitionEffect: TransitionEffect.FADE,

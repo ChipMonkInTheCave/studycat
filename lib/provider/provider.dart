@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:studycat/models/data_models.dart';
 
@@ -16,10 +17,11 @@ class ThemeColor with ChangeNotifier {
   Color _color = const Color.fromARGB(255, 103, 58, 183);
   Color get color => _color;
 
-  Color background = const Color.fromARGB(
-      255, 113, 124, 219); //Color.fromARGB(255, 103, 58, 183);
-  Color box = const Color.fromARGB(
-      255, 157, 164, 232); //Color.fromARGB(255, 148, 104, 225);
+  Color background = const Color.fromARGB(255, 135, 74, 248)
+      .withOpacity(0.9); //Color.fromARGB(
+  //255, 113, 124, 219); //Color.fromARGB(255, 103, 58, 183);
+  Color box = const Color.fromARGB(255, 156, 120, 255); // Color.fromARGB(
+  //255, 157, 164, 232); //Color.fromARGB(255, 148, 104, 225);
   Color text = Colors.white.withOpacity(0.9);
 
   void changeColor(Color color) {
@@ -50,36 +52,41 @@ class UserData with ChangeNotifier {
     notifyListeners();
   }
 
-  void addSubject(String eng, String kor) {
-    if (_subject.containsKey(eng)) {
-    } else {
-      _subject.addAll({eng: kor});
-    }
-    notifyListeners();
-  }
-
-  void removeSubject(String eng) {
-    if (_subject.containsKey(eng)) {
-      _subject.remove(eng);
-    } else {}
-    notifyListeners();
+  void getUID() {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user != null) {
+        _id = user.uid;
+      }
+    });
   }
 }
 
 //---클라우드 데이터--------------------
 class CloudData with ChangeNotifier {
-  late QuestionModel _myQuestion = QuestionModel(question: {'error': 321});
-
+  late QuestionModel _myQuestion = QuestionModel(question: [1, 2, 3]);
   late ScoreModel _myScore = ScoreModel(score: {'error': 123});
+  late UserDataModel _myUserData = UserDataModel(userdata: {'error': 123});
+  late String _id = 'jPwmXxGJpMZqGbPZqtNddImSTju1';
 
   QuestionModel get myQuestion => _myQuestion;
   ScoreModel get myScore => _myScore;
+  UserDataModel get myUserData => _myUserData;
+  String get id => _id;
 
   Future<void> fetchData() async {
-    var data = await fetchDataFromFirestore('001');
+    var data = await fetchDataFromFirestore(_id);
     _myQuestion = data['question'];
     _myScore = data['score'];
+    _myUserData = data['userdata'];
     notifyListeners();
+  }
+
+  Future<void> getUID() async {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user != null) {
+        _id = user.uid;
+      }
+    });
   }
 }
 
@@ -89,18 +96,26 @@ class CloudData with ChangeNotifier {
 //                                                                              리스트에 지정한 날짜만큼 차곡차곡 쌓임
 Future<Map<String, dynamic>> fetchDataFromFirestore(String id) async {
   DocumentSnapshot questionSnapshot =
-      await FirebaseFirestore.instance.collection(id).doc('question').get();
+      await FirebaseFirestore.instance.collection('users').doc(id).get();
 
-  Map<String, dynamic> questionData =
-      questionSnapshot.data() as Map<String, dynamic>;
+  Map<String, dynamic> data =
+      await questionSnapshot.data() as Map<String, dynamic>;
 
-  DocumentSnapshot scoreSnapshot =
-      await FirebaseFirestore.instance.collection(id).doc('score').get();
+  List<dynamic> questionData = await data['question'];
 
-  Map<String, dynamic> scoreData = scoreSnapshot.data() as Map<String, dynamic>;
+  // DocumentSnapshot scoreSnapshot =
+  //     await FirebaseFirestore.instance.collection(id).doc('score').get();
+
+  Map<String, dynamic> scoreData = await data['score'];
+
+  // DocumentSnapshot userDataSnapshot =
+  //     await FirebaseFirestore.instance.collection(id).doc('userdata').get();
+
+  Map<String, dynamic> userData = await data['userdata'];
 
   return {
     'question': QuestionModel(question: questionData),
-    'score': ScoreModel(score: scoreData)
+    'score': ScoreModel(score: scoreData),
+    'userdata': UserDataModel(userdata: userData),
   };
 }

@@ -9,7 +9,7 @@ InputDecoration TextFieldDeco(
     hintText: hint,
     labelStyle: const TextStyle(
       fontSize: 20,
-      color: Color.fromARGB(255, 125, 135, 222),
+      color: Color.fromARGB(255, 156, 120, 255),
       fontWeight: FontWeight.bold,
     ),
     enabledBorder: const OutlineInputBorder(
@@ -17,7 +17,7 @@ InputDecoration TextFieldDeco(
         Radius.circular(15),
       ),
       borderSide:
-          BorderSide(width: 2, color: Color.fromARGB(255, 125, 135, 222)),
+          BorderSide(width: 2, color: Color.fromARGB(255, 156, 120, 255)),
     ),
     focusedBorder: const OutlineInputBorder(
       borderRadius: BorderRadius.all(
@@ -25,7 +25,7 @@ InputDecoration TextFieldDeco(
       ),
       borderSide: BorderSide(
         width: 2,
-        color: Color.fromARGB(255, 125, 135, 222),
+        color: Color.fromARGB(255, 156, 120, 255),
       ),
     ),
   );
