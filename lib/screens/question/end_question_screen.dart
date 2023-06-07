@@ -218,6 +218,8 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                       });
                     }
                     context.read<CloudData>().fetchData();
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, '/', (_) => false);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
