@@ -1,9 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:studycat/provider/provider.dart';
+import 'package:studycat/screens/auth/login_screen.dart';
 import 'package:studycat/screens/graph/graph_screen.dart';
 import 'package:studycat/screens/score/test_score_screen.dart';
 import 'package:studycat/user/profile_screen.dart';
+import 'package:transition/transition.dart';
 import 'question/select_question_screen.dart';
-import 'package:table_calendar/table_calendar.dart';
 import 'package:studycat/widgets/background_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -218,6 +223,10 @@ class Page extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    num? exp = context.watch<CloudData>().myUserData.userdata['exp'];
+    var aa = FirebaseFirestore.instance
+        .collection('users')
+        .doc('jPwmXxGJpMZqGbPZqtNddImSTju1');
 
     return Scaffold(
       body: Stack(
@@ -267,7 +276,7 @@ class Page extends StatelessWidget {
                             height: 200,
                             child: CircularProgressIndicator(
                               strokeWidth: 5,
-                              value: 0.7,
+                              value: exp != null ? exp * 0.01 : 0,
                               backgroundColor: Colors.white.withOpacity(0.3),
                               valueColor: const AlwaysStoppedAnimation<Color>(
                                 Colors.white,
@@ -282,7 +291,7 @@ class Page extends StatelessWidget {
                       child: Row(
                         children: [
                           Container(
-                            width: 100,
+                            width: 80,
                             height: 70,
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -296,21 +305,25 @@ class Page extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            child: const Align(
+                            child: Align(
                               alignment: Alignment.center,
                               child: Column(
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   Text(
-                                    '23',
-                                    style: TextStyle(
+                                    context
+                                        .watch<CloudData>()
+                                        .myUserData
+                                        .userdata['level']
+                                        .toString(),
+                                    style: const TextStyle(
                                       fontSize: 30,
                                       color: Colors.black,
                                     ),
                                   ),
-                                  Text(
+                                  const Text(
                                     'Level',
                                     style: TextStyle(
                                       fontSize: 20,
@@ -339,10 +352,10 @@ class Page extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            child: const Align(
+                            child: Align(
                               alignment: Alignment.center,
                               child: Column(
-                                children: [
+                                children: const [
                                   SizedBox(
                                     height: 5,
                                   ),
@@ -382,21 +395,21 @@ class Page extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            child: const Align(
+                            child: Align(
                               alignment: Alignment.center,
                               child: Column(
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   Text(
-                                    '70%',
-                                    style: TextStyle(
+                                    exp != null ? '${exp.toInt()}%' : '0%',
+                                    style: const TextStyle(
                                       fontSize: 30,
                                       color: Colors.black,
                                     ),
                                   ),
-                                  Text(
+                                  const Text(
                                     'EXP',
                                     style: TextStyle(
                                       fontSize: 20,
@@ -415,12 +428,36 @@ class Page extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SelectQuestion(),
-                          ),
-                        );
+                        FirebaseAuth.instance
+                            .signOut()
+                            .then((value) => Navigator.push(
+                                context,
+                                Transition(
+                                  child: const LoginScreen(),
+                                  transitionEffect: TransitionEffect.FADE,
+                                )));
+                        //score 데이터 넣는 코드
+                        // for (var i = 1; i < 32; i++) {
+                        //   var now = DateTime.utc(2023, 5, i);
+                        //   var date = DateFormat('yyyy-MM-dd').format(now);
+                        //   var week = DateFormat('E').format(now);
+                        //   var list1 = context
+                        //       .read<CloudData>()
+                        //       .myScore
+                        //       .score['능률 VOCA : DAY3'];
+                        //   var map1 = context.read<CloudData>().myScore.score;
+                        //   list1 ??= [];
+                        //   list1.add({
+                        //     date: [Random().nextInt(100) + 1, week]
+                        //   });
+                        //   map1['능률 VOCA : DAY3'] = list1;
+                        //   FirebaseFirestore.instance
+                        //       .collection('users')
+                        //       .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
+                        //       .update({
+                        //     'score': map1,
+                        //   });
+                        // }
                       },
                       style: ElevatedButton.styleFrom(
                         elevation: 4,
@@ -440,14 +477,7 @@ class Page extends StatelessWidget {
                     Row(
                       children: [
                         ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const SelectQuestion(),
-                              ),
-                            );
-                          },
+                          onPressed: () {},
                           style: ElevatedButton.styleFrom(
                             elevation: 4,
                             backgroundColor: Colors.white,
@@ -548,22 +578,22 @@ class Page extends StatelessWidget {
   }
 }
 
-class Calendar extends StatefulWidget {
-  const Calendar({super.key});
+// class Calendar extends StatefulWidget {
+//   const Calendar({super.key});
 
-  @override
-  _CalendarState createState() => _CalendarState();
-}
+//   @override
+//   _CalendarState createState() => _CalendarState();
+// }
 
-class _CalendarState extends State<Calendar> {
-  @override
-  Widget build(BuildContext context) {
-    return TableCalendar(
-      focusedDay: DateTime.now(),
-      firstDay: DateTime(2023, 1, 1),
-      lastDay: DateTime(2023, 1, 31),
-      locale: 'ko-KR',
-      daysOfWeekHeight: 30,
-    );
-  }
-}
+// class _CalendarState extends State<Calendar> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return TableCalendar(
+//       focusedDay: DateTime.now(),
+//       firstDay: DateTime(2023, 1, 1),
+//       lastDay: DateTime(2023, 1, 31),
+//       locale: 'ko-KR',
+//       daysOfWeekHeight: 30,
+//     );
+//   }
+// }

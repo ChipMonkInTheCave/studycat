@@ -8,7 +8,7 @@ import 'package:studycat/database/db.dart';
 import 'package:studycat/provider/provider.dart';
 
 class _LineChart extends StatefulWidget {
-  _LineChart({
+  const _LineChart({
     required this.isShowingMainData,
   });
 
@@ -254,49 +254,161 @@ class _LineChartState extends State<_LineChart> {
               context
                   .watch<CloudData>()
                   .myScore
-                  .score['section3'][49]['2023-05-22'][0]
+                  .score['능률 VOCA : DAY1'][context
+                              .watch<CloudData>()
+                              .myScore
+                              .score['능률 VOCA : DAY1']
+                              .length -
+                          7][
+                      context
+                          .watch<CloudData>()
+                          .myScore
+                          .score['능률 VOCA : DAY1'][context
+                                  .watch<CloudData>()
+                                  .myScore
+                                  .score['능률 VOCA : DAY1']
+                                  .length -
+                              7]
+                          .keys
+                          .elementAt(0)][0]
                   .toDouble()),
           FlSpot(
               3,
               context
                   .watch<CloudData>()
                   .myScore
-                  .score['section3'][50]['2023-05-23'][0]
+                  .score['능률 VOCA : DAY1'][context
+                              .watch<CloudData>()
+                              .myScore
+                              .score['능률 VOCA : DAY1']
+                              .length -
+                          6][
+                      context
+                          .watch<CloudData>()
+                          .myScore
+                          .score['능률 VOCA : DAY1'][context
+                                  .watch<CloudData>()
+                                  .myScore
+                                  .score['능률 VOCA : DAY1']
+                                  .length -
+                              6]
+                          .keys
+                          .elementAt(0)][0]
                   .toDouble()),
           FlSpot(
               5,
               context
                   .watch<CloudData>()
                   .myScore
-                  .score['section3'][51]['2023-05-24'][0]
+                  .score['능률 VOCA : DAY1'][context
+                              .watch<CloudData>()
+                              .myScore
+                              .score['능률 VOCA : DAY1']
+                              .length -
+                          5][
+                      context
+                          .watch<CloudData>()
+                          .myScore
+                          .score['능률 VOCA : DAY1'][context
+                                  .watch<CloudData>()
+                                  .myScore
+                                  .score['능률 VOCA : DAY1']
+                                  .length -
+                              5]
+                          .keys
+                          .elementAt(0)][0]
                   .toDouble()),
           FlSpot(
               7,
               context
                   .watch<CloudData>()
                   .myScore
-                  .score['section3'][52]['2023-05-25'][0]
+                  .score['능률 VOCA : DAY1'][context
+                              .watch<CloudData>()
+                              .myScore
+                              .score['능률 VOCA : DAY1']
+                              .length -
+                          4][
+                      context
+                          .watch<CloudData>()
+                          .myScore
+                          .score['능률 VOCA : DAY1'][context
+                                  .watch<CloudData>()
+                                  .myScore
+                                  .score['능률 VOCA : DAY1']
+                                  .length -
+                              4]
+                          .keys
+                          .elementAt(0)][0]
                   .toDouble()),
           FlSpot(
               9,
               context
                   .watch<CloudData>()
                   .myScore
-                  .score['section3'][53]['2023-05-26'][0]
+                  .score['능률 VOCA : DAY1'][context
+                              .watch<CloudData>()
+                              .myScore
+                              .score['능률 VOCA : DAY1']
+                              .length -
+                          3][
+                      context
+                          .watch<CloudData>()
+                          .myScore
+                          .score['능률 VOCA : DAY1'][context
+                                  .watch<CloudData>()
+                                  .myScore
+                                  .score['능률 VOCA : DAY1']
+                                  .length -
+                              3]
+                          .keys
+                          .elementAt(0)][0]
                   .toDouble()),
           FlSpot(
               11,
               context
                   .watch<CloudData>()
                   .myScore
-                  .score['section3'][54]['2023-05-27'][0]
+                  .score['능률 VOCA : DAY1'][context
+                              .watch<CloudData>()
+                              .myScore
+                              .score['능률 VOCA : DAY1']
+                              .length -
+                          2][
+                      context
+                          .watch<CloudData>()
+                          .myScore
+                          .score['능률 VOCA : DAY1'][context
+                                  .watch<CloudData>()
+                                  .myScore
+                                  .score['능률 VOCA : DAY1']
+                                  .length -
+                              2]
+                          .keys
+                          .elementAt(0)][0]
                   .toDouble()),
           FlSpot(
               13,
               context
                   .watch<CloudData>()
                   .myScore
-                  .score['section3'][55]['2023-05-28'][0]
+                  .score['능률 VOCA : DAY1'][context
+                              .watch<CloudData>()
+                              .myScore
+                              .score['능률 VOCA : DAY1']
+                              .length -
+                          1][
+                      context
+                          .watch<CloudData>()
+                          .myScore
+                          .score['능률 VOCA : DAY1'][context
+                                  .watch<CloudData>()
+                                  .myScore
+                                  .score['능률 VOCA : DAY1']
+                                  .length -
+                              1]
+                          .keys
+                          .elementAt(0)][0]
                   .toDouble()),
         ],
       );

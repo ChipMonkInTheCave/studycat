@@ -91,70 +91,48 @@ class BarChartSample1State extends State<DailyBarChart> {
 
 //데이터 입력부분
   List<BarChartGroupData> showingGroups() => List.generate(7, (i) {
+        var scores = [];
+        for (var j = 0; j < 7; j++) {
+          scores.add(context
+              .watch<CloudData>()
+              .myScore
+              .score['능률 VOCA : DAY1'][context
+                          .watch<CloudData>()
+                          .myScore
+                          .score['능률 VOCA : DAY1']
+                          .length -
+                      7 +
+                      i][
+                  context
+                      .watch<CloudData>()
+                      .myScore
+                      .score['능률 VOCA : DAY1'][context
+                              .watch<CloudData>()
+                              .myScore
+                              .score['능률 VOCA : DAY1']
+                              .length -
+                          7 +
+                          i]
+                      .keys
+                      .elementAt(0)][0]
+              .toDouble());
+        }
+
         switch (i) {
           case 0:
-            return makeGroupData(
-                0,
-                context
-                    .watch<CloudData>()
-                    .myScore
-                    .score['section3'][49]['2023-05-22'][0]
-                    .toDouble(),
-                isTouched: i == touchedIndex);
+            return makeGroupData(0, scores[0], isTouched: i == touchedIndex);
           case 1:
-            return makeGroupData(
-                1,
-                context
-                    .watch<CloudData>()
-                    .myScore
-                    .score['section3'][50]['2023-05-23'][0]
-                    .toDouble(),
-                isTouched: i == touchedIndex);
+            return makeGroupData(1, scores[1], isTouched: i == touchedIndex);
           case 2:
-            return makeGroupData(
-                2,
-                context
-                    .watch<CloudData>()
-                    .myScore
-                    .score['section3'][51]['2023-05-24'][0]
-                    .toDouble(),
-                isTouched: i == touchedIndex);
+            return makeGroupData(2, scores[2], isTouched: i == touchedIndex);
           case 3:
-            return makeGroupData(
-                3,
-                context
-                    .watch<CloudData>()
-                    .myScore
-                    .score['section3'][52]['2023-05-25'][0]
-                    .toDouble(),
-                isTouched: i == touchedIndex);
+            return makeGroupData(3, scores[3], isTouched: i == touchedIndex);
           case 4:
-            return makeGroupData(
-                4,
-                context
-                    .watch<CloudData>()
-                    .myScore
-                    .score['section3'][53]['2023-05-26'][0]
-                    .toDouble(),
-                isTouched: i == touchedIndex);
+            return makeGroupData(4, scores[4], isTouched: i == touchedIndex);
           case 5:
-            return makeGroupData(
-                5,
-                context
-                    .watch<CloudData>()
-                    .myScore
-                    .score['section3'][54]['2023-05-27'][0]
-                    .toDouble(),
-                isTouched: i == touchedIndex);
+            return makeGroupData(5, scores[5], isTouched: i == touchedIndex);
           case 6:
-            return makeGroupData(
-                6,
-                context
-                    .watch<CloudData>()
-                    .myScore
-                    .score['section3'][55]['2023-05-28'][0]
-                    .toDouble(),
-                isTouched: i == touchedIndex);
+            return makeGroupData(6, scores[6], isTouched: i == touchedIndex);
           default:
             return throw Error();
         }

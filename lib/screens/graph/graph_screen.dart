@@ -1,4 +1,6 @@
 //import 'package:fl_chart/fl_chart.dart';
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/models/dailybarchart.dart';
@@ -7,9 +9,7 @@ import 'package:studycat/models/piechart.dart';
 import 'package:studycat/models/weeklybarchart.dart';
 import 'package:studycat/models/weeklylinechart.dart';
 import 'package:studycat/provider/provider.dart';
-import 'package:studycat/screens/home_screen.dart';
 import 'package:studycat/widgets/background_widget.dart';
-import 'package:studycat/widgets/menu_widget.dart';
 
 class Graph extends StatefulWidget {
   const Graph({Key? key}) : super(key: key);
