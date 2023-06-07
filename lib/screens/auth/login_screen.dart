@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
+import 'package:studycat/main.dart';
+import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/auth/signup_screen.dart';
 import 'package:studycat/screens/home_screen.dart';
 
@@ -50,10 +53,9 @@ class _LoginScreenState extends State<LoginScreen> {
               width: double.infinity,
               child: OutlinedButton(
                 onPressed: () async {
-                  // 이메일, 비번 중 하나라도 비워있으면 패스
+                  // 이메일, 비번 중 하나라도 비어있으면 패스
                   if (_emailInputText.text.isEmpty ||
                       _passInputText.text.isEmpty) return;
-
                   try {
                     await FirebaseAuth.instance.signInWithEmailAndPassword(
                       email: _emailInputText.text.toLowerCase().trim(),
@@ -61,10 +63,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                     print('success login');
 
+                    context.read<CloudData>().getUID();
+                    context.read<CloudData>().fetchData();
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomeScreen()),
+                      MaterialPageRoute(builder: (context) => const MyApp()),
                     );
                   } on FirebaseAuthException catch (e) {
                     print('an error occured $e');

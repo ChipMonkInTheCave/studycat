@@ -4,7 +4,7 @@ import 'package:studycat/provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:studycat/screens/home_screen.dart';
 import 'package:studycat/screens/question/input_question_screen.dart';
-import 'package:studycat/widgets/question_top_widget.dart';
+import 'package:studycat/widgets/background_widget.dart';
 import 'package:studycat/widgets/select_question_widget.dart';
 import 'package:transition/transition.dart';
 
@@ -31,26 +31,58 @@ class _SelectQuestionState extends State<SelectQuestion> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            QuestionTopWidget(
-              screenName: context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section1'][context
-                      .watch<CloudData>()
-                      .myScore
-                      .score['section1']
-                      .keys
-                      .elementAt(context
-                              .watch<CloudData>()
-                              .myScore
-                              .score['section1']
-                              .keys
-                              .length -
-                          1)]['score']
-                  .toString(),
-              screenExplain: '어떤 문제를 풀까요?',
-              icon: Icons.home,
-              destination: HomeScreen(),
+            const BackgroundWidget(num: 0.18),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: height * 0.02,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          Transition(
+                            child: const HomeScreen(),
+                            transitionEffect: TransitionEffect.FADE,
+                          ),
+                        );
+                      },
+                      icon: Icon(
+                        Icons.home,
+                        color: color.text,
+                        size: 40,
+                      ),
+                    ),
+                    Text(
+                      '문제 풀기',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: color.text,
+                        fontSize: width * 0.1,
+                      ),
+                    ),
+                    SizedBox(
+                      width: width * 0.12,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: height * 0.017,
+                ),
+                Center(
+                  child: Text(
+                    '어떤 단어를 공부할까요??',
+                    style: TextStyle(
+                      color: color.text,
+                      fontSize: width * 0.05,
+                    ),
+                  ),
+                ),
+              ],
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(
@@ -65,11 +97,11 @@ class _SelectQuestionState extends State<SelectQuestion> {
                   SizedBox(
                     height: height * 0.05,
                   ),
-                  for (var i = 0; i < question.keys.length; i++)
+                  for (var i = 0; i < question.length; i++)
                     SelectQuetionWidget(
-                      num: 0,
-                      nn: i,
-                    ),
+                        num: 0,
+                        nn: i,
+                        sub: question[i].keys.elementAt(0).toString()),
                   Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
@@ -84,14 +116,14 @@ class _SelectQuestionState extends State<SelectQuestion> {
                         );
                       },
                       shape: RoundedRectangleBorder(
-                        side: BorderSide(color: color.background, width: 7),
+                        side: BorderSide(color: color.box, width: 7),
                         borderRadius: BorderRadius.circular(17),
                       ),
                       tileColor: color.text,
                       title: Icon(
                         Icons.add,
-                        size: 65,
-                        color: color.background,
+                        size: width * 0.15,
+                        color: color.box,
                       ),
                     ),
                   ),

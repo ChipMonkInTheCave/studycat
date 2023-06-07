@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 import 'package:studycat/user/profile_setting.dart';
 
+import '../widgets/background_widget.dart';
+
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -19,6 +21,7 @@ class ProfileScreen extends StatelessWidget {
       ),
       body: Stack(
         children: [
+          const BackgroundWidget(num: 0.35),
           Container(
             padding: EdgeInsets.fromLTRB(
               width * 0.1,
@@ -59,7 +62,8 @@ class ProfileScreen extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                         elevation: 4,
-                        backgroundColor: color.box,
+                        backgroundColor:
+                            const Color.fromARGB(255, 140, 97, 213),
                         fixedSize: Size(width * 0.32, height * 0.01),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),

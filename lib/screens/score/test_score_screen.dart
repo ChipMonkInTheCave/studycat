@@ -160,7 +160,8 @@ class TestScoreState extends State<TestScore> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     var data = context.watch<CloudData>().myScore.score;
-    var list1 = data['section1'][index2].values.first;
+    // ignore: unused_local_variable
+    var list1 = data['능률 VOCA : DAY1'][index2].values.first;
     return Column(children: [
       SizedBox(
           height: height * 0.076,
@@ -174,7 +175,8 @@ class TestScoreState extends State<TestScore> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
               ),
-              child: Text(data['section1'][index2].keys.elementAt(0).toString(),
+              child: Text(
+                  data['능률 VOCA : DAY1'][index2].keys.elementAt(0).toString(),
                   style: const TextStyle(fontSize: 30)))),
       SizedBox(height: height * 0.002),
       if (showDetails1[index2])
@@ -191,7 +193,7 @@ class TestScoreState extends State<TestScore> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     var data = context.watch<CloudData>().myScore.score;
-    var list2 = data['section1'][index3 + 7].values.first;
+    var list2 = data['능률 VOCA : DAY1'][index3 + 7].values.first;
     return Column(
       children: [
         SizedBox(
@@ -207,7 +209,10 @@ class TestScoreState extends State<TestScore> {
                 backgroundColor: Colors.red,
               ),
               child: Text(
-                  data['section1'][index3 + 7].keys.elementAt(0).toString(),
+                  data['능률 VOCA : DAY1'][index3 + 7]
+                      .keys
+                      .elementAt(0)
+                      .toString(),
                   style: const TextStyle(fontSize: 30))),
         ),
         SizedBox(height: height * 0.002),
@@ -227,7 +232,7 @@ class TestScoreState extends State<TestScore> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     var data = context.watch<CloudData>().myScore.score;
-    var list3 = data['section1'][index4 + 14].values.first;
+    var list3 = data['능률 VOCA : DAY1'][index4 + 14].values.first;
     return Column(
       children: [
         SizedBox(
@@ -242,19 +247,17 @@ class TestScoreState extends State<TestScore> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.black,
               ),
-              child: Text(
-                  data['section1'][index4 + 14].keys.elementAt(0).toString(),
+              child: Text(data['능률 VOCA : DAY1'][index4 + 14],
                   style: const TextStyle(fontSize: 30))),
         ),
         SizedBox(height: height * 0.002),
-        if (showDetails3[index4])
-          Container(
-            height: height * 0.115,
-            width: width * 0.96,
-            color: Colors.black,
-            child: Text("Score : ${list3[0].toString()}",
-                style: const TextStyle(fontSize: 30)),
-          ),
+        Container(
+          height: height * 0.115,
+          width: width * 0.96,
+          color: Colors.black,
+          child: Text("Score : ${list3[0].toString()}",
+              style: const TextStyle(fontSize: 30)),
+        ),
       ],
     );
   }
@@ -263,7 +266,7 @@ class TestScoreState extends State<TestScore> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     var data = context.watch<CloudData>().myScore.score;
-    var list4 = data['section1'][index5 + 21].values.first;
+    var list4 = data['능률 VOCA : DAY1'][index5 + 21].values.first;
     return Column(
       children: [
         SizedBox(
@@ -279,7 +282,10 @@ class TestScoreState extends State<TestScore> {
                 backgroundColor: Colors.green,
               ),
               child: Text(
-                  data['section1'][index5 + 21].keys.elementAt(0).toString(),
+                  data['능률 VOCA : DAY1'][index5 + 21]
+                      .keys
+                      .elementAt(0)
+                      .toString(),
                   style: const TextStyle(fontSize: 30))),
         ),
         SizedBox(height: height * 0.002),

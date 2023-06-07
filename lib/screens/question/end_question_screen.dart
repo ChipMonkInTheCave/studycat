@@ -8,11 +8,10 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/home_screen.dart';
-import 'package:studycat/screens/question/select_question_screen.dart';
-import 'package:studycat/widgets/question_top_widget.dart';
+import 'package:studycat/widgets/background_widget.dart';
 
 class EndQuestionScreen extends StatefulWidget {
-  final int cat, queLen;
+  final num cat, queLen;
   final String subject;
   const EndQuestionScreen(
       {super.key,
@@ -27,6 +26,7 @@ class EndQuestionScreen extends StatefulWidget {
 class _EndQuestionScreenState extends State<EndQuestionScreen> {
   @override
   Widget build(BuildContext context) {
+    num exp = context.read<CloudData>().myUserData.userdata['exp'];
     var color = context.watch<ThemeColor>();
     var now = DateTime.now();
     String nowDate = DateFormat('yyyy-MM-dd').format(now);
@@ -39,11 +39,40 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          const QuestionTopWidget(
-              screenName: "학습 완료!",
-              screenExplain: '정답률을 확인하세요!',
-              icon: Icons.home,
-              destination: SelectQuestion()),
+          const BackgroundWidget(num: 0.22),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: height * 0.02,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '수고했어요!!',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: color.text,
+                      fontSize: width * 0.1,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: height * 0.022,
+              ),
+              Center(
+                child: Text(
+                  '정답률을 확인해보세요!!',
+                  style: TextStyle(
+                    color: color.text,
+                    fontSize: width * 0.05,
+                  ),
+                ),
+              ),
+            ],
+          ),
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: width * 0.10,
@@ -55,7 +84,7 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                   "정답률",
                   style: TextStyle(
                     fontSize: 40,
-                    color: color.background,
+                    color: color.box,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -64,7 +93,7 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(30),
                     border: Border.all(
-                      color: color.background,
+                      color: color.box,
                       width: 10,
                     ),
                   ),
@@ -78,7 +107,7 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                             per.toString()[i],
                             style: TextStyle(
                               fontSize: 100,
-                              color: color.background,
+                              color: color.box,
                             ),
                           ),
                         )
@@ -98,36 +127,102 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                 height: height * 0.07,
                 width: width * 0.9,
                 decoration: BoxDecoration(
-                  color: color.background,
+                  color: color.box,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: TextButton(
                   onPressed: () {
-                    //col 001 doc score {data :{ nowDate : [{eng : 90}, {kor : 80}, {math: 100}]}}
-                    for (var i = 15; i < 30; i++) {
-                      int day11 = 0 + i;
-                      var then =
-                          new DateTime(2023, 05, day11, 15, 23, 58, 0, 0);
-                      var then2 = DateFormat('yyyy-MM-dd').format(then);
-                      var ww = DateFormat('E').format(then);
-                      List list1 =
-                          context.read<CloudData>().myScore.score['수학'];
-                      list1.add({then2: Random().nextInt(99) + 1, 'week': ww});
-
-                      FirebaseFirestore.instance
-                          .collection('001')
-                          .doc('score')
-                          .set({
-                        "민수": list1,
-                      }, SetOptions(merge: true)).onError((error, _) =>
-                              print('end question screen 확인 버튼error났어요'));
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const HomeScreen()),
-                      );
+                    var keylist = context.read<CloudData>().myScore.score.keys;
+                    var list1 =
+                        context.read<CloudData>().myScore.score[widget.subject];
+                    var map1 = context.read<CloudData>().myScore.score;
+                    list1 ??= [];
+                    if (keylist.contains(widget.subject)) {
+                      if (list1.last.keys.elementAt(0) == nowDate) {
+                        list1.last = {
+                          nowDate: [
+                            ((widget.cat / widget.queLen) * 100).toInt(),
+                            nowWeek
+                          ]
+                        };
+                      } else {
+                        list1.add({
+                          nowDate: [
+                            ((widget.cat / widget.queLen) * 100).toInt(),
+                            nowWeek
+                          ]
+                        });
+                      }
+                    } else {
+                      list1.add({
+                        nowDate: [
+                          ((widget.cat / widget.queLen) * 100).toInt(),
+                          nowWeek
+                        ]
+                      });
                     }
-                    ;
+                    map1[widget.subject] = list1;
+                    FirebaseFirestore.instance
+                        .collection('users')
+                        .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
+                        .update({
+                      'score': map1,
+                    });
+                    FirebaseFirestore.instance
+                        .collection('users')
+                        .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
+                        .update({
+                      'userdata': {
+                        'exp':
+                            exp + ((widget.cat / widget.queLen) * 100).toInt(),
+                        'level': context
+                            .read<CloudData>()
+                            .myUserData
+                            .userdata['level'],
+                      }
+                    });
+                    if (context.read<CloudData>().myUserData.userdata['exp'] +
+                            (widget.cat / widget.queLen) * 100 >=
+                        100) {
+                      FirebaseFirestore.instance
+                          .collection('users')
+                          .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
+                          .update({
+                        'userdata': {
+                          'exp': exp +
+                              ((widget.cat / widget.queLen) * 100).toInt() -
+                              100,
+                          'level': context
+                                  .read<CloudData>()
+                                  .myUserData
+                                  .userdata['level'] +
+                              1
+                        }
+                      });
+                    } else {
+                      FirebaseFirestore.instance
+                          .collection('users')
+                          .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
+                          .update({
+                        'userdata': {
+                          'exp': (context
+                                  .read<CloudData>()
+                                  .myUserData
+                                  .userdata['exp'] +
+                              (widget.cat / widget.queLen) * 100),
+                          'level': context
+                              .read<CloudData>()
+                              .myUserData
+                              .userdata['level'],
+                        }
+                      });
+                    }
+                    context.read<CloudData>().fetchData();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomeScreen()),
+                    );
                   },
                   child: Text(
                     '확인',

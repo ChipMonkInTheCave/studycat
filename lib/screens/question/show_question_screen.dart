@@ -1,11 +1,13 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/question/input_question_screen.dart';
 import 'package:studycat/screens/question/select_question_screen.dart';
-import 'package:studycat/widgets/question_top_widget.dart';
+import 'package:studycat/widgets/background_widget.dart';
 import 'package:transition/transition.dart';
 
 class ShowQuestionScreen extends StatefulWidget {
@@ -19,149 +21,157 @@ class ShowQuestionScreen extends StatefulWidget {
 class _ShowQuestionScreenState extends State<ShowQuestionScreen> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     var question = context.watch<CloudData>().myQuestion.question;
     var color = context.watch<ThemeColor>();
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            const QuestionTopWidget(
-              screenName: "문제 확인",
-              screenExplain: "여기선 문제를 확인하고 수정할 수 있어요",
-              icon: Icons.arrow_back,
-              destination: SelectQuestion(),
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            padding: EdgeInsets.fromLTRB(
+                width * 0.02, height * 0.23, width * 0.02, height * 0.1),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  for (var i = 0;
+                      i <
+                          question[widget.subjectnum][
+                                  question[widget.subjectnum].keys.elementAt(0)]
+                              .length;
+                      i++)
+                    FadeIn(
+                      delay: Duration(milliseconds: 100 * i),
+                      child: Card(
+                        margin: const EdgeInsets.symmetric(
+                          vertical: 5,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            color: color.background,
+                            width: 3.0,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.symmetric(
+                            vertical: 10,
+                            horizontal: 20,
+                          ),
+                          leading: AutoSizeText(
+                            "${i + 1}",
+                            style: TextStyle(
+                              color: color.background,
+                              fontSize: 30,
+                            ),
+                          ),
+                          title: AutoSizeText(
+                            question[widget.subjectnum][
+                                    question[widget.subjectnum]
+                                        .keys
+                                        .elementAt(0)]
+                                .keys
+                                .elementAt(i)
+                                .toString(),
+                            style: TextStyle(
+                              color: color.background,
+                              fontSize: 30,
+                            ),
+                          ),
+                          subtitle: AutoSizeText(
+                            question[widget.subjectnum][
+                                    question[widget.subjectnum]
+                                        .keys
+                                        .elementAt(0)]
+                                .values
+                                .elementAt(i)
+                                .toString(),
+                            style: TextStyle(
+                              color: color.background,
+                              fontSize: 15,
+                            ),
+                          ),
+                          trailing: IconButton(
+                            onPressed: () => questionMenu(
+                                context,
+                                i,
+                                widget.subjectnum,
+                                question[widget.subjectnum][
+                                        question[widget.subjectnum]
+                                            .keys
+                                            .elementAt(0)]
+                                    .keys
+                                    .elementAt(i)
+                                    .toString()),
+                            icon: Icon(
+                              Icons.menu,
+                              color: color.background,
+                              size: width * 0.08,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                ],
+              ),
             ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                  width * 0.02, height * 0.18, width * 0.02, height * 0.1),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextButton(
-                          style: ButtonStyle(
-                              side: MaterialStateProperty.all(
-                                BorderSide(
-                                  color: color.background,
-                                  width: 4.0,
-                                ),
-                              ),
-                              backgroundColor:
-                                  MaterialStateProperty.all(color.text),
-                              minimumSize: MaterialStateProperty.all(
-                                  Size(width * 0.45, height * 0.08))),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              Transition(
-                                child: const InputQuestion(),
-                                transitionEffect: TransitionEffect.FADE,
-                              ),
-                            );
-                          },
-                          child: AutoSizeText(
-                            '문제 추가',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: color.background,
-                              fontSize: width * 0.06,
-                            ),
-                          ),
+          ),
+          const BackgroundWidget(num: 0.18),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: height * 0.02,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        Transition(
+                          child: const SelectQuestion(),
+                          transitionEffect: TransitionEffect.FADE,
                         ),
-                        SizedBox(
-                          width: width * 0.05,
-                        ),
-                        TextButton(
-                          style: ButtonStyle(
-                              side: MaterialStateProperty.all(
-                                BorderSide(
-                                  color: color.background,
-                                  width: 4.0,
-                                ),
-                              ),
-                              backgroundColor:
-                                  MaterialStateProperty.all(color.text),
-                              minimumSize: MaterialStateProperty.all(
-                                  Size(width * 0.45, height * 0.08))),
-                          onPressed: () {},
-                          child: AutoSizeText(
-                            '문제 삭제',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: color.background,
-                              fontSize: width * 0.06,
-                            ),
-                          ),
-                        ),
-                      ],
+                      );
+                    },
+                    icon: Icon(
+                      Icons.home,
+                      color: color.text,
+                      size: 40,
                     ),
-                    SizedBox(
-                      height: height * 0.015,
+                  ),
+                  Text(
+                    '단어 목록',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: color.text,
+                      fontSize: width * 0.1,
                     ),
-                    for (var i = 0;
-                        i <
-                            question[question.keys.elementAt(widget.subjectnum)]
-                                    ['01']['questions']
-                                .length;
-                        i++)
-                      FadeIn(
-                        delay: Duration(milliseconds: 200 * i),
-                        child: Card(
-                          margin: const EdgeInsets.symmetric(
-                            vertical: 5,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                              color: color.background,
-                              width: 3.0,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: ListTile(
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 10,
-                              horizontal: 20,
-                            ),
-                            leading: AutoSizeText(
-                              "${i + 1}",
-                              style: TextStyle(
-                                color: color.background,
-                                fontSize: 30,
-                              ),
-                            ),
-                            title: AutoSizeText(
-                              question[question.keys
-                                          .elementAt(widget.subjectnum)]['01']
-                                      ['questions'][i]
-                                  .toString(),
-                              style: TextStyle(
-                                color: color.background,
-                                fontSize: 30,
-                              ),
-                            ),
-                            trailing: IconButton(
-                              onPressed: () =>
-                                  questionMenu(context, i, widget.subjectnum),
-                              icon: Icon(
-                                Icons.menu,
-                                color: color.background,
-                                size: width * 0.08,
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                  ],
+                  ),
+                  SizedBox(
+                    width: width * 0.12,
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: height * 0.017,
+              ),
+              Center(
+                child: Text(
+                  '여기선 단어들을 볼 수 있어요',
+                  style: TextStyle(
+                    color: color.text,
+                    fontSize: width * 0.05,
+                  ),
                 ),
               ),
-            )
-          ],
-        ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -169,11 +179,10 @@ class _ShowQuestionScreenState extends State<ShowQuestionScreen> {
 
 void questionMenu(
   BuildContext context,
-  int num,
-  int subjectnum,
+  num num,
+  num subjectnum,
+  String word,
 ) async {
-  List<String> list1 = ['문제', '선택지', '정답 번호'];
-  List<String> list2 = ['questions', 'options', 'answers'];
   showDialog(
     context: context,
     barrierDismissible: true,
@@ -202,72 +211,9 @@ void questionMenu(
         content: SingleChildScrollView(
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.7,
-            height: MediaQuery.of(context).size.height * 0.5,
+            height: MediaQuery.of(context).size.height * 0.17,
             child: Column(
               children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.02,
-                ),
-                for (var i = 0; i < 3; i++)
-                  Column(
-                    children: [
-                      Text(
-                        list1[i],
-                        style: TextStyle(
-                          color: context.watch<ThemeColor>().background,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.6,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                          color: context.watch<ThemeColor>().background,
-                          width: 3.0,
-                        )),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            i == 2
-                                ? (context
-                                                    .watch<CloudData>()
-                                                    .myQuestion
-                                                    .question[
-                                                context
-                                                    .watch<CloudData>()
-                                                    .myQuestion
-                                                    .question
-                                                    .keys
-                                                    .elementAt(subjectnum)]
-                                            ['01'][list2[i]][num] +
-                                        1)
-                                    .toString()
-                                : context
-                                    .watch<CloudData>()
-                                    .myQuestion
-                                    .question[context
-                                            .watch<CloudData>()
-                                            .myQuestion
-                                            .question
-                                            .keys
-                                            .elementAt(subjectnum)]['01']
-                                        [list2[i]][num]
-                                    .toString(),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: context.watch<ThemeColor>().background,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                ),
                 TextButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
@@ -295,7 +241,7 @@ void questionMenu(
                         width: MediaQuery.of(context).size.width * 0.07,
                       ),
                       AutoSizeText(
-                        '문제수정',
+                        '단어수정',
                         style: TextStyle(
                           color: context.watch<ThemeColor>().text,
                           fontSize: 30,
@@ -313,7 +259,9 @@ void questionMenu(
                       context.watch<ThemeColor>().background.withOpacity(0.8),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    removeWordAlert(context, subjectnum, num, word);
+                  },
                   child: Row(
                     children: [
                       Icon(
@@ -325,7 +273,7 @@ void questionMenu(
                         width: MediaQuery.of(context).size.width * 0.07,
                       ),
                       AutoSizeText(
-                        '문제삭제',
+                        '단어삭제',
                         style: TextStyle(
                           color: context.watch<ThemeColor>().text,
                           fontSize: 30,
@@ -339,6 +287,120 @@ void questionMenu(
           ),
         ),
       );
+    }),
+  );
+}
+
+void removeWordAlert(
+    BuildContext context, num subjectnum, num num, String word) async {
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: ((context) {
+      return AlertDialog(
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              color: context.watch<ThemeColor>().box,
+              width: 10.0,
+            ),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          backgroundColor: context.watch<ThemeColor>().text,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '단어를 삭제합니다',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: context.watch<ThemeColor>().box,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          content: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.7,
+            height: MediaQuery.of(context).size.height * 0.15,
+            child: Column(
+              children: [
+                const Text('삭제할 단어',
+                    style: TextStyle(
+                      color: Colors.redAccent,
+                      fontSize: 20,
+                    )),
+                Text(
+                    context
+                        .watch<CloudData>()
+                        .myQuestion
+                        .question[subjectnum.toInt()][context
+                            .watch<CloudData>()
+                            .myQuestion
+                            .question[subjectnum.toInt()]
+                            .keys
+                            .elementAt(0)]
+                        .keys
+                        .elementAt(num),
+                    style: const TextStyle(
+                      color: Colors.redAccent,
+                      fontSize: 20,
+                    )),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          context.watch<ThemeColor>().box.withOpacity(0.8),
+                        ),
+                      ),
+                      onPressed: () {
+                        var menu =
+                            context.read<CloudData>().myQuestion.question;
+                        var keys = menu[subjectnum.toInt()].keys.elementAt(0);
+                        var list1 = menu[subjectnum.toInt()][keys];
+                        list1.remove(word);
+                        menu[subjectnum.toInt()][keys] = list1;
+                        FirebaseFirestore.instance
+                            .collection('users')
+                            .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
+                            .update({'question': menu});
+                        context.read<CloudData>().fetchData();
+                      },
+                      child: Text(
+                        '    확인    ',
+                        style: TextStyle(
+                          color: context.watch<ThemeColor>().text,
+                          fontSize: 30,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.01),
+                    TextButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          context.watch<ThemeColor>().box.withOpacity(0.8),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        '    취소    ',
+                        style: TextStyle(
+                          color: context.watch<ThemeColor>().text,
+                          fontSize: 30,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ));
     }),
   );
 }
