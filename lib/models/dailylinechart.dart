@@ -43,6 +43,60 @@ class _LineChartState extends State<_LineChart> {
         touchTooltipData: LineTouchTooltipData(
           tooltipBgColor:
               const Color.fromARGB(255, 127, 75, 239).withOpacity(0.9),
+          tooltipHorizontalAlignment: FLHorizontalAlignment.right,
+          tooltipMargin: -10,
+          getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
+            final List<LineTooltipItem> tooltipItems = lineBarsSpot.map((spot) {
+              String weekDay;
+              switch (spot.x.toInt()) {
+                case 1:
+                  weekDay = 'Mon';
+                  break;
+                case 3:
+                  weekDay = 'Tue';
+                  break;
+                case 5:
+                  weekDay = 'Wed';
+                  break;
+                case 7:
+                  weekDay = 'Thu';
+                  break;
+                case 9:
+                  weekDay = 'Fri';
+                  break;
+                case 11:
+                  weekDay = 'Sat';
+                  break;
+                case 13:
+                  weekDay = 'Sun';
+                  break;
+                default:
+                  weekDay = '';
+                  break;
+              }
+
+              return LineTooltipItem(
+                '$weekDay\n',
+                const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: (spot.y).toString(),
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              );
+            }).toList();
+
+            return tooltipItems;
+          },
         ),
       );
 
@@ -248,14 +302,14 @@ class _LineChartState extends State<_LineChart> {
       );
 }
 
-class LineChartSample1 extends StatefulWidget {
-  const LineChartSample1({super.key});
+class DailyLineChart extends StatefulWidget {
+  const DailyLineChart({super.key});
 
   @override
-  State<StatefulWidget> createState() => LineChartSample1State();
+  State<StatefulWidget> createState() => DailyLineChartState();
 }
 
-class LineChartSample1State extends State<LineChartSample1> {
+class DailyLineChartState extends State<DailyLineChart> {
   late bool isShowingMainData;
 
   @override
@@ -266,8 +320,9 @@ class LineChartSample1State extends State<LineChartSample1> {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1.03,
+    return SizedBox(
+      width: 390,
+      height: 400,
       child: FutureBuilder(
         future: setGraphData('001'),
         builder: (context, snapshot) {
@@ -275,30 +330,11 @@ class LineChartSample1State extends State<LineChartSample1> {
             return Stack(
               children: <Widget>[
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     const Padding(
                       padding: EdgeInsets.all(15),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
-                          Text(
-                            '성적 그래프',
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 46, 5, 77),
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 4),
-                          Text(
-                            '일주일 기록',
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 104, 70, 200),
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
                           SizedBox(height: 10),
                         ],
                       ),

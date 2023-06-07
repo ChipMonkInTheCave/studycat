@@ -5,6 +5,7 @@ import 'package:studycat/models/dailybarchart.dart';
 import 'package:studycat/models/dailylinechart.dart';
 import 'package:studycat/models/piechart.dart';
 import 'package:studycat/models/weeklybarchart.dart';
+import 'package:studycat/models/weeklylinechart.dart';
 import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/home_screen.dart';
 import 'package:studycat/widgets/background_widget.dart';
@@ -70,8 +71,8 @@ class _GraphState extends State<Graph> {
                       ],
                       onPressed: toggleTimeRange,
                       selectedColor: Colors.white.withOpacity(0.8),
-                      fillColor:
-                          Color.fromARGB(255, 107, 45, 213).withOpacity(1),
+                      fillColor: const Color.fromARGB(255, 107, 45, 213)
+                          .withOpacity(1),
                       children: const [
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8),
@@ -96,10 +97,40 @@ class _GraphState extends State<Graph> {
                   ],
                 ),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    if (isLineSelected) const LineChartSample1(),
-                    if (isBarSelected && isDailySelected) DailyChart(),
-                    if (isBarSelected && isWeeklySelected) WeeklyChart(),
+                    const Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(
+                            '성적 그래프',
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 46, 5, 77),
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            '일주일 기록',
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 104, 70, 200),
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    if (isLineSelected && isDailySelected)
+                      const DailyLineChart(),
+                    if (isBarSelected && isDailySelected) DailyBarChart(),
+                    if (isBarSelected && isWeeklySelected) WeeklyBarChart(),
+                    if (isLineSelected && isWeeklySelected)
+                      const WeeklyLineChart(),
                   ],
                 ),
               ],
