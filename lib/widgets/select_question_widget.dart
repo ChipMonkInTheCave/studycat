@@ -60,15 +60,15 @@ class _SelectQuetionWidgetState extends State<SelectQuetionWidget> {
                 vertical: 5,
                 horizontal: 10,
               ),
-              leading: const Icon(
+              leading: Icon(
                 Icons.book,
                 size: 45,
-                color: Color.fromARGB(255, 163, 129, 255),
+                color: Color.fromARGB(255, 13, 0, 255).withOpacity(0.56),
               ),
               title: AutoSizeText(
                 question[widget.nn].keys.elementAt(0).toString(),
                 style: TextStyle(
-                  color: color.box,
+                  color: Color.fromARGB(255, 13, 0, 255).withOpacity(0.56),
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                 ),
@@ -80,7 +80,9 @@ class _SelectQuetionWidgetState extends State<SelectQuetionWidget> {
                 ),
               ),
               shape: RoundedRectangleBorder(
-                side: BorderSide(color: color.box, width: 7),
+                side: BorderSide(
+                    color: Color.fromARGB(255, 13, 0, 255).withOpacity(0.56),
+                    width: 5),
                 borderRadius: BorderRadius.circular(17),
               ),
               tileColor: color.text,

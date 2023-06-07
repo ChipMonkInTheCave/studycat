@@ -308,9 +308,9 @@ class Page extends StatelessWidget {
                             child: CircularProgressIndicator(
                               strokeWidth: 5,
                               value: exp != null ? exp * 0.01 : 0,
-                              backgroundColor: Colors.white.withOpacity(0.3),
-                              valueColor: const AlwaysStoppedAnimation<Color>(
-                                Colors.white,
+                              backgroundColor: Colors.white,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Color.fromARGB(175, 196, 18, 184),
                               ),
                             ),
                           ),
@@ -318,141 +318,121 @@ class Page extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 30),
-                    Container(
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 80,
-                            height: 70,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 2,
-                                  blurRadius: 5,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    context
-                                        .watch<CloudData>()
-                                        .myUserData
-                                        .userdata['level']
-                                        .toString(),
-                                    style: const TextStyle(
-                                      fontSize: 30,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  const Text(
-                                    'Level',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: width * 0.23,
+                          height: height * 0.1,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: const Offset(0, 2),
                               ),
-                            ),
+                            ],
                           ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Container(
-                            width: 100,
-                            height: 70,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 2,
-                                  blurRadius: 5,
-                                  offset: const Offset(0, 2),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                exp != null ? '${exp.toInt()}%' : '0%',
+                                style: const TextStyle(
+                                  fontSize: 30,
+                                  color: Colors.black,
                                 ),
-                              ],
-                            ),
-                            child: const Align(
-                              alignment: Alignment.center,
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    '53%',
-                                    style: TextStyle(
-                                      fontSize: 30,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Progress',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ],
+                                textAlign: TextAlign.center,
                               ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Container(
-                            width: 100,
-                            height: 70,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 2,
-                                  blurRadius: 5,
-                                  offset: const Offset(0, 2),
+                              const Text(
+                                'EXP',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.grey,
                                 ),
-                              ],
-                            ),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    exp != null ? '${exp.toInt()}%' : '0%',
-                                    style: const TextStyle(
-                                      fontSize: 30,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  const Text(
-                                    'EXP',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ],
+                                textAlign: TextAlign.center,
                               ),
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                        Container(
+                          width: width * 0.23,
+                          height: height * 0.1,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                context
+                                    .watch<CloudData>()
+                                    .myUserData
+                                    .userdata['level']
+                                    .toString(),
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Text(
+                                'level',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          width: width * 0.23,
+                          height: height * 0.1,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                '53%',
+                                style: const TextStyle(
+                                  fontSize: 30,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              const Text(
+                                'Pro',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 40,
@@ -506,6 +486,7 @@ class Page extends StatelessWidget {
                     ),
                     const SizedBox(height: 30),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         ElevatedButton(
                           onPressed: () {},
@@ -523,7 +504,6 @@ class Page extends StatelessWidget {
                             color: Colors.purple,
                           ),
                         ),
-                        const SizedBox(width: 40),
                         ElevatedButton(
                           onPressed: () {
                             Navigator.push(
