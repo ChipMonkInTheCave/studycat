@@ -1,8 +1,15 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/graph/graph_screen.dart';
 import 'package:studycat/screens/score/test_score_screen.dart';
 import 'package:studycat/user/profile_screen.dart';
 import 'package:transition/transition.dart';
+import 'auth/login_screen.dart';
 import 'question/select_question_screen.dart';
 import 'package:studycat/widgets/background_widget.dart';
 
@@ -188,6 +195,12 @@ class _HomeState extends State<HomeScreen> {
                 ),
               ),
               onTap: () {
+                FirebaseAuth.instance.signOut().then((value) => Navigator.push(
+                    context,
+                    Transition(
+                      child: const LoginScreen(),
+                      transitionEffect: TransitionEffect.FADE,
+                    )));
                 // Q&A창으로
               },
             ),

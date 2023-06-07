@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/firebase_options.dart';
 import 'package:studycat/provider/provider.dart';
+import 'package:studycat/screens/auth/login_screen.dart';
 import 'package:studycat/screens/home_screen.dart';
 import 'package:studycat/user/profile_screen.dart';
 
