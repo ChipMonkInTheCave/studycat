@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:studycat/screens/graph/graph_screen.dart';
 import 'package:studycat/screens/score/test_score_screen.dart';
 import 'package:studycat/user/profile_screen.dart';
@@ -40,20 +43,19 @@ class _HomeState extends State<HomeScreen> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              currentAccountPicture: const CircleAvatar(
-                // 현재 계정 이미지
-                backgroundImage: AssetImage('assets/profile.png'),
-                backgroundColor: Colors.white,
+              currentAccountPicture: Consumer<ImageProviderModel>(
+                builder: (context, imageProvider, _) {
+                  return CircleAvatar(
+                    radius: 100,
+                    backgroundImage: imageProvider.image != null
+                        ? FileImage(File(imageProvider.image!.path))
+                        : null,
+                    // 프로필 이미지 설정
+                  );
+                },
               ),
-              otherAccountsPictures: const <Widget>[
-                // 다른 계정 이미지
-                CircleAvatar(
-                  backgroundColor: Colors.white,
-                  backgroundImage: AssetImage('assets/profile2.png'),
-                ),
-              ],
               accountName: const Text(
-                '승재',
+                '한승재',
                 style: TextStyle(
                   fontSize: 20,
                 ),
@@ -94,7 +96,6 @@ class _HomeState extends State<HomeScreen> {
                 );
                 // Home
               },
-              trailing: const Icon(Icons.add),
             ),
             ListTile(
               leading: Icon(
@@ -109,9 +110,14 @@ class _HomeState extends State<HomeScreen> {
                 ),
               ),
               onTap: () {
-                // Q&A창으로
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ProfileScreen(),
+                  ),
+                );
+                // 프로필
               },
-              trailing: const Icon(Icons.add),
             ),
             ListTile(
               leading: Icon(
@@ -133,7 +139,6 @@ class _HomeState extends State<HomeScreen> {
                   ),
                 );
               },
-              trailing: const Icon(Icons.add),
             ),
             ListTile(
               leading: Icon(
@@ -156,7 +161,6 @@ class _HomeState extends State<HomeScreen> {
                 );
                 // 설정창으로
               },
-              trailing: const Icon(Icons.add),
             ),
             ListTile(
               leading: Icon(
@@ -173,7 +177,22 @@ class _HomeState extends State<HomeScreen> {
               onTap: () {
                 // Q&A창으로
               },
-              trailing: const Icon(Icons.add),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.logout,
+                size: 30,
+                color: Colors.grey[850],
+              ),
+              title: const Text(
+                '로그아웃',
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+              onTap: () {
+                // Q&A창으로
+              },
             ),
           ],
         ),
@@ -256,9 +275,16 @@ class Page extends StatelessWidget {
                       ),
                       child: Stack(
                         children: [
-                          const CircleAvatar(
-                            radius: 100,
-                            backgroundImage: AssetImage('assets/profile.png'),
+                          Consumer<ImageProviderModel>(
+                            builder: (context, imageProvider, _) {
+                              return CircleAvatar(
+                                radius: 100,
+                                backgroundImage: imageProvider.image != null
+                                    ? FileImage(File(imageProvider.image!.path))
+                                    : null,
+                                // 프로필 이미지 설정
+                              );
+                            },
                           ),
                           Positioned(
                             top: 0,
