@@ -114,6 +114,8 @@ class WeeklyBarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var scoreList = context.read<CloudData>().month();
+
     return Padding(
       padding: const EdgeInsets.all(25),
       child: Column(
@@ -140,161 +142,59 @@ class WeeklyBarChart extends StatelessWidget {
                 barTouchData: BarTouchData(enabled: false),
                 borderData: FlBorderData(show: false),
                 gridData: FlGridData(show: false),
+                // 길이 : context.watch<CloudData>().myScore.score['능률 VOCA : DAY1'].length-7
+                //key : context.watch<CloudData>().myScore.score['능률 VOCA : DAY1'][길이].keys.elementAt(0)
+                //접근 context.watch<CloudData>().myScore.score['능률 VOCA : DAY1'][길이][key][0]
                 barGroups: [
                   generateGroupData(
-                      0,
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][0]['2023-05-01'][0]
-                          .toDouble(),
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][7]['2023-05-08'][0]
-                          .toDouble(),
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][14]['2023-05-15'][0]
-                          .toDouble(),
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][21]['2023-05-22'][0]
-                          .toDouble()), //Mon
+                    0,
+                    scoreList[0],
+                    scoreList[7],
+                    scoreList[14],
+                    scoreList[21], //Mon\
+                  ),
                   generateGroupData(
-                      1,
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][1]['2023-05-02'][0]
-                          .toDouble(),
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][8]['2023-05-09'][0]
-                          .toDouble(),
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][15]['2023-05-16'][0]
-                          .toDouble(),
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][22]['2023-05-23'][0]
-                          .toDouble()), //Tue
+                    1,
+                    scoreList[1],
+                    scoreList[8],
+                    scoreList[15],
+                    scoreList[22], //Tue
+                  ),
                   generateGroupData(
-                      2,
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][2]['2023-05-03'][0]
-                          .toDouble(),
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][9]['2023-05-10'][0]
-                          .toDouble(),
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][16]['2023-05-17'][0]
-                          .toDouble(),
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][23]['2023-05-24'][0]
-                          .toDouble()), //Wed
+                    2,
+                    scoreList[2],
+                    scoreList[9],
+                    scoreList[16],
+                    scoreList[23], //Wed
+                  ),
                   generateGroupData(
-                      3,
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][3]['2023-05-04'][0]
-                          .toDouble(),
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][10]['2023-05-11'][0]
-                          .toDouble(),
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][17]['2023-05-18'][0]
-                          .toDouble(),
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][24]['2023-05-25'][0]
-                          .toDouble()), //Thu
+                    3,
+                    scoreList[3],
+                    scoreList[10],
+                    scoreList[17],
+                    scoreList[24], //Thu
+                  ),
                   generateGroupData(
-                      4,
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][4]['2023-05-05'][0]
-                          .toDouble(),
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][11]['2023-05-12'][0]
-                          .toDouble(),
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][18]['2023-05-19'][0]
-                          .toDouble(),
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][25]['2023-05-26'][0]
-                          .toDouble()), //Fri
+                    4,
+                    scoreList[4],
+                    scoreList[11],
+                    scoreList[18],
+                    scoreList[25],
+                  ), //Fri
                   generateGroupData(
-                      5,
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][5]['2023-05-06'][0]
-                          .toDouble(),
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][12]['2023-05-13'][0]
-                          .toDouble(),
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][19]['2023-05-20'][0]
-                          .toDouble(),
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][26]['2023-05-27'][0]
-                          .toDouble()), //Sat
+                    5,
+                    scoreList[5],
+                    scoreList[12],
+                    scoreList[19],
+                    scoreList[26],
+                  ), //Sat
                   generateGroupData(
-                      6,
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][6]['2023-05-07'][0]
-                          .toDouble(),
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][13]['2023-05-14'][0]
-                          .toDouble(),
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][20]['2023-05-21'][0]
-                          .toDouble(),
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['section3'][27]['2023-05-28'][0]
-                          .toDouble()), //Sun
+                    6,
+                    scoreList[6],
+                    scoreList[13],
+                    scoreList[20],
+                    scoreList[27],
+                  ), //Sun
                 ],
                 maxY: 400 + (betweenSpace * 3),
                 extraLinesData: ExtraLinesData(

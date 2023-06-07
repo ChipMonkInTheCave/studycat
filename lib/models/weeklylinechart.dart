@@ -200,55 +200,11 @@ class _LineChartState extends State<_LineChart> {
           //     context.watch<CloudData>().myScore.score['section1'][0]
           //         ['2023-05-01'][0])
           //FlSpot(1 + (2 * i), Random().nextInt(99 + 1).toDouble()),
-          FlSpot(
-              1,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][0]['2023-05-01'][0]
-                  .toDouble()),
-          FlSpot(
-              3,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][1]['2023-05-02'][0]
-                  .toDouble()),
-          FlSpot(
-              5,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][2]['2023-05-03'][0]
-                  .toDouble()),
-          FlSpot(
-              7,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][3]['2023-05-04'][0]
-                  .toDouble()),
-          FlSpot(
-              9,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][4]['2023-05-05'][0]
-                  .toDouble()),
-          FlSpot(
-              11,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][5]['2023-05-06'][0]
-                  .toDouble()),
-          FlSpot(
-              13,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][6]['2023-05-07'][0]
-                  .toDouble()),
+          for (var i = 0; i < 7; i++)
+            FlSpot(
+              1 + (i * 2),
+              context.read<CloudData>().month()[i].toDouble(),
+            ),
         ],
       );
   LineChartBarData get lineChartBarData1_2 => LineChartBarData(
@@ -259,55 +215,11 @@ class _LineChartState extends State<_LineChart> {
         dotData: FlDotData(show: true),
         belowBarData: BarAreaData(show: false),
         spots: [
-          FlSpot(
-              1,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][7]['2023-05-08'][0]
-                  .toDouble()),
-          FlSpot(
-              3,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][8]['2023-05-09'][0]
-                  .toDouble()),
-          FlSpot(
-              5,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][9]['2023-05-10'][0]
-                  .toDouble()),
-          FlSpot(
-              7,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][10]['2023-05-11'][0]
-                  .toDouble()),
-          FlSpot(
-              9,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][11]['2023-05-12'][0]
-                  .toDouble()),
-          FlSpot(
-              11,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][12]['2023-05-13'][0]
-                  .toDouble()),
-          FlSpot(
-              13,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][13]['2023-05-14'][0]
-                  .toDouble()),
+          for (var i = 0; i < 7; i++)
+            FlSpot(
+              1 + (i * 2),
+              context.read<CloudData>().month()[i + 7].toDouble(),
+            ),
         ],
       );
   LineChartBarData get lineChartBarData1_3 => LineChartBarData(
@@ -318,55 +230,11 @@ class _LineChartState extends State<_LineChart> {
         dotData: FlDotData(show: true),
         belowBarData: BarAreaData(show: false),
         spots: [
-          FlSpot(
-              1,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][14]['2023-05-15'][0]
-                  .toDouble()),
-          FlSpot(
-              3,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][15]['2023-05-16'][0]
-                  .toDouble()),
-          FlSpot(
-              5,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][16]['2023-05-17'][0]
-                  .toDouble()),
-          FlSpot(
-              7,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][17]['2023-05-18'][0]
-                  .toDouble()),
-          FlSpot(
-              9,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][18]['2023-05-19'][0]
-                  .toDouble()),
-          FlSpot(
-              11,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][19]['2023-05-20'][0]
-                  .toDouble()),
-          FlSpot(
-              13,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][20]['2023-05-21'][0]
-                  .toDouble()),
+          for (var i = 0; i < 7; i++)
+            FlSpot(
+              1 + (i * 2),
+              context.read<CloudData>().month()[i + 14].toDouble(),
+            ),
         ],
       );
   LineChartBarData get lineChartBarData1_4 => LineChartBarData(
@@ -377,55 +245,11 @@ class _LineChartState extends State<_LineChart> {
         dotData: FlDotData(show: true),
         belowBarData: BarAreaData(show: false),
         spots: [
-          FlSpot(
-              1,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][21]['2023-05-22'][0]
-                  .toDouble()),
-          FlSpot(
-              3,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][22]['2023-05-23'][0]
-                  .toDouble()),
-          FlSpot(
-              5,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][23]['2023-05-24'][0]
-                  .toDouble()),
-          FlSpot(
-              7,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][24]['2023-05-25'][0]
-                  .toDouble()),
-          FlSpot(
-              9,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][25]['2023-05-26'][0]
-                  .toDouble()),
-          FlSpot(
-              11,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][26]['2023-05-27'][0]
-                  .toDouble()),
-          FlSpot(
-              13,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['section3'][27]['2023-05-28'][0]
-                  .toDouble()),
+          for (var i = 0; i < 7; i++)
+            FlSpot(
+              1 + (i * 2),
+              context.read<CloudData>().month()[i + 21].toDouble(),
+            ),
         ],
       );
 }

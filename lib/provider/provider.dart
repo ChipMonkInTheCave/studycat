@@ -73,6 +73,19 @@ class CloudData with ChangeNotifier {
   UserDataModel get myUserData => _myUserData;
   String get id => _id;
 
+  List<dynamic> month() {
+    var data = myScore.score['능률 VOCA : DAY1']; //점수
+    var length = data[data.length - 28]; //길이
+    var score = length[length.keys.elementAt(0)][0]; //점수
+    var scoreList = [];
+    for (var i = 28; i > 0; i--) {
+      var len = data[data.length - i];
+      double score = (len[len.keys.elementAt(0)][0]).toDouble();
+      scoreList.add(score);
+    }
+    return scoreList;
+  }
+
   Future<void> fetchData() async {
     var data = await fetchDataFromFirestore(_id);
     _myQuestion = data['question'];

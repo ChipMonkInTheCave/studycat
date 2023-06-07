@@ -289,6 +289,7 @@ class Page extends StatelessWidget {
                     const SizedBox(height: 30),
                     Container(
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
                             width: 80,
