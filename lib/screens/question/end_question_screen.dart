@@ -162,13 +162,13 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                     map1[widget.subject] = list1;
                     FirebaseFirestore.instance
                         .collection('users')
-                        .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
+                        .doc(context.read<CloudData>().id)
                         .update({
                       'score': map1,
                     });
                     FirebaseFirestore.instance
                         .collection('users')
-                        .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
+                        .doc(context.read<CloudData>().id)
                         .update({
                       'userdata': {
                         'exp':
@@ -184,7 +184,7 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                         100) {
                       FirebaseFirestore.instance
                           .collection('users')
-                          .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
+                          .doc(context.read<CloudData>().id)
                           .update({
                         'userdata': {
                           'exp': exp +
@@ -200,7 +200,7 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                     } else {
                       FirebaseFirestore.instance
                           .collection('users')
-                          .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
+                          .doc(context.read<CloudData>().id)
                           .update({
                         'userdata': {
                           'exp': (context
