@@ -420,7 +420,7 @@ void checkAlert(BuildContext context, List eng, List kor, String sub) async {
                       print(list1[keylist.indexOf(sub)]);
                       FirebaseFirestore.instance
                           .collection('users')
-                          .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
+                          .doc(context.read<CloudData>().id)
                           .update({'question': list1});
                     } else {
                       var list1 = context.read<CloudData>().myQuestion.question;
@@ -433,7 +433,7 @@ void checkAlert(BuildContext context, List eng, List kor, String sub) async {
                       list1.add(map2);
                       FirebaseFirestore.instance
                           .collection('users')
-                          .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
+                          .doc(context.read<CloudData>().id)
                           .update({'question': list1});
                     }
                     context.read<CloudData>().fetchData();

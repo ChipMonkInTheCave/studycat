@@ -2,6 +2,8 @@
 //import 'package:fl_chart_app/presentation/widgets/legend_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:studycat/provider/provider.dart';
 
 class Legend {
   final String name;
@@ -10,37 +12,28 @@ class Legend {
   Legend(this.name, this.color);
 }
 
-class WeeklyChart extends StatelessWidget {
-  WeeklyChart({super.key});
+class WeeklyBarChart extends StatelessWidget {
+  WeeklyBarChart({super.key});
 
-  final MonColor = Colors.purple;
-  final TueColor = Colors.blue;
-  final WedColor = Colors.cyan;
-  final ThuColor = Colors.black;
-  final FriColor = Colors.black;
-  final SatColor = Colors.black;
-  final SunColor = Colors.black;
-  final betweenSpace = 0.2;
+  final Week1Color = const Color.fromARGB(255, 23, 14, 192).withOpacity(0.9);
+  final Week2Color = const Color.fromARGB(255, 135, 74, 248).withOpacity(1);
+  final Week3Color = const Color.fromARGB(255, 80, 49, 205).withOpacity(0.9);
+  final Week4Color = const Color.fromARGB(255, 110, 102, 252).withOpacity(1);
+  final betweenSpace = 0.9;
 
   List<Legend> legends = [
-    Legend('Mon', Colors.purple),
-    Legend('Tue', Colors.blue),
-    Legend('Wed', Colors.cyan),
-    Legend('Thu', Colors.cyan),
-    Legend('Fri', Colors.cyan),
-    Legend('Sat', Colors.cyan),
-    Legend('Sun', Colors.cyan),
+    Legend('1주차', const Color.fromARGB(255, 23, 14, 192).withOpacity(0.9)),
+    Legend('2주차', const Color.fromARGB(255, 135, 74, 248).withOpacity(1)),
+    Legend('3주차', const Color.fromARGB(255, 80, 49, 205).withOpacity(0.9)),
+    Legend('4주차', const Color.fromARGB(255, 110, 102, 252).withOpacity(1)),
   ];
 
   BarChartGroupData generateGroupData(
     int x,
-    double Mon,
-    double Tue,
-    double Wed,
-    double Thu,
-    double Fri,
-    double Sat,
-    double Sun,
+    double week1,
+    double week2,
+    double week3,
+    double week4,
   ) {
     return BarChartGroupData(
       x: x,
@@ -48,125 +41,67 @@ class WeeklyChart extends StatelessWidget {
       barRods: [
         BarChartRodData(
           fromY: 0,
-          toY: Mon,
-          color: MonColor,
-          width: 15,
+          toY: week1,
+          color: Week1Color,
+          width: 17,
         ),
         BarChartRodData(
-          fromY: Mon + betweenSpace,
-          toY: Mon + betweenSpace + Tue,
-          color: TueColor,
-          width: 15,
+          fromY: week1 + betweenSpace,
+          toY: week1 + betweenSpace + week2,
+          color: Week2Color,
+          width: 17,
         ),
         BarChartRodData(
-          fromY: Mon + betweenSpace + Tue + betweenSpace,
-          toY: Mon + betweenSpace + Tue + betweenSpace + Wed,
-          color: WedColor,
-          width: 15,
+          fromY: week1 + betweenSpace + week2 + betweenSpace,
+          toY: week1 + betweenSpace + week2 + betweenSpace + week3,
+          color: Week3Color,
+          width: 17,
         ),
         BarChartRodData(
-          fromY: Mon + betweenSpace + Tue + betweenSpace + Wed,
-          toY: Mon +
+          fromY: week1 +
               betweenSpace +
-              Tue +
+              week2 +
               betweenSpace +
-              Wed +
+              week3 +
+              betweenSpace,
+          toY: week1 +
               betweenSpace +
-              Thu,
-          color: WedColor,
-          width: 15,
-        ),
-        BarChartRodData(
-          fromY: Mon +
+              week2 +
               betweenSpace +
-              Tue +
+              week3 +
               betweenSpace +
-              Wed +
-              betweenSpace +
-              Thu,
-          toY: Mon +
-              betweenSpace +
-              Tue +
-              betweenSpace +
-              Wed +
-              betweenSpace +
-              Thu +
-              betweenSpace +
-              Fri,
-          color: WedColor,
-          width: 15,
-        ),
-        BarChartRodData(
-          fromY: Mon +
-              betweenSpace +
-              Tue +
-              betweenSpace +
-              Wed +
-              betweenSpace +
-              Thu +
-              betweenSpace +
-              Fri,
-          toY: Mon +
-              betweenSpace +
-              Tue +
-              betweenSpace +
-              Wed +
-              betweenSpace +
-              Thu +
-              betweenSpace +
-              Fri +
-              betweenSpace +
-              Sat,
-          color: WedColor,
-          width: 15,
-        ),
-        BarChartRodData(
-          fromY: Mon +
-              betweenSpace +
-              Tue +
-              betweenSpace +
-              Wed +
-              betweenSpace +
-              Thu +
-              betweenSpace +
-              Fri +
-              betweenSpace +
-              Sat,
-          toY: Mon +
-              betweenSpace +
-              Tue +
-              betweenSpace +
-              Wed +
-              betweenSpace +
-              Thu +
-              betweenSpace +
-              Fri +
-              betweenSpace +
-              Sat +
-              betweenSpace +
-              Sun,
-          color: WedColor,
-          width: 15,
+              week4,
+          color: Week4Color,
+          width: 17,
         ),
       ],
     );
   }
 
   Widget bottomTitles(double value, TitleMeta meta) {
-    const style = TextStyle(fontSize: 10);
+    const style = TextStyle(fontSize: 15, fontWeight: FontWeight.w600);
     String text;
     switch (value.toInt()) {
       case 0:
-        text = 'Week1';
+        text = 'M';
         break;
       case 1:
-        text = 'Week2';
+        text = 'T';
         break;
       case 2:
-        text = 'Week3';
+        text = 'W';
         break;
       case 3:
-        text = 'Week4';
+        text = 'T';
+        break;
+      case 4:
+        text = 'F';
+        break;
+      case 5:
+        text = 'S';
+        break;
+      case 6:
+        text = 'S';
         break;
       default:
         text = '';
@@ -179,24 +114,16 @@ class WeeklyChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var scoreList = context.read<CloudData>().month();
+
     return Padding(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(25),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text(
-            'Activity',
-            style: TextStyle(
-              color: Colors.blue,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 300),
-          const SizedBox(height: 14),
           AspectRatio(
-            aspectRatio: 2,
+            aspectRatio: 1.0,
             child: BarChart(
               BarChartData(
                 alignment: BarChartAlignment.spaceBetween,
@@ -208,37 +135,97 @@ class WeeklyChart extends StatelessWidget {
                     sideTitles: SideTitles(
                       showTitles: true,
                       getTitlesWidget: bottomTitles,
-                      reservedSize: 15,
+                      reservedSize: 30,
                     ),
                   ),
                 ),
                 barTouchData: BarTouchData(enabled: false),
                 borderData: FlBorderData(show: false),
                 gridData: FlGridData(show: false),
+                // 길이 : context.watch<CloudData>().myScore.score['능률 VOCA : DAY1'].length-7
+                //key : context.watch<CloudData>().myScore.score['능률 VOCA : DAY1'][길이].keys.elementAt(0)
+                //접근 context.watch<CloudData>().myScore.score['능률 VOCA : DAY1'][길이][key][0]
                 barGroups: [
-                  generateGroupData(0, 2, 3, 2, 4, 2, 1, 2),
-                  generateGroupData(1, 2, 5, 1.7, 5, 3, 4, 6),
-                  generateGroupData(2, 1.3, 3.1, 2.8, 1, 7, 5, 4),
-                  generateGroupData(3, 3.1, 4, 3.1, 8, 6, 4, 5),
+                  generateGroupData(
+                    0,
+                    scoreList[0],
+                    scoreList[7],
+                    scoreList[14],
+                    scoreList[21], //Mon\
+                  ),
+                  generateGroupData(
+                    1,
+                    scoreList[1],
+                    scoreList[8],
+                    scoreList[15],
+                    scoreList[22], //Tue
+                  ),
+                  generateGroupData(
+                    2,
+                    scoreList[2],
+                    scoreList[9],
+                    scoreList[16],
+                    scoreList[23], //Wed
+                  ),
+                  generateGroupData(
+                    3,
+                    scoreList[3],
+                    scoreList[10],
+                    scoreList[17],
+                    scoreList[24], //Thu
+                  ),
+                  generateGroupData(
+                    4,
+                    scoreList[4],
+                    scoreList[11],
+                    scoreList[18],
+                    scoreList[25],
+                  ), //Fri
+                  generateGroupData(
+                    5,
+                    scoreList[5],
+                    scoreList[12],
+                    scoreList[19],
+                    scoreList[26],
+                  ), //Sat
+                  generateGroupData(
+                    6,
+                    scoreList[6],
+                    scoreList[13],
+                    scoreList[20],
+                    scoreList[27],
+                  ), //Sun
                 ],
-                maxY: 11 + (betweenSpace * 3),
+                maxY: 400 + (betweenSpace * 3),
                 extraLinesData: ExtraLinesData(
                   horizontalLines: [
                     HorizontalLine(
-                      y: 3.3,
-                      color: MonColor,
+                      y: 0,
+                      color: Week1Color,
                       strokeWidth: 1,
                       dashArray: [15, 4],
                     ),
                     HorizontalLine(
-                      y: 8,
-                      color: TueColor,
+                      y: 100,
+                      color: Week2Color,
                       strokeWidth: 1,
                       dashArray: [15, 4],
                     ),
                     HorizontalLine(
-                      y: 11,
-                      color: WedColor,
+                      y: 200,
+                      color: Week3Color,
+                      strokeWidth: 1,
+                      dashArray: [15, 4],
+                    ),
+                    HorizontalLine(
+                      y: 300,
+                      color: Week3Color,
+                      strokeWidth: 1,
+                      dashArray: [15, 4],
+                    ),
+                    HorizontalLine(
+                      y: 400,
+                      color: Week3Color,
                       strokeWidth: 1,
                       dashArray: [15, 4],
                     ),
@@ -246,6 +233,35 @@ class WeeklyChart extends StatelessWidget {
                 ),
               ),
             ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: legends.map((legend) {
+              return Row(
+                children: [
+                  Container(
+                    width: 12,
+                    height: 12,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: legend.color,
+                    ),
+                    // color: legend.color,
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    legend.name,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              );
+            }).toList(),
           ),
         ],
       ),

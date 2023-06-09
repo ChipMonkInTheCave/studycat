@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -216,6 +218,8 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                       });
                     }
                     context.read<CloudData>().fetchData();
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, '/', (_) => false);
                     Navigator.push(
                       context,
                       MaterialPageRoute(

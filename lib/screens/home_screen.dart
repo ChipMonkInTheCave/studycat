@@ -1,13 +1,15 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
-import 'package:studycat/screens/auth/login_screen.dart';
 import 'package:studycat/screens/graph/graph_screen.dart';
 import 'package:studycat/screens/score/test_score_screen.dart';
 import 'package:studycat/user/profile_screen.dart';
 import 'package:transition/transition.dart';
+import 'auth/login_screen.dart';
 import 'question/select_question_screen.dart';
 import 'package:studycat/widgets/background_widget.dart';
 
@@ -45,20 +47,19 @@ class _HomeState extends State<HomeScreen> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              currentAccountPicture: const CircleAvatar(
-                // 현재 계정 이미지
-                backgroundImage: AssetImage('assets/profile.png'),
-                backgroundColor: Colors.white,
+              currentAccountPicture: Consumer<ImageProviderModel>(
+                builder: (context, imageProvider, _) {
+                  return CircleAvatar(
+                    radius: 100,
+                    backgroundImage: imageProvider.image != null
+                        ? FileImage(File(imageProvider.image!.path))
+                        : null,
+                    // 프로필 이미지 설정
+                  );
+                },
               ),
-              otherAccountsPictures: const <Widget>[
-                // 다른 계정 이미지
-                CircleAvatar(
-                  backgroundColor: Colors.white,
-                  backgroundImage: AssetImage('assets/profile2.png'),
-                ),
-              ],
               accountName: const Text(
-                '승재',
+                '한승재',
                 style: TextStyle(
                   fontSize: 20,
                 ),
@@ -99,7 +100,6 @@ class _HomeState extends State<HomeScreen> {
                 );
                 // Home
               },
-              trailing: const Icon(Icons.add),
             ),
             ListTile(
               leading: Icon(
@@ -114,9 +114,14 @@ class _HomeState extends State<HomeScreen> {
                 ),
               ),
               onTap: () {
-                // Q&A창으로
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ProfileScreen(),
+                  ),
+                );
+                // 프로필
               },
-              trailing: const Icon(Icons.add),
             ),
             ListTile(
               leading: Icon(
@@ -138,7 +143,6 @@ class _HomeState extends State<HomeScreen> {
                   ),
                 );
               },
-              trailing: const Icon(Icons.add),
             ),
             ListTile(
               leading: Icon(
@@ -161,7 +165,6 @@ class _HomeState extends State<HomeScreen> {
                 );
                 // 설정창으로
               },
-              trailing: const Icon(Icons.add),
             ),
             ListTile(
               leading: Icon(
@@ -178,7 +181,28 @@ class _HomeState extends State<HomeScreen> {
               onTap: () {
                 // Q&A창으로
               },
-              trailing: const Icon(Icons.add),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.logout,
+                size: 30,
+                color: Colors.grey[850],
+              ),
+              title: const Text(
+                '로그아웃',
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+              onTap: () {
+                FirebaseAuth.instance.signOut().then((value) => Navigator.push(
+                    context,
+                    Transition(
+                      child: const LoginScreen(),
+                      transitionEffect: TransitionEffect.FADE,
+                    )));
+                // Q&A창으로
+              },
             ),
           ],
         ),
@@ -265,9 +289,16 @@ class Page extends StatelessWidget {
                       ),
                       child: Stack(
                         children: [
-                          const CircleAvatar(
-                            radius: 100,
-                            backgroundImage: AssetImage('assets/profile.png'),
+                          Consumer<ImageProviderModel>(
+                            builder: (context, imageProvider, _) {
+                              return CircleAvatar(
+                                radius: 100,
+                                backgroundImage: imageProvider.image != null
+                                    ? FileImage(File(imageProvider.image!.path))
+                                    : null,
+                                // 프로필 이미지 설정
+                              );
+                            },
                           ),
                           Positioned(
                             top: 0,
@@ -277,9 +308,9 @@ class Page extends StatelessWidget {
                             child: CircularProgressIndicator(
                               strokeWidth: 5,
                               value: exp != null ? exp * 0.01 : 0,
-                              backgroundColor: Colors.white.withOpacity(0.3),
-                              valueColor: const AlwaysStoppedAnimation<Color>(
-                                Colors.white,
+                              backgroundColor: Colors.white,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Color.fromARGB(175, 196, 18, 184),
                               ),
                             ),
                           ),
@@ -287,141 +318,121 @@ class Page extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 30),
-                    Container(
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 80,
-                            height: 70,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 2,
-                                  blurRadius: 5,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    context
-                                        .watch<CloudData>()
-                                        .myUserData
-                                        .userdata['level']
-                                        .toString(),
-                                    style: const TextStyle(
-                                      fontSize: 30,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  const Text(
-                                    'Level',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: width * 0.23,
+                          height: height * 0.1,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: const Offset(0, 2),
                               ),
-                            ),
+                            ],
                           ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Container(
-                            width: 100,
-                            height: 70,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 2,
-                                  blurRadius: 5,
-                                  offset: const Offset(0, 2),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                exp != null ? '${exp.toInt()}%' : '0%',
+                                style: const TextStyle(
+                                  fontSize: 30,
+                                  color: Colors.black,
                                 ),
-                              ],
-                            ),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Column(
-                                children: const [
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    '53%',
-                                    style: TextStyle(
-                                      fontSize: 30,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Progress',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ],
+                                textAlign: TextAlign.center,
                               ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Container(
-                            width: 100,
-                            height: 70,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 2,
-                                  blurRadius: 5,
-                                  offset: const Offset(0, 2),
+                              const Text(
+                                'EXP',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.grey,
                                 ),
-                              ],
-                            ),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    exp != null ? '${exp.toInt()}%' : '0%',
-                                    style: const TextStyle(
-                                      fontSize: 30,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  const Text(
-                                    'EXP',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ],
+                                textAlign: TextAlign.center,
                               ),
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                        Container(
+                          width: width * 0.23,
+                          height: height * 0.1,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                context
+                                    .watch<CloudData>()
+                                    .myUserData
+                                    .userdata['level']
+                                    .toString(),
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Text(
+                                'level',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          width: width * 0.23,
+                          height: height * 0.1,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                '53%',
+                                style: const TextStyle(
+                                  fontSize: 30,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              const Text(
+                                'Pro',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 40,
@@ -475,6 +486,7 @@ class Page extends StatelessWidget {
                     ),
                     const SizedBox(height: 30),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         ElevatedButton(
                           onPressed: () {},
@@ -492,7 +504,6 @@ class Page extends StatelessWidget {
                             color: Colors.purple,
                           ),
                         ),
-                        const SizedBox(width: 40),
                         ElevatedButton(
                           onPressed: () {
                             Navigator.push(
