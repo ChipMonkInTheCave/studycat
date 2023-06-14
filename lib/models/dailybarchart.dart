@@ -8,13 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 
-class DailyChart extends StatefulWidget {
-  const DailyChart({super.key});
+class DailyBarChart extends StatefulWidget {
+  DailyBarChart({super.key});
   @override
   State<StatefulWidget> createState() => BarChartSample1State();
 }
 
-class BarChartSample1State extends State<DailyChart> {
+class BarChartSample1State extends State<DailyBarChart> {
   final Duration animDuration = const Duration(milliseconds: 250);
 
   int touchedIndex = -1;
@@ -39,28 +39,6 @@ class BarChartSample1State extends State<DailyChart> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                const Text(
-                  '성적 그래프',
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 46, 5, 77),
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
-                const Text(
-                  '일주일 기록',
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 104, 70, 200),
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(
-                  height: 38,
-                ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -245,6 +223,7 @@ class BarChartSample1State extends State<DailyChart> {
         leftTitles: AxisTitles(
           sideTitles: SideTitles(
             reservedSize: 32,
+            interval: 20,
             showTitles: true, //왼쪽 타이틀
           ),
         ),
