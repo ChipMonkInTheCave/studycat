@@ -7,6 +7,8 @@ import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/auth/signup_screen.dart';
 import 'package:studycat/screens/home_screen.dart';
 
+import '../../widgets/background_widget.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -28,110 +30,144 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: TextField(
-                controller: _emailInputText,
-                decoration: const InputDecoration(hintText: 'Email'),
+      body: Stack(
+        children: [
+          const BackgroundWidget(num: 0.15),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: TextField(
+                  cursorColor: const Color.fromARGB(255, 140, 97, 213),
+                  controller: _emailInputText,
+                  decoration: const InputDecoration(
+                    hintText: 'Email',
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color.fromARGB(255, 140, 97, 213),
+                      ),
+                    ),
+                  ),
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: TextField(
-                controller: _passInputText,
-                obscureText: true,
-                decoration: const InputDecoration(hintText: 'Password'),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: TextField(
+                  cursorColor: const Color.fromARGB(255, 140, 97, 213),
+                  controller: _passInputText,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    hintText: 'Password',
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color.fromARGB(255, 140, 97, 213),
+                      ),
+                    ),
+                  ),
+                ),
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 5),
-              width: double.infinity,
-              child: OutlinedButton(
-                onPressed: () async {
-                  // 이메일, 비번 중 하나라도 비어있으면 패스
-                  if (_emailInputText.text.isEmpty ||
-                      _passInputText.text.isEmpty) return;
-                  try {
-                    await FirebaseAuth.instance.signInWithEmailAndPassword(
-                      email: _emailInputText.text.toLowerCase().trim(),
-                      password: _passInputText.text.trim(),
-                    );
-                    print('success login');
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: () async {
+                    // 이메일, 비번 중 하나라도 비어있으면 패스
+                    if (_emailInputText.text.isEmpty ||
+                        _passInputText.text.isEmpty) return;
+                    try {
+                      await FirebaseAuth.instance.signInWithEmailAndPassword(
+                        email: _emailInputText.text.toLowerCase().trim(),
+                        password: _passInputText.text.trim(),
+                      );
+                      print('success login');
 
-                    context.read<CloudData>().getUID();
-                    context.read<CloudData>().fetchData();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const MyApp()),
-                    );
-                  } on FirebaseAuthException catch (e) {
-                    print('an error occured $e');
-                  }
-                },
-                child: const Text('이메일 로그인'),
+                      context.read<CloudData>().getUID();
+                      context.read<CloudData>().fetchData();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const MyApp()),
+                      );
+                    } on FirebaseAuthException catch (e) {
+                      print('an error occured $e');
+                    }
+                  },
+                  child: const Text(
+                    '이메일 로그인',
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 140, 97, 213),
+                    ),
+                  ),
+                ),
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 5),
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () async {
-                  final googleSignIn = GoogleSignIn();
-                  final googleAccount = await googleSignIn.signIn();
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 4,
+                    backgroundColor: const Color.fromARGB(255, 140, 97, 213),
+                  ),
+                  onPressed: () async {
+                    final googleSignIn = GoogleSignIn();
+                    final googleAccount = await googleSignIn.signIn();
 
-                  if (googleAccount != null) {
-                    final googleAuth = await googleAccount.authentication;
+                    if (googleAccount != null) {
+                      final googleAuth = await googleAccount.authentication;
 
-                    if (googleAuth.accessToken != null &&
-                        googleAuth.idToken != null) {
-                      try {
-                        await FirebaseAuth.instance
-                            .signInWithCredential(GoogleAuthProvider.credential(
-                          idToken: googleAuth.idToken,
-                          accessToken: googleAuth.accessToken,
-                        ));
-                        print('success registered');
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HomeScreen()),
-                        );
-                      } on FirebaseAuthException catch (e) {
-                        print('an error occured $e');
-                      } catch (e) {
-                        print('an error occured $e');
+                      if (googleAuth.accessToken != null &&
+                          googleAuth.idToken != null) {
+                        try {
+                          await FirebaseAuth.instance.signInWithCredential(
+                              GoogleAuthProvider.credential(
+                            idToken: googleAuth.idToken,
+                            accessToken: googleAuth.accessToken,
+                          ));
+                          print('success registered');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomeScreen()),
+                          );
+                        } on FirebaseAuthException catch (e) {
+                          print('an error occured $e');
+                        } catch (e) {
+                          print('an error occured $e');
+                        }
+                      } else {
+                        print('an error occured');
                       }
                     } else {
                       print('an error occured');
                     }
-                  } else {
-                    print('an error occured');
-                  }
-                },
-                child: const Text('구글로 시작하기'),
+                  },
+                  child: const Text(
+                    '구글로 시작하기',
+                  ),
+                ),
               ),
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const SignUpScreen()),
-                  );
-                },
-                // width: double.infinity,
-                child: const Text('회원가입 하러가기'),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SignUpScreen()),
+                    );
+                  },
+                  // width: double.infinity,
+                  child: const Text(
+                    '회원가입 하러가기',
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 140, 97, 213),
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
+        ],
       ),
     );
   }

@@ -111,8 +111,7 @@ Future<Map<String, dynamic>> fetchDataFromFirestore(String id) async {
   DocumentSnapshot questionSnapshot =
       await FirebaseFirestore.instance.collection('users').doc(id).get();
 
-  Map<String, dynamic> data =
-      await questionSnapshot.data() as Map<String, dynamic>;
+  Map<String, dynamic> data = questionSnapshot.data() as Map<String, dynamic>;
 
   List<dynamic> questionData = await data['question'];
 

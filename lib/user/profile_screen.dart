@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
+import 'package:studycat/screens/home_screen.dart';
 import 'package:studycat/widgets/background_widget.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:studycat/widgets/iconbutton_widget.dart';
 import 'dart:io';
 
 class ImageProviderModel extends ChangeNotifier {
@@ -57,10 +59,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     double height = MediaQuery.of(context).size.height;
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     return Scaffold(
-      appBar: AppBar(backgroundColor: const Color.fromARGB(255, 135, 74, 248)),
       body: Stack(
         children: [
           const BackgroundWidget(num: 0.35),
+          const IconButtonWidget(
+            icon: Icons.arrow_back,
+            destination: HomeScreen(),
+          ),
           Container(
             padding: EdgeInsets.fromLTRB(
               width * 0.1,
@@ -71,13 +76,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Center(
               child: Column(
                 children: [
+                  const SizedBox(
+                    height: 50,
+                  ),
                   Consumer<ImageProviderModel>(
                     builder: (context, imageProvider, _) {
                       return CircleAvatar(
                         radius: 100,
                         backgroundImage: imageProvider.image != null
                             ? FileImage(File(imageProvider.image!.path))
-                            : null,
+                            : Image.asset('assets/default_image.png').image,
                         // 프로필 이미지 설정
                       );
                     },
