@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +12,7 @@ import 'package:transition/transition.dart';
 import 'auth/login_screen.dart';
 import 'question/select_question_screen.dart';
 import 'package:studycat/widgets/background_widget.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -39,6 +38,41 @@ class _HomeState extends State<HomeScreen> {
           });
   }
 
+  void _sendEmail() async {
+    final Email email = Email(
+      body: '',
+      subject: '[스터디캣 문의]',
+      recipients: ['gimbuk00@gmail.com'],
+      cc: [],
+      bcc: [],
+      attachmentPaths: [],
+      isHTML: false,
+    );
+    try {
+      await FlutterEmailSender.send(email);
+    } catch (error) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return const AlertDialog(
+            title: Text('메일 앱을 사용할 수 없어요 :('),
+            content: Text(
+                '기본 메일 앱을 사용할 수 없기 때문에 앱에서 바로 문의를 전송하기 어려운 상황입니다.\n\n아래 이메일로 연락주시면 친절하게 답변해드릴게요 :)\n\n[ gimbuk00@gmail.com ]'),
+            titleTextStyle: TextStyle(
+              fontSize: 20,
+              color: Colors.purple,
+            ),
+            contentTextStyle: TextStyle(
+              fontSize: 15,
+              color: Colors.black,
+            ),
+            actions: [],
+          );
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +89,7 @@ class _HomeState extends State<HomeScreen> {
                     radius: 100,
                     backgroundImage: imageProvider.image != null
                         ? FileImage(File(imageProvider.image!.path))
-                        : null,
+                        : Image.asset('assets/default_image.png').image,
                     // 프로필 이미지 설정
                   );
                 },
@@ -181,6 +215,7 @@ class _HomeState extends State<HomeScreen> {
                 ),
               ),
               onTap: () {
+                _sendEmail();
                 // Q&A창으로
               },
             ),
@@ -297,7 +332,8 @@ class Page extends StatelessWidget {
                                 radius: 100,
                                 backgroundImage: imageProvider.image != null
                                     ? FileImage(File(imageProvider.image!.path))
-                                    : null,
+                                    : Image.asset('assets/default_image.png')
+                                        .image,
                                 // 프로필 이미지 설정
                               );
                             },
@@ -414,9 +450,9 @@ class Page extends StatelessWidget {
                               ),
                             ],
                           ),
-                          child: Column(
+                          child: const Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               Text(
                                 '53%',
                                 style: TextStyle(
