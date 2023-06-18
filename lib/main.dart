@@ -40,19 +40,37 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode;
-    if (FirebaseAuth.instance.currentUser != null) {
-      if (update) {
-      } else {
-        context.watch<CloudData>().getUID();
-        context.watch<CloudData>().fetchData();
-        // context.watch<UserData>().addSubject(
-        //     context.watch<CloudData>().myQuestion.question.keys.elementAt(0),
-        //     context.watch<CloudData>().myQuestion.question.keys.elementAt(0));
-        update = true;
-      }
-      return const MaterialApp(home: HomeScreen());
-    } else {
-      return const MaterialApp(home: LoginScreen());
-    }
+    return FutureBuilder(
+      future: context.watch<CloudData>().getUID(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (FirebaseAuth.instance.currentUser != null) {
+            if (update) {
+            } else {
+              context.watch<CloudData>().fetchData();
+              update = true;
+            }
+            return const MaterialApp(home: HomeScreen());
+          } else {
+            return const MaterialApp(home: LoginScreen());
+          }
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return const MaterialApp(
+            home: Scaffold(
+              body: Center(
+                child: Text("로딩중..."),
+              ),
+            ),
+          );
+        }
+        return const MaterialApp(
+          home: Scaffold(
+            body: Center(
+              child: Text("재시작해주세요."),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
