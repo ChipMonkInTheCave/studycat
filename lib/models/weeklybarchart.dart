@@ -15,17 +15,17 @@ class Legend {
 class WeeklyBarChart extends StatelessWidget {
   WeeklyBarChart({super.key});
 
-  final Week1Color = const Color.fromARGB(255, 23, 14, 192).withOpacity(0.9);
-  final Week2Color = const Color.fromARGB(255, 135, 74, 248).withOpacity(1);
-  final Week3Color = const Color.fromARGB(255, 80, 49, 205).withOpacity(0.9);
-  final Week4Color = const Color.fromARGB(255, 110, 102, 252).withOpacity(1);
-  final betweenSpace = 0.9;
+  final Week1Color = const Color(0xff84B1ED);
+  final Week2Color = const Color(0xffC89EC4);
+  final Week3Color = const Color(0xffEE7785);
+  final Week4Color = const Color(0xff67D5B5);
+  final betweenSpace = 1.0;
 
   List<Legend> legends = [
-    Legend('1주차', const Color.fromARGB(255, 23, 14, 192).withOpacity(0.9)),
-    Legend('2주차', const Color.fromARGB(255, 135, 74, 248).withOpacity(1)),
-    Legend('3주차', const Color.fromARGB(255, 80, 49, 205).withOpacity(0.9)),
-    Legend('4주차', const Color.fromARGB(255, 110, 102, 252).withOpacity(1)),
+    Legend('1주차', const Color(0xff84B1ED)),
+    Legend('2주차', const Color(0xffC89EC4)),
+    Legend('3주차', const Color(0xffEE7785)),
+    Legend('4주차', const Color(0xff67D5B5)),
   ];
 
   BarChartGroupData generateGroupData(
