@@ -443,7 +443,7 @@ class DailyLineChartState extends State<DailyLineChart> {
               children: <Widget>[
                 Column(
                   children: <Widget>[
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.all(15),
                       child: Column(
                         children: <Widget>[

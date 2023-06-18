@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/graph/graph_screen.dart';
@@ -449,9 +451,9 @@ class Page extends StatelessWidget {
                               ),
                             ],
                           ),
-                          child: const Column(
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
+                            children: const [
                               Text(
                                 '53%',
                                 style: TextStyle(
@@ -476,36 +478,28 @@ class Page extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        FirebaseAuth.instance
-                            .signOut()
-                            .then((value) => Navigator.push(
-                                context,
-                                Transition(
-                                  child: const LoginScreen(),
-                                  transitionEffect: TransitionEffect.FADE,
-                                )));
-                        //score 데이터 넣는 코드
-                        // for (var i = 1; i < 32; i++) {
-                        //   var now = DateTime.utc(2023, 5, i);
-                        //   var date = DateFormat('yyyy-MM-dd').format(now);
-                        //   var week = DateFormat('E').format(now);
-                        //   var list1 = context
-                        //       .read<CloudData>()
-                        //       .myScore
-                        //       .score['능률 VOCA : DAY3'];
-                        //   var map1 = context.read<CloudData>().myScore.score;
-                        //   list1 ??= [];
-                        //   list1.add({
-                        //     date: [Random().nextInt(100) + 1, week]
-                        //   });
-                        //   map1['능률 VOCA : DAY3'] = list1;
-                        //   FirebaseFirestore.instance
-                        //       .collection('users')
-                        //       .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
-                        //       .update({
-                        //     'score': map1,
-                        //   });
-                        // }
+                        // score 데이터 넣는 코드
+                        for (var i = 1; i < 32; i++) {
+                          var now = DateTime.utc(2023, 5, i);
+                          var date = DateFormat('yyyy-MM-dd').format(now);
+                          var week = DateFormat('E').format(now);
+                          var list1 = context
+                              .read<CloudData>()
+                              .myScore
+                              .score['능률 VOCA : DAY3'];
+                          var map1 = context.read<CloudData>().myScore.score;
+                          list1 ??= [];
+                          list1.add({
+                            date: [Random().nextInt(100) + 1, week]
+                          });
+                          map1['능률 VOCA : DAY2'] = list1;
+                          FirebaseFirestore.instance
+                              .collection('users')
+                              .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
+                              .update({
+                            'score': map1,
+                          });
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         elevation: 4,

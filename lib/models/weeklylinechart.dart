@@ -275,7 +275,7 @@ class WeeklyLineChartState extends State<WeeklyLineChart> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.all(15),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,

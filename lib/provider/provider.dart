@@ -87,6 +87,7 @@ class CloudData with ChangeNotifier {
   }
 
   Future<void> fetchData() async {
+    getUID();
     var data = await fetchDataFromFirestore(_id);
     _myQuestion = data['question'];
     _myScore = data['score'];

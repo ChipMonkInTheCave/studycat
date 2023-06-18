@@ -247,7 +247,7 @@ class TestScoreState extends State<TestScore> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.black,
               ),
-              child: Text(data['능률 VOCA : DAY1'][index4 + 14],
+              child: Text(data['능률 VOCA : DAY1'][index4 + 14].toString(),
                   style: const TextStyle(fontSize: 30))),
         ),
         SizedBox(height: height * 0.002),

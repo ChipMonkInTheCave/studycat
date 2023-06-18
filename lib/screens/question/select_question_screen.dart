@@ -116,7 +116,7 @@ class _SelectQuestionState extends State<SelectQuestion> {
                         );
                       },
                       shape: RoundedRectangleBorder(
-                        side: BorderSide(color: color.box, width: 7),
+                        side: BorderSide(color: color.box, width: 5),
                         borderRadius: BorderRadius.circular(17),
                       ),
                       tileColor: color.text,

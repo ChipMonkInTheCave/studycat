@@ -139,7 +139,7 @@ class _ShowQuestionScreenState extends State<ShowQuestionScreen> {
                       );
                     },
                     icon: Icon(
-                      Icons.home,
+                      Icons.arrow_back,
                       color: color.text,
                       size: 40,
                     ),
@@ -366,9 +366,17 @@ void removeWordAlert(
                         menu[subjectnum.toInt()][keys] = list1;
                         FirebaseFirestore.instance
                             .collection('users')
-                            .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
+                            .doc(context.read<CloudData>().id)
                             .update({'question': menu});
                         context.read<CloudData>().fetchData();
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, '/', (_) => false);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ShowQuestionScreen(
+                                  subjectnum: subjectnum.toInt())),
+                        );
                       },
                       child: Text(
                         '    확인    ',

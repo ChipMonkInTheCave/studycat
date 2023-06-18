@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/question/select_question_screen.dart';
+import 'package:studycat/widgets/alert_widget.dart';
 import 'package:studycat/widgets/background_widget.dart';
 import 'package:studycat/widgets/textfield_widget.dart';
 import 'package:transition/transition.dart';
@@ -110,7 +111,8 @@ class _InputQuestionState extends State<InputQuestion> {
                     padding: EdgeInsets.symmetric(
                         horizontal: width * 0.08, vertical: height * 0.05),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Card(
                           shape: RoundedRectangleBorder(
@@ -126,6 +128,10 @@ class _InputQuestionState extends State<InputQuestion> {
                             ),
                           ),
                         ),
+                        const Text(
+                          'hihi',
+                          textAlign: TextAlign.center,
+                        ),
                         Center(
                           child: TextButton(
                             style: ButtonStyle(
@@ -139,7 +145,7 @@ class _InputQuestionState extends State<InputQuestion> {
                             onPressed: () {
                               inputText = inputController.text;
                               if (inputText.isEmpty) {
-                                nullAlert(context, true);
+                                nullAlert(context, '과목을 입력한 후 선택해주세요');
                               } else {
                                 questionMenu(context, inputText);
                               }
@@ -154,37 +160,6 @@ class _InputQuestionState extends State<InputQuestion> {
                           ),
                         ),
                       ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: height * 0.87),
-              child: Center(
-                child: Container(
-                  width: width * 0.9,
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [
-                        Color.fromARGB(255, 127, 134, 220),
-                        Color.fromARGB(255, 125, 135, 222),
-                        Color.fromARGB(255, 157, 164, 232),
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: TextButton(
-                    onPressed: () {},
-                    child: AutoSizeText(
-                      '확인',
-                      style: TextStyle(
-                        color: color.text,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                      ),
                     ),
                   ),
                 ),
@@ -287,7 +262,7 @@ void questionMenu(
                     if (eng.length != kor.length ||
                         engController.text.isEmpty ||
                         korController.text.isEmpty) {
-                      nullAlert(context, false);
+                      nullAlert(context, '영단어 갯수와\n뜻의 갯수를 맞춰주세요');
                     } else {
                       checkAlert(context, eng, kor, sub);
                     }
@@ -304,39 +279,6 @@ void questionMenu(
             ),
           ),
         ),
-      );
-    }),
-  );
-}
-
-void nullAlert(BuildContext context, bool sub) async {
-  showDialog(
-    context: context,
-    barrierDismissible: true,
-    builder: ((context) {
-      return AlertDialog(
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-            color: context.watch<ThemeColor>().box,
-            width: 10.0,
-          ),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        backgroundColor: context.watch<ThemeColor>().text,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              sub ? '과목을 입력한 후 선택해주세요' : '영단어 갯수와\n뜻의 갯수를 맞춰주세요',
-              style: TextStyle(
-                color: context.watch<ThemeColor>().box,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-        content: const SingleChildScrollView(),
       );
     }),
   );
@@ -437,7 +379,13 @@ void checkAlert(BuildContext context, List eng, List kor, String sub) async {
                           .update({'question': list1});
                     }
                     context.read<CloudData>().fetchData();
-                    Navigator.pop(context);
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, '/', (_) => false);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SelectQuestion()),
+                    );
                   },
                   child: Text(
                     '    확인    ',
