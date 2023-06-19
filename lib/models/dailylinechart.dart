@@ -1,10 +1,6 @@
-import 'dart:ffi';
-import 'dart:math';
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:studycat/database/db.dart';
 import 'package:studycat/provider/provider.dart';
 
 class _LineChart extends StatefulWidget {
@@ -240,176 +236,39 @@ class _LineChartState extends State<_LineChart> {
         dotData: FlDotData(show: true),
         belowBarData: BarAreaData(show: false),
         spots: [
-          //1~5
-          //context.watch<CloudData>().myScore.score['section1'][0]['2023-05-01'],
-          //for (double i = 0; i < 7; i++)
-          // FlSpot(
-          //     context.watch<CloudData>().myScore.score['section1'][0]
-          //         ['2023-05-01'][1],
-          //     context.watch<CloudData>().myScore.score['section1'][0]
-          //         ['2023-05-01'][0])
-          //FlSpot(1 + (2 * i), Random().nextInt(99 + 1).toDouble()),
-          FlSpot(
-              1,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['능률 VOCA : DAY1'][context
-                              .watch<CloudData>()
-                              .myScore
-                              .score['능률 VOCA : DAY1']
-                              .length -
-                          7][
+          if (context.watch<CloudData>().scoreList["능률 VOCA : DAY1"] !=
+              null) ...[
+            if (context.watch<CloudData>().scoreList["능률 VOCA : DAY1"].length >=
+                7) ...[
+              for (var i = 0; i < 7; i++) ...[
+                FlSpot(
+                    1 + (i * 2),
+                    context
+                        .watch<CloudData>()
+                        .scoreList["능률 VOCA : DAY1"][context
+                                .watch<CloudData>()
+                                .scoreList["능률 VOCA : DAY1"]
+                                .length -
+                            7 +
+                            i]
+                        .toDouble())
+              ]
+            ] else ...[
+              for (var i = 0;
+                  i <
                       context
                           .watch<CloudData>()
-                          .myScore
-                          .score['능률 VOCA : DAY1'][context
-                                  .watch<CloudData>()
-                                  .myScore
-                                  .score['능률 VOCA : DAY1']
-                                  .length -
-                              7]
-                          .keys
-                          .elementAt(0)][0]
-                  .toDouble()),
-          FlSpot(
-              3,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['능률 VOCA : DAY1'][context
-                              .watch<CloudData>()
-                              .myScore
-                              .score['능률 VOCA : DAY1']
-                              .length -
-                          6][
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['능률 VOCA : DAY1'][context
-                                  .watch<CloudData>()
-                                  .myScore
-                                  .score['능률 VOCA : DAY1']
-                                  .length -
-                              6]
-                          .keys
-                          .elementAt(0)][0]
-                  .toDouble()),
-          FlSpot(
-              5,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['능률 VOCA : DAY1'][context
-                              .watch<CloudData>()
-                              .myScore
-                              .score['능률 VOCA : DAY1']
-                              .length -
-                          5][
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['능률 VOCA : DAY1'][context
-                                  .watch<CloudData>()
-                                  .myScore
-                                  .score['능률 VOCA : DAY1']
-                                  .length -
-                              5]
-                          .keys
-                          .elementAt(0)][0]
-                  .toDouble()),
-          FlSpot(
-              7,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['능률 VOCA : DAY1'][context
-                              .watch<CloudData>()
-                              .myScore
-                              .score['능률 VOCA : DAY1']
-                              .length -
-                          4][
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['능률 VOCA : DAY1'][context
-                                  .watch<CloudData>()
-                                  .myScore
-                                  .score['능률 VOCA : DAY1']
-                                  .length -
-                              4]
-                          .keys
-                          .elementAt(0)][0]
-                  .toDouble()),
-          FlSpot(
-              9,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['능률 VOCA : DAY1'][context
-                              .watch<CloudData>()
-                              .myScore
-                              .score['능률 VOCA : DAY1']
-                              .length -
-                          3][
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['능률 VOCA : DAY1'][context
-                                  .watch<CloudData>()
-                                  .myScore
-                                  .score['능률 VOCA : DAY1']
-                                  .length -
-                              3]
-                          .keys
-                          .elementAt(0)][0]
-                  .toDouble()),
-          FlSpot(
-              11,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['능률 VOCA : DAY1'][context
-                              .watch<CloudData>()
-                              .myScore
-                              .score['능률 VOCA : DAY1']
-                              .length -
-                          2][
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['능률 VOCA : DAY1'][context
-                                  .watch<CloudData>()
-                                  .myScore
-                                  .score['능률 VOCA : DAY1']
-                                  .length -
-                              2]
-                          .keys
-                          .elementAt(0)][0]
-                  .toDouble()),
-          FlSpot(
-              13,
-              context
-                  .watch<CloudData>()
-                  .myScore
-                  .score['능률 VOCA : DAY1'][context
-                              .watch<CloudData>()
-                              .myScore
-                              .score['능률 VOCA : DAY1']
-                              .length -
-                          1][
-                      context
-                          .watch<CloudData>()
-                          .myScore
-                          .score['능률 VOCA : DAY1'][context
-                                  .watch<CloudData>()
-                                  .myScore
-                                  .score['능률 VOCA : DAY1']
-                                  .length -
-                              1]
-                          .keys
-                          .elementAt(0)][0]
-                  .toDouble()),
+                          .scoreList["능률 VOCA : DAY1"]
+                          .length;
+                  i++)
+                FlSpot(
+                    1 + (i * 2),
+                    context
+                        .watch<CloudData>()
+                        .scoreList["능률 VOCA : DAY1"][i]
+                        .toDouble())
+            ]
+          ]
         ],
       );
 }
@@ -436,7 +295,7 @@ class DailyLineChartState extends State<DailyLineChart> {
       width: 390,
       height: 400,
       child: FutureBuilder(
-        future: setGraphData('001'),
+        future: context.watch<CloudData>().month(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return Stack(
@@ -444,9 +303,9 @@ class DailyLineChartState extends State<DailyLineChart> {
                 Column(
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(15),
                       child: Column(
-                        children: <Widget>[
+                        children: const <Widget>[
                           SizedBox(height: 10),
                         ],
                       ),

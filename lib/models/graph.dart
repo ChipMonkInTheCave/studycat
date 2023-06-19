@@ -3,11 +3,10 @@ import 'dart:ffi';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:studycat/database/db.dart';
 import 'package:studycat/provider/provider.dart';
 
 class _LineChart extends StatefulWidget {
-  _LineChart({
+  const _LineChart({
     required this.isShowingMainData,
   });
 
@@ -289,7 +288,7 @@ class LineChartSample1State extends State<LineChartSample1> {
                 const SizedBox(
                   height: 10,
                 ),
-                Text(
+                const Text(
                   '성적 그래프',
                   style: TextStyle(
                     color: Colors.black,

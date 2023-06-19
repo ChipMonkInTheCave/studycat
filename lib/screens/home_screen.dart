@@ -76,6 +76,7 @@ class _HomeState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth user = FirebaseAuth.instance;
     return Scaffold(
       key: _endDrawerKey,
       body: _widgetOptions.elementAt(_currentSelected),
@@ -95,15 +96,17 @@ class _HomeState extends State<HomeScreen> {
                   );
                 },
               ),
-              accountName: const Text(
-                '한승재',
-                style: TextStyle(
+              accountName: Text(
+                user.currentUser!.displayName == null
+                    ? '익명'
+                    : user.currentUser!.displayName.toString(),
+                style: const TextStyle(
                   fontSize: 20,
                 ),
               ),
-              accountEmail: const Text(
-                'Gimbuk00@gmail.com',
-                style: TextStyle(
+              accountEmail: Text(
+                user.currentUser!.email.toString(),
+                style: const TextStyle(
                   fontSize: 15,
                 ),
               ),
