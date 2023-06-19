@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:animate_do/animate_do.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -181,6 +179,9 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                             .read<CloudData>()
                             .myUserData
                             .userdata['level'],
+                        'recentScore':
+                            ((widget.cat / widget.queLen) * 100).toInt(),
+                        'recentWordnote': widget.subject,
                       }
                     });
                     if (context.read<CloudData>().myUserData.userdata['exp'] +
@@ -198,7 +199,10 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                                   .read<CloudData>()
                                   .myUserData
                                   .userdata['level'] +
-                              1
+                              1,
+                          'recentScore':
+                              ((widget.cat / widget.queLen) * 100).toInt(),
+                          'recentWordnote': widget.subject,
                         }
                       });
                     } else {
@@ -216,6 +220,9 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                               .read<CloudData>()
                               .myUserData
                               .userdata['level'],
+                          'recentScore':
+                              ((widget.cat / widget.queLen) * 100).toInt(),
+                          'recentWordnote': widget.subject,
                         }
                       });
                     }

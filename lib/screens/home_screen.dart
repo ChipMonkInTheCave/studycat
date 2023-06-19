@@ -1,10 +1,7 @@
 import 'dart:io';
-import 'dart:math';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/graph/graph_screen.dart';
@@ -291,9 +288,7 @@ class Page extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     num? exp = context.watch<CloudData>().myUserData.userdata['exp'];
-    var aa = FirebaseFirestore.instance
-        .collection('users')
-        .doc('jPwmXxGJpMZqGbPZqtNddImSTju1');
+    var color = context.watch<ThemeColor>();
 
     return Scaffold(
       body: Stack(
@@ -482,30 +477,7 @@ class Page extends StatelessWidget {
                       height: 40,
                     ),
                     ElevatedButton(
-                      onPressed: () {
-                        // score 데이터 넣는 코드
-                        for (var i = 1; i < 32; i++) {
-                          var now = DateTime.utc(2023, 5, i);
-                          var date = DateFormat('yyyy-MM-dd').format(now);
-                          var week = DateFormat('E').format(now);
-                          var list1 = context
-                              .read<CloudData>()
-                              .myScore
-                              .score['능률 VOCA : DAY3'];
-                          var map1 = context.read<CloudData>().myScore.score;
-                          list1 ??= [];
-                          list1.add({
-                            date: [Random().nextInt(100) + 1, week]
-                          });
-                          map1['능률 VOCA : DAY2'] = list1;
-                          FirebaseFirestore.instance
-                              .collection('users')
-                              .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
-                              .update({
-                            'score': map1,
-                          });
-                        }
-                      },
+                      onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         elevation: 4,
                         backgroundColor: Colors.white,
@@ -514,10 +486,50 @@ class Page extends StatelessWidget {
                           borderRadius: BorderRadius.circular(5),
                         ),
                       ),
-                      child: const Icon(
-                        Icons.calendar_month,
-                        size: 40,
-                        color: Colors.purple,
+                      child: Container(
+                        width: width * 0.8,
+                        height: height * 0.2,
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '최근 공부했던 단어장',
+                              style: TextStyle(
+                                color: color.background,
+                                fontSize: width * 0.05,
+                              ),
+                            ),
+                            Text(
+                              "제목 : ${context.watch<CloudData>().myUserData.userdata['recentWordnote']}",
+                              style: TextStyle(
+                                color: color.background,
+                                fontSize: width * 0.05,
+                              ),
+                            ),
+                            Text(
+                              "점수 : ${context.watch<CloudData>().myUserData.userdata['recentScore']}점",
+                              style: TextStyle(
+                                color: color.background,
+                                fontSize: width * 0.05,
+                              ),
+                            ),
+                            TextButton(
+                                onPressed: () {},
+                                style: ButtonStyle(
+                                  fixedSize: MaterialStateProperty.all(
+                                    Size(width * 0.8, height * 0.02),
+                                  ),
+                                  backgroundColor: MaterialStateProperty.all(
+                                    color.box,
+                                  ),
+                                ),
+                                child: Text('다시 풀러가기',
+                                    style: TextStyle(
+                                      color: color.text,
+                                    ))),
+                          ],
+                        ),
                       ),
                     ),
                     const SizedBox(height: 30),
