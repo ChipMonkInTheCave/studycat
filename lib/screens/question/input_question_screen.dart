@@ -120,18 +120,28 @@ class _InputQuestionState extends State<InputQuestion> {
                           ),
                           child: TextField(
                             controller: inputController,
-                            decoration:
-                                TextFieldDeco('과목을 입력해주세요', '기존 과목이나 새 과목 입력'),
+                            decoration: TextFieldDeco(
+                                '단어장 이름을 입력해주세요', '기존 단어장이나 새 단어장 입력'),
                             style: TextStyle(
                               fontSize: 20,
                               color: color.box,
                             ),
                           ),
                         ),
-                        const Text(
-                          'hihi',
-                          textAlign: TextAlign.center,
-                        ),
+                        Text(
+                            '\n**입력 방법**\n 새로운 이름을 입력하면 새로운 단어장이 생깁니다.\n 기존 단어장을 입력하면 기존 단어장에 단어가 추가됩니다.',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              color: color.background,
+                              fontSize: width * 0.05,
+                            )),
+                        Text(
+                            '\n**주의할 점**\n 새 단어장을 입력할때는 단어를 4개이상 입력해주세요.\n 단어나 뜻은 .(점)으로 구분합니다.\n',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              color: color.background,
+                              fontSize: width * 0.05,
+                            )),
                         Center(
                           child: TextButton(
                             style: ButtonStyle(
