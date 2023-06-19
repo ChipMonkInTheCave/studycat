@@ -185,21 +185,12 @@ class _LineChartState extends State<_LineChart> {
 
   LineChartBarData get lineChartBarData1_1 => LineChartBarData(
         isCurved: true,
-        color: const Color.fromARGB(255, 23, 14, 192).withOpacity(0.9),
+        color: const Color(0xff84B1ED),
         barWidth: 4,
         isStrokeCapRound: true,
         dotData: FlDotData(show: true),
         belowBarData: BarAreaData(show: false),
         spots: [
-          //1~5
-          //context.watch<CloudData>().myScore.score['section1'][0]['2023-05-01'],
-          //for (double i = 0; i < 7; i++)
-          // FlSpot(
-          //     context.watch<CloudData>().myScore.score['section1'][0]
-          //         ['2023-05-01'][1],
-          //     context.watch<CloudData>().myScore.score['section1'][0]
-          //         ['2023-05-01'][0])
-          //FlSpot(1 + (2 * i), Random().nextInt(99 + 1).toDouble()),
           for (var i = 0; i < 7; i++)
             FlSpot(
               1 + (i * 2),
@@ -209,7 +200,7 @@ class _LineChartState extends State<_LineChart> {
       );
   LineChartBarData get lineChartBarData1_2 => LineChartBarData(
         isCurved: true,
-        color: const Color.fromARGB(255, 135, 74, 248).withOpacity(1),
+        color: const Color(0xffC89EC4),
         barWidth: 4,
         isStrokeCapRound: true,
         dotData: FlDotData(show: true),
@@ -224,7 +215,7 @@ class _LineChartState extends State<_LineChart> {
       );
   LineChartBarData get lineChartBarData1_3 => LineChartBarData(
         isCurved: true,
-        color: const Color.fromARGB(255, 80, 49, 205).withOpacity(0.9),
+        color: const Color(0xffEE7785),
         barWidth: 4,
         isStrokeCapRound: true,
         dotData: FlDotData(show: true),
@@ -239,7 +230,7 @@ class _LineChartState extends State<_LineChart> {
       );
   LineChartBarData get lineChartBarData1_4 => LineChartBarData(
         isCurved: true,
-        color: const Color.fromARGB(255, 110, 102, 252).withOpacity(1),
+        color: const Color(0xff67D5B5),
         barWidth: 4,
         isStrokeCapRound: true,
         dotData: FlDotData(show: true),
@@ -300,33 +291,29 @@ class WeeklyLineChartState extends State<WeeklyLineChart> {
                       ),
                     ),
                     const SizedBox(height: 25),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Indicator(
-                            color: const Color.fromARGB(255, 23, 14, 192)
-                                .withOpacity(0.9),
+                            color: Color(0xff84B1ED),
                             text: '1주차',
                             isSquare: false,
                             //size: touchedIndex == 0?18:16,
                             textColor: Colors.black),
                         Indicator(
-                          color: const Color.fromARGB(255, 135, 74, 248)
-                              .withOpacity(1),
+                          color: Color(0xffC89EC4),
                           text: '2주차',
                           isSquare: false,
                           textColor: Colors.black,
                         ),
                         Indicator(
-                          color: const Color.fromARGB(255, 80, 49, 205)
-                              .withOpacity(0.9),
+                          color: Color(0xffEE7785),
                           text: '3주차',
                           isSquare: false,
                           textColor: Colors.black,
                         ),
                         Indicator(
-                          color: const Color.fromARGB(255, 110, 102, 252)
-                              .withOpacity(1),
+                          color: Color(0xff67D5B5),
                           text: '4주차',
                           isSquare: false,
                           textColor: Colors.black,

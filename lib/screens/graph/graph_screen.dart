@@ -33,7 +33,7 @@ class _GraphState extends State<Graph> {
           SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 60),
+                const SizedBox(height: 100),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
