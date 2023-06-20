@@ -1,9 +1,8 @@
-import 'dart:math';
-
 import 'package:animate_do/animate_do.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
@@ -26,6 +25,7 @@ class EndQuestionScreen extends StatefulWidget {
 class _EndQuestionScreenState extends State<EndQuestionScreen> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode;
     num exp = context.read<CloudData>().myUserData.userdata['exp'];
     var color = context.watch<ThemeColor>();
     var now = DateTime.now();
@@ -179,6 +179,9 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                             .read<CloudData>()
                             .myUserData
                             .userdata['level'],
+                        'recentScore':
+                            ((widget.cat / widget.queLen) * 100).toInt(),
+                        'recentWordnote': widget.subject,
                       }
                     });
                     if (context.read<CloudData>().myUserData.userdata['exp'] +
@@ -196,7 +199,10 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                                   .read<CloudData>()
                                   .myUserData
                                   .userdata['level'] +
-                              1
+                              1,
+                          'recentScore':
+                              ((widget.cat / widget.queLen) * 100).toInt(),
+                          'recentWordnote': widget.subject,
                         }
                       });
                     } else {
@@ -214,6 +220,9 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                               .read<CloudData>()
                               .myUserData
                               .userdata['level'],
+                          'recentScore':
+                              ((widget.cat / widget.queLen) * 100).toInt(),
+                          'recentWordnote': widget.subject,
                         }
                       });
                     }

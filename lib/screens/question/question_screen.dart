@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:animate_do/animate_do.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/question/end_question_screen.dart';
@@ -44,6 +45,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode;
     var color = context.watch<ThemeColor>();
     //--스크린 크기--//
     double width = MediaQuery.of(context).size.width;

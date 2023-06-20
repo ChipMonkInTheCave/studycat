@@ -1,14 +1,11 @@
 //import 'package:fl_chart/fl_chart.dart';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 import 'package:studycat/models/dailybarchart.dart';
 import 'package:studycat/models/dailylinechart.dart';
-import 'package:studycat/models/piechart.dart';
 import 'package:studycat/models/weeklybarchart.dart';
 import 'package:studycat/models/weeklylinechart.dart';
-import 'package:studycat/provider/provider.dart';
 import 'package:studycat/widgets/background_widget.dart';
 
 class Graph extends StatefulWidget {
@@ -26,6 +23,7 @@ class _GraphState extends State<Graph> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode;
     return Scaffold(
       body: Stack(
         children: [
@@ -127,7 +125,7 @@ class _GraphState extends State<Graph> {
                     const SizedBox(height: 10),
                     if (isLineSelected && isDailySelected)
                       const DailyLineChart(),
-                    if (isBarSelected && isDailySelected) DailyBarChart(),
+                    if (isBarSelected && isDailySelected) const DailyBarChart(),
                     if (isBarSelected && isWeeklySelected) WeeklyBarChart(),
                     if (isLineSelected && isWeeklySelected)
                       const WeeklyLineChart(),

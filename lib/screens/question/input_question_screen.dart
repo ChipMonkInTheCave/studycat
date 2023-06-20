@@ -1,13 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/question/select_question_screen.dart';
 import 'package:studycat/widgets/alert_widget.dart';
 import 'package:studycat/widgets/background_widget.dart';
 import 'package:studycat/widgets/textfield_widget.dart';
-import 'package:transition/transition.dart';
 
 class InputQuestion extends StatefulWidget {
   const InputQuestion({super.key});
@@ -25,6 +25,7 @@ class _InputQuestionState extends State<InputQuestion> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode;
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     var color = context.watch<ThemeColor>();
@@ -47,16 +48,10 @@ class _InputQuestionState extends State<InputQuestion> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          Transition(
-                            child: const SelectQuestion(),
-                            transitionEffect: TransitionEffect.FADE,
-                          ),
-                        );
+                        Navigator.pop(context);
                       },
                       icon: Icon(
-                        Icons.home,
+                        Icons.arrow_back,
                         color: color.text,
                         size: 40,
                       ),
@@ -120,18 +115,28 @@ class _InputQuestionState extends State<InputQuestion> {
                           ),
                           child: TextField(
                             controller: inputController,
-                            decoration:
-                                TextFieldDeco('과목을 입력해주세요', '기존 과목이나 새 과목 입력'),
+                            decoration: TextFieldDeco(
+                                '단어장 이름을 입력해주세요', '기존 단어장이나 새 단어장 입력'),
                             style: TextStyle(
                               fontSize: 20,
                               color: color.box,
                             ),
                           ),
                         ),
-                        const Text(
-                          'hihi',
-                          textAlign: TextAlign.center,
-                        ),
+                        Text(
+                            '\n**입력 방법**\n 새로운 이름을 입력하면 새로운 단어장이 생깁니다.\n 기존 단어장을 입력하면 기존 단어장에 단어가 추가됩니다.',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              color: color.background,
+                              fontSize: width * 0.05,
+                            )),
+                        Text(
+                            '\n**주의할 점**\n 새 단어장을 입력할때는 단어를 4개이상 입력해주세요.\n 단어나 뜻은 .(점)으로 구분합니다.\n',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              color: color.background,
+                              fontSize: width * 0.05,
+                            )),
                         Center(
                           child: TextButton(
                             style: ButtonStyle(
@@ -325,6 +330,7 @@ void checkAlert(BuildContext context, List eng, List kor, String sub) async {
               height: MediaQuery.of(context).size.height * 0.01,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
                   style: ButtonStyle(
@@ -391,7 +397,7 @@ void checkAlert(BuildContext context, List eng, List kor, String sub) async {
                     '    확인    ',
                     style: TextStyle(
                       color: context.watch<ThemeColor>().text,
-                      fontSize: 30,
+                      fontSize: MediaQuery.of(context).size.width * 0.07,
                     ),
                   ),
                 ),
@@ -409,7 +415,7 @@ void checkAlert(BuildContext context, List eng, List kor, String sub) async {
                     '    취소    ',
                     style: TextStyle(
                       color: context.watch<ThemeColor>().text,
-                      fontSize: 30,
+                      fontSize: MediaQuery.of(context).size.width * 0.07,
                     ),
                   ),
                 ),

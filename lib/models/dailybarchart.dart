@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 // import 'package:resources/appcolors.dart';
 // import 'package:fl_chart_app/util/extensions/color_extensions.dart';
@@ -9,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 
 class DailyBarChart extends StatefulWidget {
-  DailyBarChart({super.key});
+  const DailyBarChart({super.key});
   @override
   State<StatefulWidget> createState() => BarChartSample1State();
 }
@@ -93,29 +92,26 @@ class BarChartSample1State extends State<DailyBarChart> {
   List<BarChartGroupData> showingGroups() => List.generate(7, (i) {
         var scores = [];
         for (var j = 0; j < 7; j++) {
-          scores.add(context
-              .watch<CloudData>()
-              .myScore
-              .score['능률 VOCA : DAY1'][context
+          if (context.watch<CloudData>().scoreList["능률 VOCA : DAY1"] != null) {
+            if (context.watch<CloudData>().scoreList["능률 VOCA : DAY1"].length -
+                    1 -
+                    i >=
+                0) {
+              scores.add(context
+                  .watch<CloudData>()
+                  .scoreList["능률 VOCA : DAY1"][context
                           .watch<CloudData>()
-                          .myScore
-                          .score['능률 VOCA : DAY1']
+                          .scoreList["능률 VOCA : DAY1"]
                           .length -
                       7 +
-                      i][
-                  context
-                      .watch<CloudData>()
-                      .myScore
-                      .score['능률 VOCA : DAY1'][context
-                              .watch<CloudData>()
-                              .myScore
-                              .score['능률 VOCA : DAY1']
-                              .length -
-                          7 +
-                          i]
-                      .keys
-                      .elementAt(0)][0]
-              .toDouble());
+                      i]
+                  .toDouble());
+            } else {
+              scores.add(0.0);
+            }
+          } else {
+            scores.add(0.0);
+          }
         }
 
         switch (i) {
