@@ -9,7 +9,8 @@ import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 
 class DailyBarChart extends StatefulWidget {
-  const DailyBarChart({super.key});
+  final String name;
+  const DailyBarChart({super.key, required this.name});
   @override
   State<StatefulWidget> createState() => BarChartSample1State();
 }
@@ -93,31 +94,24 @@ class BarChartSample1State extends State<DailyBarChart> {
   List<BarChartGroupData> showingGroups() => List.generate(7, (i) {
         var scores = [];
 
-        if (context.watch<CloudData>().scoreList["능률 VOCA : DAY1"] != null) {
-          if (context.watch<CloudData>().scoreList["능률 VOCA : DAY1"].length >=
-              7) {
+        if (context.watch<CloudData>().scoreList[widget.name] != null) {
+          if (context.watch<CloudData>().scoreList[widget.name].length >= 7) {
             for (var j = 0; j < 7; j++) {
               scores.add(context
                   .watch<CloudData>()
-                  .scoreList["능률 VOCA : DAY1"][context
-                          .watch<CloudData>()
-                          .scoreList["능률 VOCA : DAY1"]
-                          .length -
-                      7 -
-                      i]
+                  .scoreList[widget.name][
+                      context.watch<CloudData>().scoreList[widget.name].length -
+                          7 -
+                          i]
                   .toDouble());
             }
           } else {
             for (var j = 0;
-                j <
-                    context
-                        .watch<CloudData>()
-                        .scoreList["능률 VOCA : DAY1"]
-                        .length;
+                j < context.watch<CloudData>().scoreList[widget.name].length;
                 j++) {
               scores.add(context
                   .watch<CloudData>()
-                  .scoreList["능률 VOCA : DAY1"][j]
+                  .scoreList[widget.name][j]
                   .toDouble());
             }
             for (var q = 0;
@@ -125,7 +119,7 @@ class BarChartSample1State extends State<DailyBarChart> {
                     7 -
                         context
                             .watch<CloudData>()
-                            .scoreList["능률 VOCA : DAY1"]
+                            .scoreList[widget.name]
                             .length;
                 q++) {
               scores.add(0.0);

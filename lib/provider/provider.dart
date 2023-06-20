@@ -101,8 +101,12 @@ class CloudData with ChangeNotifier {
     _myQuestion = data['question'];
     _myScore = data['score'];
     _myUserData = data['userdata'];
-    notifyListeners();
+    // notifyListeners();
   }
+
+  // Future<void> re() async {
+  //   notifyListeners();
+  // }
 
   Future<void> getUID() async {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {

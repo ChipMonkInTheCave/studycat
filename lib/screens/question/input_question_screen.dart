@@ -214,7 +214,7 @@ void questionMenu(
         content: SingleChildScrollView(
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.7,
-            height: MediaQuery.of(context).size.height * 0.34,
+            height: MediaQuery.of(context).size.height * 0.4,
             child: Column(
               children: [
                 Text(

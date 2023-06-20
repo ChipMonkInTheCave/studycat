@@ -3,11 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:studycat/models/dailybarchart.dart';
 import 'package:studycat/models/dailylinechart.dart';
 import 'package:studycat/models/weeklybarchart.dart';
 import 'package:studycat/models/weeklylinechart.dart';
+import 'package:studycat/provider/provider.dart';
 import 'package:studycat/widgets/background_widget.dart';
+import 'package:transition/transition.dart';
 
 class Graph extends StatefulWidget {
   const Graph({Key? key}) : super(key: key);
@@ -21,11 +24,13 @@ class _GraphState extends State<Graph> {
   bool isBarSelected = false;
   bool isDailySelected = true;
   bool isWeeklySelected = false;
-
+  String select = "능률 VOCA : DAY1";
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode;
     double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -124,14 +129,73 @@ class _GraphState extends State<Graph> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 0),
                     if (isLineSelected && isDailySelected)
-                      const DailyLineChart(),
-                    if (isBarSelected && isDailySelected) const DailyBarChart(),
-                    if (isBarSelected && isWeeklySelected) WeeklyBarChart(),
+                      DailyLineChart(
+                        name: select,
+                      ),
+                    if (isBarSelected && isDailySelected)
+                      DailyBarChart(
+                        name: select,
+                      ),
+                    if (isBarSelected && isWeeklySelected)
+                      WeeklyBarChart(
+                        name: select,
+                      ),
                     if (isLineSelected && isWeeklySelected)
-                      const WeeklyLineChart(),
+                      WeeklyLineChart(
+                        name: select,
+                      ),
                   ],
+                ),
+                Container(
+                  width: width * 0.8,
+                  height: height * 0.1,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      for (var i = 0;
+                          i <
+                              context
+                                  .read<CloudData>()
+                                  .myScore
+                                  .score
+                                  .keys
+                                  .length;
+                          i++)
+                        TextButton(
+                          onPressed: () {
+                            setState(() {
+                              select = context
+                                  .read<CloudData>()
+                                  .myQuestion
+                                  .question[i]
+                                  .keys
+                                  .elementAt(0)
+                                  .toString();
+                            });
+                          },
+                          child: Text(
+                              context
+                                  .read<CloudData>()
+                                  .myQuestion
+                                  .question[i]
+                                  .keys
+                                  .elementAt(0)
+                                  .toString(),
+                              style: GoogleFonts.jua(
+                                color: Colors.black,
+                              )),
+                          style: ButtonStyle(
+                            fixedSize: MaterialStateProperty.all(
+                              Size(
+                                width * 0.22,
+                                height * 0.1,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
               ],
             ),

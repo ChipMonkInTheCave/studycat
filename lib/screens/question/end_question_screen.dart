@@ -138,6 +138,20 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                         context.read<CloudData>().myScore.score[widget.subject];
                     var map1 = context.read<CloudData>().myScore.score;
                     list1 ??= [];
+                    var highscore = context
+                        .read<CloudData>()
+                        .myUserData
+                        .userdata['highscore'];
+                    if (highscore[widget.subject] != null) {
+                      if (highscore[widget.subject] <
+                          ((widget.cat / widget.queLen) * 100).toInt()) {
+                        highscore[widget.subject] =
+                            ((widget.cat / widget.queLen) * 100).toInt();
+                      }
+                    } else {
+                      highscore[widget.subject] =
+                          ((widget.cat / widget.queLen) * 100).toInt();
+                    }
                     if (keylist.contains(widget.subject)) {
                       if (list1.last.keys.elementAt(0) == nowDate) {
                         list1.last = {
@@ -169,22 +183,6 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                         .update({
                       'score': map1,
                     });
-                    FirebaseFirestore.instance
-                        .collection('users')
-                        .doc(context.read<CloudData>().id)
-                        .update({
-                      'userdata': {
-                        'exp':
-                            exp + ((widget.cat / widget.queLen) * 100).toInt(),
-                        'level': context
-                            .read<CloudData>()
-                            .myUserData
-                            .userdata['level'],
-                        'recentScore':
-                            ((widget.cat / widget.queLen) * 100).toInt(),
-                        'recentWordnote': widget.subject,
-                      }
-                    });
                     if (context.read<CloudData>().myUserData.userdata['exp'] +
                             (widget.cat / widget.queLen) * 100 >=
                         100) {
@@ -204,6 +202,7 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                           'recentScore':
                               ((widget.cat / widget.queLen) * 100).toInt(),
                           'recentWordnote': widget.subject,
+                          'highscore': highscore,
                         }
                       });
                     } else {
@@ -224,6 +223,7 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                           'recentScore':
                               ((widget.cat / widget.queLen) * 100).toInt(),
                           'recentWordnote': widget.subject,
+                          'highscore': highscore,
                         }
                       });
                     }

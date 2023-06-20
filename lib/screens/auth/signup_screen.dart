@@ -179,6 +179,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         'level': 1,
                         'recentScore': 0,
                         'recentWordnote': "정보없음",
+                        'highscore': {
+                          "능률 VOCA : DAY1": 0,
+                          "능률 VOCA : DAY2": 0,
+                          "능률 VOCA : DAY3": 0
+                        }
                       }
                     });
                     print(context.read<CloudData>().id);

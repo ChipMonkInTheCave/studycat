@@ -6,8 +6,10 @@ import 'package:studycat/provider/provider.dart';
 import 'package:studycat/widgets/indicator.dart';
 
 class _LineChart extends StatefulWidget {
+  final String name;
   const _LineChart({
     required this.isShowingMainData,
+    required this.name,
   });
 
   final bool isShowingMainData;
@@ -188,18 +190,17 @@ class _LineChartState extends State<_LineChart> {
         dotData: FlDotData(show: true),
         belowBarData: BarAreaData(show: false),
         spots: [
-          if (context.watch<CloudData>().scoreList["능률 VOCA : DAY1"] !=
-              null) ...[
-            if (context.watch<CloudData>().scoreList["능률 VOCA : DAY1"].length >=
+          if (context.watch<CloudData>().scoreList[widget.name] != null) ...[
+            if (context.watch<CloudData>().scoreList[widget.name].length >=
                 7) ...[
               for (var i = 0; i < 7; i++) ...[
                 FlSpot(
                     1 + (i * 2),
                     context
                         .watch<CloudData>()
-                        .scoreList["능률 VOCA : DAY1"][context
+                        .scoreList[widget.name][context
                                 .watch<CloudData>()
-                                .scoreList["능률 VOCA : DAY1"]
+                                .scoreList[widget.name]
                                 .length -
                             7 +
                             i]
@@ -207,17 +208,13 @@ class _LineChartState extends State<_LineChart> {
               ]
             ] else ...[
               for (var i = 0;
-                  i <
-                      context
-                          .watch<CloudData>()
-                          .scoreList["능률 VOCA : DAY1"]
-                          .length;
+                  i < context.watch<CloudData>().scoreList[widget.name].length;
                   i++)
                 FlSpot(
                     1 + (i * 2),
                     context
                         .watch<CloudData>()
-                        .scoreList["능률 VOCA : DAY1"][i]
+                        .scoreList[widget.name][i]
                         .toDouble())
             ]
           ]
@@ -231,18 +228,17 @@ class _LineChartState extends State<_LineChart> {
         dotData: FlDotData(show: true),
         belowBarData: BarAreaData(show: false),
         spots: [
-          if (context.watch<CloudData>().scoreList["능률 VOCA : DAY1"] !=
-              null) ...[
-            if (context.watch<CloudData>().scoreList["능률 VOCA : DAY1"].length >=
+          if (context.watch<CloudData>().scoreList[widget.name] != null) ...[
+            if (context.watch<CloudData>().scoreList[widget.name].length >=
                 14) ...[
               for (var i = 0; i < 7; i++) ...[
                 FlSpot(
                     1 + (i * 2),
                     context
                         .watch<CloudData>()
-                        .scoreList["능률 VOCA : DAY1"][context
+                        .scoreList[widget.name][context
                                 .watch<CloudData>()
-                                .scoreList["능률 VOCA : DAY1"]
+                                .scoreList[widget.name]
                                 .length -
                             14 +
                             i]
@@ -250,17 +246,13 @@ class _LineChartState extends State<_LineChart> {
               ]
             ] else ...[
               for (var i = 0;
-                  i <
-                      context
-                          .watch<CloudData>()
-                          .scoreList["능률 VOCA : DAY1"]
-                          .length;
+                  i < context.watch<CloudData>().scoreList[widget.name].length;
                   i++)
                 FlSpot(
                     1 + (i * 2),
                     context
                         .watch<CloudData>()
-                        .scoreList["능률 VOCA : DAY1"][i]
+                        .scoreList[widget.name][i]
                         .toDouble())
             ]
           ]
@@ -274,18 +266,17 @@ class _LineChartState extends State<_LineChart> {
         dotData: FlDotData(show: true),
         belowBarData: BarAreaData(show: false),
         spots: [
-          if (context.watch<CloudData>().scoreList["능률 VOCA : DAY1"] !=
-              null) ...[
-            if (context.watch<CloudData>().scoreList["능률 VOCA : DAY1"].length >=
+          if (context.watch<CloudData>().scoreList[widget.name] != null) ...[
+            if (context.watch<CloudData>().scoreList[widget.name].length >=
                 21) ...[
               for (var i = 0; i < 7; i++) ...[
                 FlSpot(
                     1 + (i * 2),
                     context
                         .watch<CloudData>()
-                        .scoreList["능률 VOCA : DAY1"][context
+                        .scoreList[widget.name][context
                                 .watch<CloudData>()
-                                .scoreList["능률 VOCA : DAY1"]
+                                .scoreList[widget.name]
                                 .length -
                             21 +
                             i]
@@ -293,17 +284,13 @@ class _LineChartState extends State<_LineChart> {
               ]
             ] else ...[
               for (var i = 0;
-                  i <
-                      context
-                          .watch<CloudData>()
-                          .scoreList["능률 VOCA : DAY1"]
-                          .length;
+                  i < context.watch<CloudData>().scoreList[widget.name].length;
                   i++)
                 FlSpot(
                     1 + (i * 2),
                     context
                         .watch<CloudData>()
-                        .scoreList["능률 VOCA : DAY1"][i]
+                        .scoreList[widget.name][i]
                         .toDouble())
             ]
           ]
@@ -317,18 +304,17 @@ class _LineChartState extends State<_LineChart> {
         dotData: FlDotData(show: true),
         belowBarData: BarAreaData(show: false),
         spots: [
-          if (context.watch<CloudData>().scoreList["능률 VOCA : DAY1"] !=
-              null) ...[
-            if (context.watch<CloudData>().scoreList["능률 VOCA : DAY1"].length >=
+          if (context.watch<CloudData>().scoreList[widget.name] != null) ...[
+            if (context.watch<CloudData>().scoreList[widget.name].length >=
                 28) ...[
               for (var i = 0; i < 7; i++) ...[
                 FlSpot(
                     1 + (i * 2),
                     context
                         .watch<CloudData>()
-                        .scoreList["능률 VOCA : DAY1"][context
+                        .scoreList[widget.name][context
                                 .watch<CloudData>()
-                                .scoreList["능률 VOCA : DAY1"]
+                                .scoreList[widget.name]
                                 .length -
                             28 +
                             i]
@@ -336,17 +322,13 @@ class _LineChartState extends State<_LineChart> {
               ]
             ] else ...[
               for (var i = 0;
-                  i <
-                      context
-                          .watch<CloudData>()
-                          .scoreList["능률 VOCA : DAY1"]
-                          .length;
+                  i < context.watch<CloudData>().scoreList[widget.name].length;
                   i++)
                 FlSpot(
                     1 + (i * 2),
                     context
                         .watch<CloudData>()
-                        .scoreList["능률 VOCA : DAY1"][i]
+                        .scoreList[widget.name][i]
                         .toDouble())
             ]
           ]
@@ -355,7 +337,11 @@ class _LineChartState extends State<_LineChart> {
 }
 
 class WeeklyLineChart extends StatefulWidget {
-  const WeeklyLineChart({super.key});
+  final String name;
+  const WeeklyLineChart({
+    super.key,
+    required this.name,
+  });
 
   @override
   State<StatefulWidget> createState() => WeeklyLineChartState();
@@ -374,7 +360,7 @@ class WeeklyLineChartState extends State<WeeklyLineChart> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 390,
-      height: 420,
+      height: 400,
       child: FutureBuilder(
         future: context.watch<CloudData>().month(),
         builder: (context, snapshot) {
@@ -395,8 +381,8 @@ class WeeklyLineChartState extends State<WeeklyLineChart> {
                       child: Padding(
                         padding: const EdgeInsets.only(right: 14, left: 6),
                         child: _LineChart(
-                          isShowingMainData: isShowingMainData,
-                        ),
+                            isShowingMainData: isShowingMainData,
+                            name: widget.name),
                       ),
                     ),
                     const SizedBox(height: 25),

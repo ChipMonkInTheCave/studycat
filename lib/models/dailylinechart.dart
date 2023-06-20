@@ -5,8 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 
 class _LineChart extends StatefulWidget {
+  final String name;
   const _LineChart({
     required this.isShowingMainData,
+    required this.name,
   });
 
   final bool isShowingMainData;
@@ -237,18 +239,17 @@ class _LineChartState extends State<_LineChart> {
         dotData: FlDotData(show: true),
         belowBarData: BarAreaData(show: false),
         spots: [
-          if (context.watch<CloudData>().scoreList["능률 VOCA : DAY1"] !=
-              null) ...[
-            if (context.watch<CloudData>().scoreList["능률 VOCA : DAY1"].length >=
+          if (context.watch<CloudData>().scoreList[widget.name] != null) ...[
+            if (context.watch<CloudData>().scoreList[widget.name].length >=
                 7) ...[
               for (var i = 0; i < 7; i++) ...[
                 FlSpot(
                     1 + (i * 2),
                     context
                         .watch<CloudData>()
-                        .scoreList["능률 VOCA : DAY1"][context
+                        .scoreList[widget.name][context
                                 .watch<CloudData>()
-                                .scoreList["능률 VOCA : DAY1"]
+                                .scoreList[widget.name]
                                 .length -
                             7 +
                             i]
@@ -256,17 +257,13 @@ class _LineChartState extends State<_LineChart> {
               ]
             ] else ...[
               for (var i = 0;
-                  i <
-                      context
-                          .watch<CloudData>()
-                          .scoreList["능률 VOCA : DAY1"]
-                          .length;
+                  i < context.watch<CloudData>().scoreList[widget.name].length;
                   i++)
                 FlSpot(
                     1 + (i * 2),
                     context
                         .watch<CloudData>()
-                        .scoreList["능률 VOCA : DAY1"][i]
+                        .scoreList[widget.name][i]
                         .toDouble())
             ]
           ]
@@ -275,7 +272,11 @@ class _LineChartState extends State<_LineChart> {
 }
 
 class DailyLineChart extends StatefulWidget {
-  const DailyLineChart({super.key});
+  final String name;
+  const DailyLineChart({
+    super.key,
+    required this.name,
+  });
 
   @override
   State<StatefulWidget> createState() => DailyLineChartState();
@@ -316,6 +317,7 @@ class DailyLineChartState extends State<DailyLineChart> {
                         padding: const EdgeInsets.only(right: 14, left: 6),
                         child: _LineChart(
                           isShowingMainData: isShowingMainData,
+                          name: widget.name,
                         ),
                       ),
                     ),

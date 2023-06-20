@@ -81,7 +81,7 @@ class _SelectQuetionWidgetState extends State<SelectQuetionWidget> {
                 ),
               ),
               subtitle: AutoSizeText(
-                '단어 ${question[widget.nn][question[widget.nn].keys.elementAt(0)].length}개',
+                '단어 ${question[widget.nn][question[widget.nn].keys.elementAt(0)].length}개, 최고 점수 ${context.read<CloudData>().myUserData.userdata['highscore'][widget.sub]}점',
                 style: GoogleFonts.jua(
                   color: color.box,
                 ),
@@ -161,6 +161,7 @@ void questionMenu(
                         .doc(context.read<CloudData>().id)
                         .update({'question': menu});
                     context.read<CloudData>().fetchData();
+                    Navigator.pop(context);
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,

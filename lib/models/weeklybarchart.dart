@@ -14,7 +14,11 @@ class Legend {
 }
 
 class WeeklyBarChart extends StatelessWidget {
-  WeeklyBarChart({super.key});
+  final String name;
+  WeeklyBarChart({
+    super.key,
+    required this.name,
+  });
 
   final Week1Color = const Color(0xff84B1ED);
   final Week2Color = const Color(0xffC89EC4);
@@ -116,28 +120,21 @@ class WeeklyBarChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<dynamic> scoreList = [];
-    if (context.watch<CloudData>().scoreList["능률 VOCA : DAY1"] != null) {
-      if (context.watch<CloudData>().scoreList["능률 VOCA : DAY1"].length - 1 >
-          27) {
+    if (context.watch<CloudData>().scoreList[name] != null) {
+      if (context.watch<CloudData>().scoreList[name].length - 1 > 27) {
         for (var i = 0; i < 28; i++) {
           scoreList.add(context
               .watch<CloudData>()
-              .scoreList["능률 VOCA : DAY1"][context
-                      .watch<CloudData>()
-                      .scoreList["능률 VOCA : DAY1"]
-                      .length -
-                  28 +
-                  i]
+              .scoreList[name]
+                  [context.watch<CloudData>().scoreList[name].length - 28 + i]
               .toDouble());
         }
       } else {
         for (var i = 0;
-            i < context.watch<CloudData>().scoreList["능률 VOCA : DAY1"].length;
+            i < context.watch<CloudData>().scoreList[name].length;
             i++) {
-          scoreList.add(context
-              .watch<CloudData>()
-              .scoreList["능률 VOCA : DAY1"][i]
-              .toDouble());
+          scoreList
+              .add(context.watch<CloudData>().scoreList[name][i].toDouble());
         }
       }
     }
@@ -148,7 +145,6 @@ class WeeklyBarChart extends StatelessWidget {
       score[cnt].add(scoreList[i].toDouble());
       cnt += 1;
     }
-    print(score[0].length);
     for (var i = 0; i < 7; i++) {
       if (score[i].length < 4) {
         for (var j = 0; j < 4; j++) {
@@ -234,9 +230,9 @@ class WeeklyBarChart extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          // const SizedBox(
+          //   height: 20,
+          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: legends.map((legend) {

@@ -291,296 +291,322 @@ class Page extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     num? exp = context.watch<CloudData>().myUserData.userdata['exp'];
     var color = context.watch<ThemeColor>();
+    var highscore = context.watch<CloudData>().myUserData.userdata['highscore'];
+    int aver = 0;
+    num bas = 0;
+    int cnt = 0;
+    highscore.forEach((key, value) {
+      bas += value;
+      cnt += 1;
+    });
+    aver = (bas / cnt).toInt();
 
-    return Scaffold(
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Stack(
-          children: [
-            Container(
-              height: height,
-              width: width,
-              color: Colors.white,
-            ),
-            const BackgroundWidget(num: 0.35),
-            SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.fromLTRB(
-                  width * 0.1,
-                  height * 0.05,
-                  width * 0.1,
-                  height * 0.1,
-                ),
-                child: Center(
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 40),
-                      Container(
-                        width: 200,
-                        height: 200,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.8),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: const Offset(3, 5),
-                            ),
-                          ],
+    return FutureBuilder(
+        future: context.watch<CloudData>().fetchData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Scaffold(
+              body: GestureDetector(
+                onTap: () => FocusScope.of(context).unfocus(),
+                child: Stack(
+                  children: [
+                    Container(
+                      height: height,
+                      width: width,
+                      color: Colors.white,
+                    ),
+                    const BackgroundWidget(num: 0.35),
+                    SingleChildScrollView(
+                      child: Container(
+                        padding: EdgeInsets.fromLTRB(
+                          width * 0.1,
+                          height * 0.05,
+                          width * 0.1,
+                          height * 0.1,
                         ),
-                        child: Stack(
-                          children: [
-                            Consumer<ImageProviderModel>(
-                              builder: (context, imageProvider, _) {
-                                return CircleAvatar(
-                                  radius: 100,
-                                  backgroundImage: imageProvider.image != null
-                                      ? FileImage(
-                                          File(imageProvider.image!.path))
-                                      : Image.asset('assets/default_image.png')
-                                          .image,
-                                  // 프로필 이미지 설정
-                                );
-                              },
-                            ),
-                            Positioned(
-                              top: 0,
-                              left: 0,
-                              width: 200,
-                              height: 200,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 5,
-                                value: exp != null ? exp * 0.01 : 0,
-                                backgroundColor: Colors.white,
-                                valueColor: const AlwaysStoppedAnimation<Color>(
-                                  Color.fromARGB(175, 196, 18, 184),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 30),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            width: width * 0.23,
-                            height: height * 0.1,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 2,
-                                  blurRadius: 5,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  exp != null ? '${exp.toInt()}%' : '0%',
-                                  style: GoogleFonts.jua(
-                                    fontSize: 30,
-                                    color: Colors.black,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                Text(
-                                  'EXP',
-                                  style: GoogleFonts.jua(
-                                    fontSize: 20,
-                                    color: Colors.grey,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            width: width * 0.23,
-                            height: height * 0.1,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 2,
-                                  blurRadius: 5,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  context
-                                      .watch<CloudData>()
-                                      .myUserData
-                                      .userdata['level']
-                                      .toString(),
-                                  style: GoogleFonts.jua(
-                                    fontSize: 30,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Text(
-                                  'level',
-                                  style: GoogleFonts.jua(
-                                    fontSize: 20,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            width: width * 0.23,
-                            height: height * 0.1,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 2,
-                                  blurRadius: 5,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  '53%',
-                                  style: GoogleFonts.jua(
-                                    fontSize: 30,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Text(
-                                  'Pro',
-                                  style: GoogleFonts.jua(
-                                    fontSize: 20,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          elevation: 4,
-                          backgroundColor: Colors.white,
-                          fixedSize: Size(width * 0.8, height * 0.25),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        ),
-                        child: Container(
-                          width: width * 0.8,
-                          height: height * 0.3,
-                          padding: const EdgeInsets.all(15.0),
+                        child: Center(
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                '마지막 공부',
-                                style: GoogleFonts.jua(
-                                  fontSize: 25,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              Text(
-                                "제목 : ${context.watch<CloudData>().myUserData.userdata['recentWordnote']}",
-                                style: GoogleFonts.jua(
-                                  color: Colors.black,
-                                  fontSize: width * 0.05,
-                                ),
-                              ),
-                              Text(
-                                "점수 : ${context.watch<CloudData>().myUserData.userdata['recentScore']}점",
-                                style: GoogleFonts.jua(
-                                  color: Colors.black,
-                                  fontSize: width * 0.05,
-                                ),
-                              ),
-                              TextButton(
-                                  onPressed: () {},
-                                  style: ButtonStyle(
-                                    fixedSize: MaterialStateProperty.all(
-                                      Size(width * 0.8, height * 0.02),
+                              const SizedBox(height: 40),
+                              Container(
+                                width: 200,
+                                height: 200,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.8),
+                                      spreadRadius: 2,
+                                      blurRadius: 5,
+                                      offset: const Offset(3, 5),
                                     ),
-                                    backgroundColor: MaterialStateProperty.all(
-                                      color.box,
+                                  ],
+                                ),
+                                child: Stack(
+                                  children: [
+                                    Consumer<ImageProviderModel>(
+                                      builder: (context, imageProvider, _) {
+                                        return CircleAvatar(
+                                          radius: 100,
+                                          backgroundImage: imageProvider
+                                                      .image !=
+                                                  null
+                                              ? FileImage(File(
+                                                  imageProvider.image!.path))
+                                              : Image.asset(
+                                                      'assets/default_image.png')
+                                                  .image,
+                                          // 프로필 이미지 설정
+                                        );
+                                      },
+                                    ),
+                                    Positioned(
+                                      top: 0,
+                                      left: 0,
+                                      width: 200,
+                                      height: 200,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 5,
+                                        value: exp != null ? exp * 0.01 : 0,
+                                        backgroundColor: Colors.white,
+                                        valueColor:
+                                            const AlwaysStoppedAnimation<Color>(
+                                          Color.fromARGB(175, 196, 18, 184),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 30),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width: width * 0.23,
+                                    height: height * 0.1,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 2,
+                                          blurRadius: 5,
+                                          offset: const Offset(0, 2),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          exp != null
+                                              ? '${exp.toInt()}%'
+                                              : '0%',
+                                          style: GoogleFonts.jua(
+                                            fontSize: 30,
+                                            color: Colors.black,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        Text(
+                                          'EXP',
+                                          style: GoogleFonts.jua(
+                                            fontSize: 20,
+                                            color: Colors.grey,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  child: Text('공부하러가기',
-                                      style: GoogleFonts.jua(
-                                        color: color.text,
-                                      ))),
+                                  Container(
+                                    width: width * 0.23,
+                                    height: height * 0.1,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 2,
+                                          blurRadius: 5,
+                                          offset: const Offset(0, 2),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          context
+                                              .watch<CloudData>()
+                                              .myUserData
+                                              .userdata['level']
+                                              .toString(),
+                                          style: GoogleFonts.jua(
+                                            fontSize: 30,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        Text(
+                                          'level',
+                                          style: GoogleFonts.jua(
+                                            fontSize: 20,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    width: width * 0.23,
+                                    height: height * 0.1,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 2,
+                                          blurRadius: 5,
+                                          offset: const Offset(0, 2),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          aver.toString() + "점",
+                                          style: GoogleFonts.jua(
+                                            fontSize: 30,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        Text(
+                                          'AVR',
+                                          style: GoogleFonts.jua(
+                                            fontSize: 20,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 40,
+                              ),
+                              ElevatedButton(
+                                onPressed: () {},
+                                style: ElevatedButton.styleFrom(
+                                  elevation: 4,
+                                  backgroundColor: Colors.white,
+                                  fixedSize: Size(width * 0.8, height * 0.25),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                ),
+                                child: Container(
+                                  width: width * 0.8,
+                                  height: height * 0.3,
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '마지막 공부',
+                                        style: GoogleFonts.jua(
+                                          fontSize: 25,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      Text(
+                                        "단어장 : ${context.watch<CloudData>().myUserData.userdata['recentWordnote']}",
+                                        style: GoogleFonts.jua(
+                                          color: Colors.black,
+                                          fontSize: width * 0.05,
+                                        ),
+                                      ),
+                                      Text(
+                                        "점수 : ${context.watch<CloudData>().myUserData.userdata['recentScore']}점",
+                                        style: GoogleFonts.jua(
+                                          color: Colors.black,
+                                          fontSize: width * 0.05,
+                                        ),
+                                      ),
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                Transition(
+                                                    child: SelectQuestion(),
+                                                    transitionEffect:
+                                                        TransitionEffect.FADE));
+                                          },
+                                          style: ButtonStyle(
+                                            fixedSize:
+                                                MaterialStateProperty.all(
+                                              Size(width * 0.8, height * 0.02),
+                                            ),
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                              color.box,
+                                            ),
+                                          ),
+                                          child: Text('공부하러가기',
+                                              style: GoogleFonts.jua(
+                                                color: color.text,
+                                              ))),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    width: width * 0.8,
+                                    height: height * 0.4,
+                                    child: const DailyLineChart(
+                                        name: "능률 VOCA : DAY1"),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),
                       ),
-                      const SizedBox(height: 30),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: width * 0.8,
-                            height: height * 0.4,
-                            child: const DailyLineChart(),
-                          ),
-                        ],
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const SelectQuestion(),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          elevation: 4,
-                          backgroundColor: Colors.white,
-                          fixedSize: Size(width * 0.8, height * 0.2),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          shadowColor: Colors.black.withOpacity(0.8),
-                        ),
-                        child: const Icon(
-                          Icons.quiz,
-                          size: 60,
-                          color: Color.fromARGB(255, 140, 97, 213),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
-    );
+            );
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return Scaffold(
+                backgroundColor: color.background,
+                body: Center(
+                  child: Container(
+                      width: width * 0.4,
+                      height: height * 0.2,
+                      child: Image.asset('assets/app_icon.png')),
+                ));
+          } else {
+            return Scaffold(
+                body: Center(
+              child: Text('앱을 재시작해주세요'),
+            ));
+          }
+        });
   }
 }
 

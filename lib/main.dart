@@ -41,26 +41,25 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode;
     return FutureBuilder(
-      future: context.watch<CloudData>().getUID(),
+      future: context.watch<CloudData>().fetchData(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (FirebaseAuth.instance.currentUser != null) {
-            if (update) {
-            } else {
-              context.watch<CloudData>().fetchData();
-              update = true;
-            }
             return const MaterialApp(home: HomeScreen());
           } else {
             return const MaterialApp(home: LoginScreen());
           }
         } else if (snapshot.connectionState == ConnectionState.waiting) {
-          return const MaterialApp(
+          return MaterialApp(
             home: Scaffold(
-              body: Center(
-                child: Text("로딩중..."),
-              ),
-            ),
+                backgroundColor:
+                    const Color.fromARGB(255, 135, 74, 248).withOpacity(0.9),
+                body: Center(
+                  child: Container(
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      child: Image.asset('assets/app_icon.png')),
+                )),
           );
         }
         return const MaterialApp(

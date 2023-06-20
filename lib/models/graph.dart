@@ -6,8 +6,10 @@ import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 
 class _LineChart extends StatefulWidget {
+  final String name;
   const _LineChart({
     required this.isShowingMainData,
+    required this.name,
   });
 
   final bool isShowingMainData;
@@ -189,11 +191,6 @@ class _LineChartState extends State<_LineChart> {
         dotData: FlDotData(show: false),
         belowBarData: BarAreaData(show: false),
         spots: [
-          //1~5
-          //(context.watch<CloudData>().myScore.score['eng']['score']
-          //     ['2023-05-30'] /
-          // 20)
-
           for (double i = 0; i < 7; i++) FlSpot(1 + (2 * i), (100 / 20)),
         ],
       );
@@ -304,7 +301,9 @@ class LineChartSample1State extends State<LineChartSample1> {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(right: 14, left: 6),
-                    child: _LineChart(isShowingMainData: isShowingMainData),
+                    child: _LineChart(
+                        isShowingMainData: isShowingMainData,
+                        name: "능률 VOCA : DAY1"),
                   ),
                 ),
                 const SizedBox(
