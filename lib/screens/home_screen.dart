@@ -5,11 +5,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:studycat/models/dailylinechart.dart';
 import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/graph/graph_screen.dart';
 import 'package:studycat/screens/score/test_score_screen.dart';
 import 'package:studycat/user/profile_screen.dart';
 import 'package:transition/transition.dart';
+import '../models/dailybarchart.dart';
 import 'auth/login_screen.dart';
 import 'question/select_question_screen.dart';
 import 'package:studycat/widgets/background_widget.dart';
@@ -60,7 +62,7 @@ class _HomeState extends State<HomeScreen> {
             content: Text(
                 '기본 메일 앱을 사용할 수 없기 때문에 앱에서 바로 문의를 전송하기 어려운 상황입니다.\n\n아래 이메일로 연락주시면 친절하게 답변해드릴게요 :)\n\n[ gimbuk00@gmail.com ]'),
             titleTextStyle: TextStyle(
-              fontSize: 20,
+              fontSize: 18,
               color: Colors.purple,
             ),
             contentTextStyle: TextStyle(
@@ -476,92 +478,56 @@ class Page extends StatelessWidget {
                     const SizedBox(
                       height: 40,
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        // score 데이터 넣는 코드
-                        for (var i = 1; i < 32; i++) {
-                          var now = DateTime.utc(2023, 5, i);
-                          var date = DateFormat('yyyy-MM-dd').format(now);
-                          var week = DateFormat('E').format(now);
-                          var list1 = context
-                              .read<CloudData>()
-                              .myScore
-                              .score['능률 VOCA : DAY3'];
-                          var map1 = context.read<CloudData>().myScore.score;
-                          list1 ??= [];
-                          list1.add({
-                            date: [Random().nextInt(100) + 1, week]
-                          });
-                          map1['능률 VOCA : DAY2'] = list1;
-                          FirebaseFirestore.instance
-                              .collection('users')
-                              .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
-                              .update({
-                            'score': map1,
-                          });
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        elevation: 4,
-                        backgroundColor: Colors.white,
-                        fixedSize: Size(width * 0.8, height * 0.2),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                      child: const Icon(
-                        Icons.calendar_month,
-                        size: 40,
-                        color: Colors.purple,
-                      ),
-                    ),
-                    const SizedBox(height: 30),
+                    // ElevatedButton(
+                    //   onPressed: () {
+                    //     // score 데이터 넣는 코드
+                    //     for (var i = 1; i < 32; i++) {
+                    //       var now = DateTime.utc(2023, 5, i);
+                    //       var date = DateFormat('yyyy-MM-dd').format(now);
+                    //       var week = DateFormat('E').format(now);
+                    //       var list1 = context
+                    //           .read<CloudData>()
+                    //           .myScore
+                    //           .score['능률 VOCA : DAY3'];
+                    //       var map1 = context.read<CloudData>().myScore.score;
+                    //       list1 ??= [];
+                    //       list1.add({
+                    //         date: [Random().nextInt(100) + 1, week]
+                    //       });
+                    //       map1['능률 VOCA : DAY2'] = list1;
+                    //       FirebaseFirestore.instance
+                    //           .collection('users')
+                    //           .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
+                    //           .update({
+                    //         'score': map1,
+                    //       });
+                    //     }
+                    //   },
+                    //   style: ElevatedButton.styleFrom(
+                    //     elevation: 4,
+                    //     backgroundColor: Colors.white,
+                    //     fixedSize: Size(width * 0.8, height * 0.2),
+                    //     shape: RoundedRectangleBorder(
+                    //       borderRadius: BorderRadius.circular(5),
+                    //     ),
+                    //   ),
+                    //   child: const Icon(
+                    //     Icons.calendar_month,
+                    //     size: 40,
+                    //     color: Colors.purple,
+                    //   ),
+                    // ),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            elevation: 4,
-                            backgroundColor: Colors.white,
-                            fixedSize: Size(width * 0.35, height * 0.125),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                          ),
-                          child: const Icon(
-                            Icons.people_outline,
-                            size: 40,
-                            color: Colors.purple,
-                          ),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const SelectQuestion(),
-                              ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            elevation: 4,
-                            backgroundColor: Colors.white,
-                            fixedSize: Size(width * 0.35, height * 0.125),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            shadowColor: Colors.black.withOpacity(0.8),
-                          ),
-                          child: const Icon(
-                            Icons.quiz,
-                            size: 40,
-                            color: Colors.purple,
-                          ),
+                        Container(
+                          width: width * 0.8,
+                          height: height * 0.5,
+                          child: DailyLineChart(),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 30),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.push(
@@ -578,35 +544,12 @@ class Page extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
                         ),
+                        shadowColor: Colors.black.withOpacity(0.8),
                       ),
                       child: const Icon(
-                        Icons.recommend,
-                        size: 40,
-                        color: Colors.purple,
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SelectQuestion(),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        elevation: 4,
-                        backgroundColor: Colors.white,
-                        fixedSize: Size(width * 0.8, height * 0.2),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                      child: const Icon(
-                        Icons.bar_chart,
-                        size: 40,
-                        color: Colors.purple,
+                        Icons.quiz,
+                        size: 60,
+                        color: Color.fromARGB(255, 140, 97, 213),
                       ),
                     ),
                   ],
