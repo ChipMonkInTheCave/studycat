@@ -99,7 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     height: 5,
                   ),
                   Text(
-                    user.currentUser!.displayName == null
+                    user.currentUser?.displayName == null
                         ? '익명'
                         : user.currentUser!.displayName.toString(),
                     style: GoogleFonts.jua(
@@ -216,6 +216,7 @@ void nullAlert(BuildContext context, String str) async {
                       } else {
                         user.currentUser!.updateDisplayName(inputText);
                       }
+
                       Navigator.pop(context);
                     },
                     child: Text(

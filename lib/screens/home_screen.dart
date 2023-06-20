@@ -10,7 +10,6 @@ import 'package:studycat/screens/graph/graph_screen.dart';
 import 'package:studycat/screens/score/test_score_screen.dart';
 import 'package:studycat/user/profile_screen.dart';
 import 'package:transition/transition.dart';
-import '../models/dailybarchart.dart';
 import 'auth/login_screen.dart';
 import 'question/select_question_screen.dart';
 import 'package:studycat/widgets/background_widget.dart';
@@ -57,8 +56,8 @@ class _HomeState extends State<HomeScreen> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('메일 앱을 사용할 수 없어요 :('),
-            content: Text(
+            title: const Text('메일 앱을 사용할 수 없어요 :('),
+            content: const Text(
                 '기본 메일 앱을 사용할 수 없기 때문에 앱에서 바로 문의를 전송하기 어려운 상황입니다.\n\n아래 이메일로 연락주시면 친절하게 답변해드릴게요 :)\n\n[ gimbuk00@gmail.com ]'),
             titleTextStyle: GoogleFonts.jua(
               fontSize: 18,
@@ -68,7 +67,7 @@ class _HomeState extends State<HomeScreen> {
               fontSize: 15,
               color: Colors.black,
             ),
-            actions: [],
+            actions: const [],
           );
         },
       );
@@ -530,7 +529,7 @@ class Page extends StatelessWidget {
                                       color.box,
                                     ),
                                   ),
-                                  child: Text('다시 풀러가기',
+                                  child: Text('공부하러가기',
                                       style: GoogleFonts.jua(
                                         color: color.text,
                                       ))),
@@ -542,10 +541,10 @@ class Page extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
+                          SizedBox(
                             width: width * 0.8,
                             height: height * 0.4,
-                            child: DailyLineChart(),
+                            child: const DailyLineChart(),
                           ),
                         ],
                       ),
