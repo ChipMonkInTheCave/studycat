@@ -3,6 +3,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
@@ -52,7 +53,7 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                   Text(
                     '수고했어요!!',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: GoogleFonts.jua(
                       color: color.text,
                       fontSize: width * 0.1,
                     ),
@@ -65,7 +66,7 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
               Center(
                 child: Text(
                   '정답률을 확인해보세요!!',
-                  style: TextStyle(
+                  style: GoogleFonts.jua(
                     color: color.text,
                     fontSize: width * 0.05,
                   ),
@@ -82,7 +83,7 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
               children: [
                 Text(
                   "정답률",
-                  style: TextStyle(
+                  style: GoogleFonts.jua(
                     fontSize: 40,
                     color: color.box,
                     fontWeight: FontWeight.bold,
@@ -105,7 +106,7 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                           delay: Duration(milliseconds: 500 * i),
                           child: AutoSizeText(
                             per.toString()[i],
-                            style: TextStyle(
+                            style: GoogleFonts.jua(
                               fontSize: 100,
                               color: color.box,
                             ),
@@ -237,7 +238,7 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                   },
                   child: Text(
                     '확인',
-                    style: TextStyle(
+                    style: GoogleFonts.jua(
                       color: color.text,
                       fontWeight: FontWeight.w600,
                       fontSize: 16,

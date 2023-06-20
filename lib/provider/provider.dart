@@ -79,17 +79,19 @@ class CloudData with ChangeNotifier {
     for (var name in myScore.score.keys) {
       var data = myScore.score[name]; //점수
       var length; //길이
-      if (data.length != null) {
-        length = data[data.length - 1];
-        var score = length[length.keys.elementAt(0)][0]; //점수
-        var scores = [];
-        for (var i = 0; i < data.length; i++) {
-          var len = data[i];
-          double score = (len[len.keys.elementAt(0)][0]).toDouble();
-          scores.add(score);
-        }
-        _scoreList[name] = scores;
-      } else {}
+      if (data.runtimeType != int) {
+        if (data.length != null) {
+          length = data[data.length - 1];
+          var score = length[length.keys.elementAt(0)][0]; //점수
+          var scores = [];
+          for (var i = 0; i < data.length; i++) {
+            var len = data[i];
+            double score = (len[len.keys.elementAt(0)][0]).toDouble();
+            scores.add(score);
+          }
+          _scoreList[name] = scores;
+        } else {}
+      }
     }
   }
 
@@ -99,7 +101,6 @@ class CloudData with ChangeNotifier {
     _myQuestion = data['question'];
     _myScore = data['score'];
     _myUserData = data['userdata'];
-    month();
     notifyListeners();
   }
 

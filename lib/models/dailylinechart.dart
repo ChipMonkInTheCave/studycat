@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 
@@ -73,7 +74,7 @@ class _LineChartState extends State<_LineChart> {
 
               return LineTooltipItem(
                 '$weekDay\n',
-                const TextStyle(
+                GoogleFonts.jua(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
@@ -81,7 +82,7 @@ class _LineChartState extends State<_LineChart> {
                 children: <TextSpan>[
                   TextSpan(
                     text: (spot.y).toString(),
-                    style: const TextStyle(
+                    style: GoogleFonts.jua(
                       color: Colors.black,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -131,7 +132,7 @@ class _LineChartState extends State<_LineChart> {
       );
 
   Widget leftTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(
+    var style = GoogleFonts.jua(
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );
@@ -170,35 +171,35 @@ class _LineChartState extends State<_LineChart> {
       );
 
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(
+    var style = GoogleFonts.jua(
       fontWeight: FontWeight.w600,
       fontSize: 15,
     );
     Widget text;
     switch (value.toInt()) {
       case 1:
-        text = const Text('M', style: style);
+        text = Text('M', style: style);
         break;
       case 3:
-        text = const Text('T', style: style);
+        text = Text('T', style: style);
         break;
       case 5:
-        text = const Text('W', style: style);
+        text = Text('W', style: style);
         break;
       case 7:
-        text = const Text('T', style: style);
+        text = Text('T', style: style);
         break;
       case 9:
-        text = const Text('F', style: style);
+        text = Text('F', style: style);
         break;
       case 11:
-        text = const Text('S', style: style);
+        text = Text('S', style: style);
         break;
       case 13:
-        text = const Text('S', style: style);
+        text = Text('S', style: style);
         break;
       default:
-        text = const Text('');
+        text = Text('');
         break;
     }
 

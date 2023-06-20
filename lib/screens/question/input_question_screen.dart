@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/question/select_question_screen.dart';
@@ -59,7 +60,7 @@ class _InputQuestionState extends State<InputQuestion> {
                     Text(
                       '단어장 추가',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: GoogleFonts.jua(
                         color: color.text,
                         fontSize: width * 0.1,
                       ),
@@ -75,7 +76,7 @@ class _InputQuestionState extends State<InputQuestion> {
                 Center(
                   child: Text(
                     '나만의 새로운 단어장을 만들 수 있어요!',
-                    style: TextStyle(
+                    style: GoogleFonts.jua(
                       color: color.text,
                       fontSize: width * 0.05,
                     ),
@@ -117,7 +118,7 @@ class _InputQuestionState extends State<InputQuestion> {
                             controller: inputController,
                             decoration: TextFieldDeco(
                                 '단어장 이름을 입력해주세요', '기존 단어장이나 새 단어장 입력'),
-                            style: TextStyle(
+                            style: GoogleFonts.jua(
                               fontSize: 20,
                               color: color.box,
                             ),
@@ -126,14 +127,14 @@ class _InputQuestionState extends State<InputQuestion> {
                         Text(
                             '\n**입력 방법**\n 새로운 이름을 입력하면 새로운 단어장이 생깁니다.\n 기존 단어장을 입력하면 기존 단어장에 단어가 추가됩니다.',
                             textAlign: TextAlign.start,
-                            style: TextStyle(
+                            style: GoogleFonts.jua(
                               color: color.background,
                               fontSize: width * 0.05,
                             )),
                         Text(
                             '\n**주의할 점**\n 새 단어장을 입력할때는 단어를 4개이상 입력해주세요.\n 단어나 뜻은 .(점)으로 구분합니다.\n',
                             textAlign: TextAlign.start,
-                            style: TextStyle(
+                            style: GoogleFonts.jua(
                               color: color.background,
                               fontSize: width * 0.05,
                             )),
@@ -157,7 +158,7 @@ class _InputQuestionState extends State<InputQuestion> {
                             },
                             child: AutoSizeText(
                               '    단어 추가하기    ',
-                              style: TextStyle(
+                              style: GoogleFonts.jua(
                                 color: context.watch<ThemeColor>().text,
                                 fontSize: 30,
                               ),
@@ -203,7 +204,7 @@ void questionMenu(
           children: [
             Text(
               '어떤 단어를 넣을까요??',
-              style: TextStyle(
+              style: GoogleFonts.jua(
                 color: context.watch<ThemeColor>().box,
                 fontWeight: FontWeight.bold,
               ),
@@ -216,9 +217,9 @@ void questionMenu(
             height: MediaQuery.of(context).size.height * 0.34,
             child: Column(
               children: [
-                const Text(
+                Text(
                   '여러 개를 넣으려면 점으로 구분해주세요. \n 예시 : apple.banana.melon',
-                  style: TextStyle(
+                  style: GoogleFonts.jua(
                     color: Color.fromARGB(255, 156, 120, 255),
                     fontSize: 15,
                   ),
@@ -233,7 +234,7 @@ void questionMenu(
                     '영단어를 입력해주세요',
                     'apple',
                   ),
-                  style: const TextStyle(
+                  style: GoogleFonts.jua(
                     fontSize: 20,
                     color: Colors.red,
                   ),
@@ -247,7 +248,7 @@ void questionMenu(
                     '뜻을 입력해주세요',
                     '사과',
                   ),
-                  style: const TextStyle(
+                  style: GoogleFonts.jua(
                     fontSize: 20,
                     color: Colors.red,
                   ),
@@ -274,7 +275,7 @@ void questionMenu(
                   },
                   child: AutoSizeText(
                     '    단어 등록    ',
-                    style: TextStyle(
+                    style: GoogleFonts.jua(
                       color: context.watch<ThemeColor>().text,
                       fontSize: 30,
                     ),
@@ -309,7 +310,7 @@ void checkAlert(BuildContext context, List eng, List kor, String sub) async {
             Text(
               "추가할 단어를 확인해주세요!!\n $sub에 추가됩니다!",
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: GoogleFonts.jua(
                 color: context.watch<ThemeColor>().box,
                 fontWeight: FontWeight.bold,
               ),
@@ -321,7 +322,7 @@ void checkAlert(BuildContext context, List eng, List kor, String sub) async {
             for (var i = 0; i < eng.length; i++)
               Text(
                 '${i + 1}. 단어 : ${eng[i]}, 뜻 :${kor[i]}',
-                style: TextStyle(
+                style: GoogleFonts.jua(
                   color: context.watch<ThemeColor>().box,
                   fontSize: 20,
                 ),
@@ -395,7 +396,7 @@ void checkAlert(BuildContext context, List eng, List kor, String sub) async {
                   },
                   child: Text(
                     '    확인    ',
-                    style: TextStyle(
+                    style: GoogleFonts.jua(
                       color: context.watch<ThemeColor>().text,
                       fontSize: MediaQuery.of(context).size.width * 0.07,
                     ),
@@ -413,7 +414,7 @@ void checkAlert(BuildContext context, List eng, List kor, String sub) async {
                   },
                   child: Text(
                     '    취소    ',
-                    style: TextStyle(
+                    style: GoogleFonts.jua(
                       color: context.watch<ThemeColor>().text,
                       fontSize: MediaQuery.of(context).size.width * 0.07,
                     ),

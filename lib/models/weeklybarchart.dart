@@ -2,6 +2,7 @@
 //import 'package:fl_chart_app/presentation/widgets/legend_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 
@@ -79,7 +80,7 @@ class WeeklyBarChart extends StatelessWidget {
   }
 
   Widget bottomTitles(double value, TitleMeta meta) {
-    const style = TextStyle(fontSize: 15, fontWeight: FontWeight.w600);
+    var style = GoogleFonts.jua(fontSize: 15, fontWeight: FontWeight.w600);
     String text;
     switch (value.toInt()) {
       case 0:
@@ -253,7 +254,7 @@ class WeeklyBarChart extends StatelessWidget {
                   const SizedBox(width: 4),
                   Text(
                     legend.name,
-                    style: const TextStyle(
+                    style: GoogleFonts.jua(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),

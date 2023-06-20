@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/question/question_screen.dart';
@@ -74,15 +75,14 @@ class _SelectQuetionWidgetState extends State<SelectQuetionWidget> {
               ),
               title: AutoSizeText(
                 question[widget.nn].keys.elementAt(0).toString(),
-                style: TextStyle(
+                style: GoogleFonts.jua(
                   color: color.box,
                   fontSize: 30,
-                  fontWeight: FontWeight.bold,
                 ),
               ),
               subtitle: AutoSizeText(
                 '단어 ${question[widget.nn][question[widget.nn].keys.elementAt(0)].length}개',
-                style: TextStyle(
+                style: GoogleFonts.jua(
                   color: color.box,
                 ),
               ),
@@ -135,9 +135,8 @@ void questionMenu(
           children: [
             Text(
               '무엇을 할까요?',
-              style: TextStyle(
+              style: GoogleFonts.jua(
                 color: context.watch<ThemeColor>().background,
-                fontWeight: FontWeight.bold,
               ),
             ),
           ],
@@ -176,7 +175,7 @@ void questionMenu(
                       ),
                       AutoSizeText(
                         '단어장삭제',
-                        style: TextStyle(
+                        style: GoogleFonts.jua(
                           color: context.watch<ThemeColor>().text,
                           fontSize: 30,
                         ),
@@ -216,7 +215,7 @@ void questionMenu(
                       ),
                       AutoSizeText(
                         '단어목록',
-                        style: TextStyle(
+                        style: GoogleFonts.jua(
                           color: context.watch<ThemeColor>().text,
                           fontSize: 30,
                         ),

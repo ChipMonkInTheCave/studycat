@@ -3,6 +3,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/question/input_question_screen.dart';
@@ -62,7 +63,7 @@ class _ShowQuestionScreenState extends State<ShowQuestionScreen> {
                           ),
                           leading: AutoSizeText(
                             "${i + 1}",
-                            style: TextStyle(
+                            style: GoogleFonts.jua(
                               color: color.background,
                               fontSize: 30,
                             ),
@@ -75,7 +76,7 @@ class _ShowQuestionScreenState extends State<ShowQuestionScreen> {
                                 .keys
                                 .elementAt(i)
                                 .toString(),
-                            style: TextStyle(
+                            style: GoogleFonts.jua(
                               color: color.background,
                               fontSize: 30,
                             ),
@@ -88,7 +89,7 @@ class _ShowQuestionScreenState extends State<ShowQuestionScreen> {
                                 .values
                                 .elementAt(i)
                                 .toString(),
-                            style: TextStyle(
+                            style: GoogleFonts.jua(
                               color: color.background,
                               fontSize: 15,
                             ),
@@ -147,7 +148,7 @@ class _ShowQuestionScreenState extends State<ShowQuestionScreen> {
                   Text(
                     '단어 목록',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: GoogleFonts.jua(
                       color: color.text,
                       fontSize: width * 0.1,
                     ),
@@ -163,7 +164,7 @@ class _ShowQuestionScreenState extends State<ShowQuestionScreen> {
               Center(
                 child: Text(
                   '여기선 단어들을 볼 수 있어요',
-                  style: TextStyle(
+                  style: GoogleFonts.jua(
                     color: color.text,
                     fontSize: width * 0.05,
                   ),
@@ -201,7 +202,7 @@ void questionMenu(
           children: [
             Text(
               '무엇을 할까요?',
-              style: TextStyle(
+              style: GoogleFonts.jua(
                 color: context.watch<ThemeColor>().background,
                 fontWeight: FontWeight.bold,
               ),
@@ -242,7 +243,7 @@ void questionMenu(
                       ),
                       AutoSizeText(
                         '단어수정',
-                        style: TextStyle(
+                        style: GoogleFonts.jua(
                           color: context.watch<ThemeColor>().text,
                           fontSize: 30,
                         ),
@@ -274,7 +275,7 @@ void questionMenu(
                       ),
                       AutoSizeText(
                         '단어삭제',
-                        style: TextStyle(
+                        style: GoogleFonts.jua(
                           color: context.watch<ThemeColor>().text,
                           fontSize: 30,
                         ),
@@ -312,7 +313,7 @@ void removeWordAlert(
               Text(
                 '단어를 삭제합니다',
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: GoogleFonts.jua(
                   color: context.watch<ThemeColor>().box,
                   fontWeight: FontWeight.bold,
                 ),
@@ -324,8 +325,8 @@ void removeWordAlert(
             height: MediaQuery.of(context).size.height * 0.15,
             child: Column(
               children: [
-                const Text('삭제할 단어',
-                    style: TextStyle(
+                Text('삭제할 단어',
+                    style: GoogleFonts.jua(
                       color: Colors.redAccent,
                       fontSize: 20,
                     )),
@@ -341,7 +342,7 @@ void removeWordAlert(
                             .elementAt(0)]
                         .keys
                         .elementAt(num),
-                    style: const TextStyle(
+                    style: GoogleFonts.jua(
                       color: Colors.redAccent,
                       fontSize: 20,
                     )),
@@ -380,7 +381,7 @@ void removeWordAlert(
                       },
                       child: Text(
                         '    확인    ',
-                        style: TextStyle(
+                        style: GoogleFonts.jua(
                           color: context.watch<ThemeColor>().text,
                           fontSize: 30,
                         ),
@@ -398,7 +399,7 @@ void removeWordAlert(
                       },
                       child: Text(
                         '    취소    ',
-                        style: TextStyle(
+                        style: GoogleFonts.jua(
                           color: context.watch<ThemeColor>().text,
                           fontSize: 30,
                         ),

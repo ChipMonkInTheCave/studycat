@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/home_screen.dart';
@@ -101,14 +102,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     user.currentUser!.displayName == null
                         ? '익명'
                         : user.currentUser!.displayName.toString(),
-                    style: const TextStyle(
+                    style: GoogleFonts.jua(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
                     user.currentUser!.email.toString(),
-                    style: const TextStyle(
+                    style: GoogleFonts.jua(
                       fontSize: 16,
                     ),
                   ),
@@ -176,7 +177,7 @@ void nullAlert(BuildContext context, String str) async {
           children: [
             Text(
               "변경할 닉네임을 입력해주세요.",
-              style: TextStyle(
+              style: GoogleFonts.jua(
                 color: context.watch<ThemeColor>().box,
                 fontWeight: FontWeight.bold,
               ),
@@ -192,7 +193,7 @@ void nullAlert(BuildContext context, String str) async {
                 TextField(
                   controller: inputController,
                   decoration: TextFieldDeco('변경할 닉네임을 입력해주세요', '닉네임 입력'),
-                  style: TextStyle(
+                  style: GoogleFonts.jua(
                     fontSize: 20,
                     color: color.box,
                   ),
@@ -219,7 +220,7 @@ void nullAlert(BuildContext context, String str) async {
                     },
                     child: Text(
                       '확인',
-                      style: TextStyle(
+                      style: GoogleFonts.jua(
                         color: context.watch<ThemeColor>().box,
                         fontSize: MediaQuery.of(context).size.height * 0.03,
                         fontWeight: FontWeight.bold,

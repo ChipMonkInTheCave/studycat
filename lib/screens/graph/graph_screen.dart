@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:studycat/models/dailybarchart.dart';
 import 'package:studycat/models/dailylinechart.dart';
 import 'package:studycat/models/weeklybarchart.dart';
@@ -24,6 +25,7 @@ class _GraphState extends State<Graph> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Stack(
         children: [
@@ -31,7 +33,7 @@ class _GraphState extends State<Graph> {
           SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 100),
+                SizedBox(height: height * 0.07),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -42,11 +44,11 @@ class _GraphState extends State<Graph> {
                       selectedColor: Colors.white.withOpacity(0.8),
                       fillColor: const Color.fromARGB(255, 107, 45, 213)
                           .withOpacity(1),
-                      children: const [
+                      children: [
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 14),
                           child: Text('꺾은선',
-                              style: TextStyle(
+                              style: GoogleFonts.jua(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
                               )),
@@ -54,7 +56,7 @@ class _GraphState extends State<Graph> {
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           child: Text('막대',
-                              style: TextStyle(
+                              style: GoogleFonts.jua(
                                 fontSize: 19,
                                 fontWeight: FontWeight.w500,
                               )),
@@ -71,11 +73,11 @@ class _GraphState extends State<Graph> {
                       selectedColor: Colors.white.withOpacity(0.8),
                       fillColor: const Color.fromARGB(255, 107, 45, 213)
                           .withOpacity(1),
-                      children: const [
+                      children: [
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8),
                           child: Text('D',
-                              style: TextStyle(
+                              style: GoogleFonts.jua(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
                               )),
@@ -84,7 +86,7 @@ class _GraphState extends State<Graph> {
                           padding: EdgeInsets.symmetric(horizontal: 8),
                           child: Text(
                             'W',
-                            style: TextStyle(
+                            style: GoogleFonts.jua(
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
                             ),
@@ -101,10 +103,10 @@ class _GraphState extends State<Graph> {
                       padding: const EdgeInsets.all(15),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: const [
+                        children: [
                           Text(
                             '성적 그래프',
-                            style: TextStyle(
+                            style: GoogleFonts.jua(
                               color: Color.fromARGB(255, 46, 5, 77),
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -113,7 +115,7 @@ class _GraphState extends State<Graph> {
                           SizedBox(height: 4),
                           Text(
                             '일주일 기록',
-                            style: TextStyle(
+                            style: GoogleFonts.jua(
                               color: Color.fromARGB(255, 104, 70, 200),
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -122,7 +124,7 @@ class _GraphState extends State<Graph> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 0),
                     if (isLineSelected && isDailySelected)
                       const DailyLineChart(),
                     if (isBarSelected && isDailySelected) const DailyBarChart(),

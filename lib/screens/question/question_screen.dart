@@ -4,6 +4,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/question/end_question_screen.dart';
@@ -108,7 +109,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
           backgroundColor: MaterialStateProperty.all(
               isSelected[num] ? color.background : color.box),
           textStyle: MaterialStateProperty.all(
-            const TextStyle(
+            GoogleFonts.jua(
               fontSize: 20,
               fontWeight: FontWeight.normal,
             ),
@@ -171,10 +172,10 @@ class _QuestionScreenState extends State<QuestionScreen> {
                         from: 30,
                         child: AutoSizeText(
                           '다음 단어의 뜻을 고르세요!!',
-                          style: TextStyle(
+                          style: GoogleFonts.jua(
                               fontSize: 25,
                               color: color.background,
-                              fontWeight: FontWeight.w600),
+                              fontWeight: FontWeight.normal),
                         ),
                       ),
                     ),
@@ -189,10 +190,10 @@ class _QuestionScreenState extends State<QuestionScreen> {
                               .keys
                               .elementAt(widget.num)
                               .toString(),
-                          style: TextStyle(
+                          style: GoogleFonts.jua(
                               fontSize: 40,
                               color: color.background,
-                              fontWeight: FontWeight.w600),
+                              fontWeight: FontWeight.normal),
                         ),
                       ),
                     ),
@@ -285,9 +286,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   },
                   child: AutoSizeText(
                     answerChk ? '다음 문제' : '확인',
-                    style: TextStyle(
+                    style: GoogleFonts.jua(
                       color: color.text,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.normal,
                       fontSize: 16,
                     ),
                   ),

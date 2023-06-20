@@ -4,6 +4,7 @@ import 'dart:async';
 // import 'package:fl_chart_app/util/extensions/color_extensions.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 
@@ -91,25 +92,47 @@ class BarChartSample1State extends State<DailyBarChart> {
 //데이터 입력부분
   List<BarChartGroupData> showingGroups() => List.generate(7, (i) {
         var scores = [];
-        for (var j = 0; j < 7; j++) {
-          if (context.watch<CloudData>().scoreList["능률 VOCA : DAY1"] != null) {
-            if (context.watch<CloudData>().scoreList["능률 VOCA : DAY1"].length -
-                    1 -
-                    i >=
-                0) {
+
+        if (context.watch<CloudData>().scoreList["능률 VOCA : DAY1"] != null) {
+          if (context.watch<CloudData>().scoreList["능률 VOCA : DAY1"].length >=
+              7) {
+            for (var j = 0; j < 7; j++) {
               scores.add(context
                   .watch<CloudData>()
                   .scoreList["능률 VOCA : DAY1"][context
                           .watch<CloudData>()
                           .scoreList["능률 VOCA : DAY1"]
                           .length -
-                      7 +
+                      7 -
                       i]
                   .toDouble());
-            } else {
-              scores.add(0.0);
             }
           } else {
+            for (var j = 0;
+                j <
+                    context
+                        .watch<CloudData>()
+                        .scoreList["능률 VOCA : DAY1"]
+                        .length;
+                j++) {
+              scores.add(context
+                  .watch<CloudData>()
+                  .scoreList["능률 VOCA : DAY1"][j]
+                  .toDouble());
+            }
+            for (var q = 0;
+                q <
+                    7 -
+                        context
+                            .watch<CloudData>()
+                            .scoreList["능률 VOCA : DAY1"]
+                            .length;
+                q++) {
+              scores.add(0.0);
+            }
+          }
+        } else {
+          for (var q = 0; q < 7; q++) {
             scores.add(0.0);
           }
         }
@@ -171,7 +194,7 @@ class BarChartSample1State extends State<DailyBarChart> {
             }
             return BarTooltipItem(
               '$weekDay\n',
-              const TextStyle(
+              GoogleFonts.jua(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
@@ -179,7 +202,7 @@ class BarChartSample1State extends State<DailyBarChart> {
               children: <TextSpan>[
                 TextSpan(
                   text: (rod.toY - 1).toString(),
-                  style: const TextStyle(
+                  style: GoogleFonts.jua(
                     color: Colors.black,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -233,7 +256,7 @@ class BarChartSample1State extends State<DailyBarChart> {
   }
 
   Widget getTitles(double value, TitleMeta meta) {
-    const style = TextStyle(
+    var style = GoogleFonts.jua(
       color: Colors.black87,
       fontWeight: FontWeight.bold,
       fontSize: 15,
@@ -241,28 +264,28 @@ class BarChartSample1State extends State<DailyBarChart> {
     Widget text;
     switch (value.toInt()) {
       case 0:
-        text = const Text('M', style: style);
+        text = Text('M', style: style);
         break;
       case 1:
-        text = const Text('T', style: style);
+        text = Text('T', style: style);
         break;
       case 2:
-        text = const Text('W', style: style);
+        text = Text('W', style: style);
         break;
       case 3:
-        text = const Text('T', style: style);
+        text = Text('T', style: style);
         break;
       case 4:
-        text = const Text('F', style: style);
+        text = Text('F', style: style);
         break;
       case 5:
-        text = const Text('S', style: style);
+        text = Text('S', style: style);
         break;
       case 6:
-        text = const Text('S', style: style);
+        text = Text('S', style: style);
         break;
       default:
-        text = const Text('', style: style);
+        text = Text('', style: style);
         break;
     }
     return SideTitleWidget(

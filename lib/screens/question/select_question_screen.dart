@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 import 'package:flutter/services.dart';
@@ -60,7 +61,7 @@ class _SelectQuestionState extends State<SelectQuestion> {
                     Text(
                       '문제 풀기',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: GoogleFonts.jua(
                         color: color.text,
                         fontSize: width * 0.1,
                       ),
@@ -76,7 +77,7 @@ class _SelectQuestionState extends State<SelectQuestion> {
                 Center(
                   child: Text(
                     '어떤 단어를 공부할까요??',
-                    style: TextStyle(
+                    style: GoogleFonts.jua(
                       color: color.text,
                       fontSize: width * 0.05,
                     ),
