@@ -203,7 +203,7 @@ class TestScoreState extends State<TestScore> {
                 });
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
+                backgroundColor: Color.fromARGB(255, 173, 134, 239),
               ),
               child: Text(
                   data['능률 VOCA : DAY1'][index2].keys.elementAt(0).toString(),
@@ -213,7 +213,7 @@ class TestScoreState extends State<TestScore> {
         Container(
             height: height * 0.115,
             width: width * 0.96,
-            color: Colors.blue,
+            color: Color.fromARGB(255, 173, 134, 239),
             child: Text('Score : ${list1[0].toString()}',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.jua(
@@ -240,7 +240,7 @@ class TestScoreState extends State<TestScore> {
                 });
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
+                backgroundColor: Color.fromARGB(255, 153, 98, 248),
               ),
               child: Text(
                   data['능률 VOCA : DAY1'][index3 + 7]
@@ -254,7 +254,7 @@ class TestScoreState extends State<TestScore> {
           Container(
               height: height * 0.115,
               width: width * 0.96,
-              color: Colors.red,
+              color: Color.fromARGB(255, 153, 98, 248),
               child: Text("Score : ${list2[0].toString()}",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.jua(
@@ -282,7 +282,7 @@ class TestScoreState extends State<TestScore> {
                 });
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black,
+                backgroundColor: Color.fromARGB(255, 126, 62, 238),
               ),
               child: Text(
                   data['능률 VOCA : DAY1'][index4 + 14]
@@ -296,7 +296,7 @@ class TestScoreState extends State<TestScore> {
           Container(
               height: height * 0.115,
               width: width * 0.96,
-              color: Colors.black,
+              color: Color.fromARGB(255, 126, 62, 238),
               child: Text("Score : ${list3[0].toString()}",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.jua(
@@ -322,7 +322,7 @@ class TestScoreState extends State<TestScore> {
                 });
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
+                backgroundColor: Color.fromARGB(255, 111, 34, 245),
               ),
               child: Text(
                   data['능률 VOCA : DAY1'][index5 + 21]
@@ -336,7 +336,7 @@ class TestScoreState extends State<TestScore> {
           Container(
               height: height * 0.115,
               width: width * 0.96,
-              color: Colors.green,
+              color: Color.fromARGB(255, 111, 34, 245),
               child: Text("Score : ${list4[0].toString()}",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.jua(

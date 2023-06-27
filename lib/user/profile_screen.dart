@@ -193,6 +193,7 @@ void nullAlert(BuildContext context) async {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextField(
+                  cursorColor: const Color.fromARGB(255, 140, 97, 213),
                   controller: inputController,
                   decoration: TextFieldDeco('변경할 닉네임을 입력해주세요', '닉네임 입력'),
                   style: GoogleFonts.jua(

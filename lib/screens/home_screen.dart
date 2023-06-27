@@ -111,9 +111,6 @@ class _HomeState extends State<HomeScreen> {
                   fontSize: 15,
                 ),
               ),
-              onDetailsPressed: () {
-                // 계정변경버튼
-              },
               decoration: const BoxDecoration(
                   color: Color.fromARGB(255, 140, 97, 213),
                   borderRadius: BorderRadius.only(
@@ -140,28 +137,6 @@ class _HomeState extends State<HomeScreen> {
                   ),
                 );
                 // Home
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.people,
-                size: 30,
-                color: Colors.grey[850],
-              ),
-              title: Text(
-                '프로필',
-                style: GoogleFonts.jua(
-                  fontSize: 20,
-                ),
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ProfileScreen(),
-                  ),
-                );
-                // 프로필
               },
             ),
             ListTile(
@@ -454,7 +429,7 @@ class Page extends StatelessWidget {
                                           ),
                                         ),
                                         Text(
-                                          'level',
+                                          'LEVEL',
                                           style: GoogleFonts.jua(
                                             fontSize: 20,
                                             color: Colors.grey,
@@ -598,7 +573,7 @@ class Page extends StatelessWidget {
                   child: Container(
                       width: width * 0.4,
                       height: height * 0.2,
-                      child: Image.asset('assets/app_icon.png')),
+                      child: Image.asset('assets/roading.png')),
                 ));
           } else {
             return Scaffold(

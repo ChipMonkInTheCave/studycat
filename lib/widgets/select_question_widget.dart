@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/question/question_screen.dart';
+import 'package:studycat/screens/question/select_question_screen.dart';
 import 'package:studycat/screens/question/show_question_screen.dart';
 import 'package:transition/transition.dart';
 import 'package:studycat/widgets/alert_widget.dart';
@@ -81,7 +82,7 @@ class _SelectQuetionWidgetState extends State<SelectQuetionWidget> {
                 ),
               ),
               subtitle: AutoSizeText(
-                '단어 ${question[widget.nn][question[widget.nn].keys.elementAt(0)].length}개, 최고 점수 ${context.read<CloudData>().myUserData.userdata['highscore'][widget.sub]}점',
+                '단어 ${question[widget.nn][question[widget.nn].keys.elementAt(0)].length}개, 최고 점수 ${context.read<CloudData>().myUserData.userdata['highscore'][widget.sub] == null ? 0 : context.read<CloudData>().myUserData.userdata['highscore'][widget.sub]}점',
                 style: GoogleFonts.jua(
                   color: color.box,
                 ),
@@ -96,6 +97,7 @@ class _SelectQuetionWidgetState extends State<SelectQuetionWidget> {
                   questionMenu(
                     context,
                     widget.nn,
+                    widget.sub,
                   );
                 },
                 icon: Icon(
@@ -116,6 +118,7 @@ class _SelectQuetionWidgetState extends State<SelectQuetionWidget> {
 void questionMenu(
   BuildContext context,
   num subjectnum,
+  String sub,
 ) async {
   showDialog(
     context: context,
@@ -156,12 +159,25 @@ void questionMenu(
                   onPressed: () {
                     var menu = context.read<CloudData>().myQuestion.question;
                     menu.removeAt(subjectnum.toInt());
+                    var score = context.read<CloudData>().myScore.score;
+                    score.remove(sub);
+                    var high = context.read<CloudData>().myUserData.userdata;
+                    high['highscore'].remove(sub);
                     FirebaseFirestore.instance
                         .collection('users')
                         .doc(context.read<CloudData>().id)
                         .update({'question': menu});
+                    FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(context.read<CloudData>().id)
+                        .update({'score': score});
+                    FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(context.read<CloudData>().id)
+                        .update({'userdata': high});
                     context.read<CloudData>().fetchData();
-                    Navigator.pop(context);
+                    Navigator.push(
+                        context, Transition(child: SelectQuestion()));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
