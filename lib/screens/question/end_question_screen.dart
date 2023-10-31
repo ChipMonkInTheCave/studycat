@@ -1,9 +1,9 @@
-import 'dart:math';
-
 import 'package:animate_do/animate_do.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
@@ -26,6 +26,7 @@ class EndQuestionScreen extends StatefulWidget {
 class _EndQuestionScreenState extends State<EndQuestionScreen> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode;
     num exp = context.read<CloudData>().myUserData.userdata['exp'];
     var color = context.watch<ThemeColor>();
     var now = DateTime.now();
@@ -52,7 +53,7 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                   Text(
                     '수고했어요!!',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: GoogleFonts.jua(
                       color: color.text,
                       fontSize: width * 0.1,
                     ),
@@ -65,7 +66,7 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
               Center(
                 child: Text(
                   '정답률을 확인해보세요!!',
-                  style: TextStyle(
+                  style: GoogleFonts.jua(
                     color: color.text,
                     fontSize: width * 0.05,
                   ),
@@ -82,7 +83,7 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
               children: [
                 Text(
                   "정답률",
-                  style: TextStyle(
+                  style: GoogleFonts.jua(
                     fontSize: 40,
                     color: color.box,
                     fontWeight: FontWeight.bold,
@@ -105,7 +106,7 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                           delay: Duration(milliseconds: 500 * i),
                           child: AutoSizeText(
                             per.toString()[i],
-                            style: TextStyle(
+                            style: GoogleFonts.jua(
                               fontSize: 100,
                               color: color.box,
                             ),
@@ -137,6 +138,20 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                         context.read<CloudData>().myScore.score[widget.subject];
                     var map1 = context.read<CloudData>().myScore.score;
                     list1 ??= [];
+                    var highscore = context
+                        .read<CloudData>()
+                        .myUserData
+                        .userdata['highscore'];
+                    if (highscore[widget.subject] != null) {
+                      if (highscore[widget.subject] <
+                          ((widget.cat / widget.queLen) * 100).toInt()) {
+                        highscore[widget.subject] =
+                            ((widget.cat / widget.queLen) * 100).toInt();
+                      }
+                    } else {
+                      highscore[widget.subject] =
+                          ((widget.cat / widget.queLen) * 100).toInt();
+                    }
                     if (keylist.contains(widget.subject)) {
                       if (list1.last.keys.elementAt(0) == nowDate) {
                         list1.last = {
@@ -164,29 +179,16 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                     map1[widget.subject] = list1;
                     FirebaseFirestore.instance
                         .collection('users')
-                        .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
+                        .doc(context.read<CloudData>().id)
                         .update({
                       'score': map1,
-                    });
-                    FirebaseFirestore.instance
-                        .collection('users')
-                        .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
-                        .update({
-                      'userdata': {
-                        'exp':
-                            exp + ((widget.cat / widget.queLen) * 100).toInt(),
-                        'level': context
-                            .read<CloudData>()
-                            .myUserData
-                            .userdata['level'],
-                      }
                     });
                     if (context.read<CloudData>().myUserData.userdata['exp'] +
                             (widget.cat / widget.queLen) * 100 >=
                         100) {
                       FirebaseFirestore.instance
                           .collection('users')
-                          .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
+                          .doc(context.read<CloudData>().id)
                           .update({
                         'userdata': {
                           'exp': exp +
@@ -196,13 +198,17 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                                   .read<CloudData>()
                                   .myUserData
                                   .userdata['level'] +
-                              1
+                              1,
+                          'recentScore':
+                              ((widget.cat / widget.queLen) * 100).toInt(),
+                          'recentWordnote': widget.subject,
+                          'highscore': highscore,
                         }
                       });
                     } else {
                       FirebaseFirestore.instance
                           .collection('users')
-                          .doc('jPwmXxGJpMZqGbPZqtNddImSTju1')
+                          .doc(context.read<CloudData>().id)
                           .update({
                         'userdata': {
                           'exp': (context
@@ -214,6 +220,10 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                               .read<CloudData>()
                               .myUserData
                               .userdata['level'],
+                          'recentScore':
+                              ((widget.cat / widget.queLen) * 100).toInt(),
+                          'recentWordnote': widget.subject,
+                          'highscore': highscore,
                         }
                       });
                     }
@@ -228,7 +238,7 @@ class _EndQuestionScreenState extends State<EndQuestionScreen> {
                   },
                   child: Text(
                     '확인',
-                    style: TextStyle(
+                    style: GoogleFonts.jua(
                       color: color.text,
                       fontWeight: FontWeight.w600,
                       fontSize: 16,

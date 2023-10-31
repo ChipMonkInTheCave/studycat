@@ -66,33 +66,47 @@ class CloudData with ChangeNotifier {
   late QuestionModel _myQuestion = QuestionModel(question: [1, 2, 3]);
   late ScoreModel _myScore = ScoreModel(score: {'error': 123});
   late UserDataModel _myUserData = UserDataModel(userdata: {'error': 123});
-  late String _id = 'jPwmXxGJpMZqGbPZqtNddImSTju1';
+  late String _id = '';
+  late final Map<String, dynamic> _scoreList = {};
 
   QuestionModel get myQuestion => _myQuestion;
   ScoreModel get myScore => _myScore;
   UserDataModel get myUserData => _myUserData;
   String get id => _id;
+  Map<String, dynamic> get scoreList => _scoreList;
 
-  List<dynamic> month() {
-    var data = myScore.score['능률 VOCA : DAY1']; //점수
-    var length = data[data.length - 28]; //길이
-    var score = length[length.keys.elementAt(0)][0]; //점수
-    var scoreList = [];
-    for (var i = 28; i > 0; i--) {
-      var len = data[data.length - i];
-      double score = (len[len.keys.elementAt(0)][0]).toDouble();
-      scoreList.add(score);
+  Future<void> month() async {
+    for (var name in myScore.score.keys) {
+      var data = myScore.score[name]; //점수
+      var length; //길이
+      if (data.runtimeType != int) {
+        if (data.length != null) {
+          length = data[data.length - 1];
+          var score = length[length.keys.elementAt(0)][0]; //점수
+          var scores = [];
+          for (var i = 0; i < data.length; i++) {
+            var len = data[i];
+            double score = (len[len.keys.elementAt(0)][0]).toDouble();
+            scores.add(score);
+          }
+          _scoreList[name] = scores;
+        } else {}
+      }
     }
-    return scoreList;
   }
 
   Future<void> fetchData() async {
+    await getUID();
     var data = await fetchDataFromFirestore(_id);
     _myQuestion = data['question'];
     _myScore = data['score'];
     _myUserData = data['userdata'];
-    notifyListeners();
+    // notifyListeners();
   }
+
+  // Future<void> re() async {
+  //   notifyListeners();
+  // }
 
   Future<void> getUID() async {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {

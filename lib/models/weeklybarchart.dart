@@ -2,6 +2,7 @@
 //import 'package:fl_chart_app/presentation/widgets/legend_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 
@@ -13,19 +14,23 @@ class Legend {
 }
 
 class WeeklyBarChart extends StatelessWidget {
-  WeeklyBarChart({super.key});
+  final String name;
+  WeeklyBarChart({
+    super.key,
+    required this.name,
+  });
 
-  final Week1Color = const Color.fromARGB(255, 23, 14, 192).withOpacity(0.9);
-  final Week2Color = const Color.fromARGB(255, 135, 74, 248).withOpacity(1);
-  final Week3Color = const Color.fromARGB(255, 80, 49, 205).withOpacity(0.9);
-  final Week4Color = const Color.fromARGB(255, 110, 102, 252).withOpacity(1);
-  final betweenSpace = 0.9;
+  final Week1Color = const Color(0xff84B1ED);
+  final Week2Color = const Color(0xffC89EC4);
+  final Week3Color = const Color(0xffEE7785);
+  final Week4Color = const Color(0xff67D5B5);
+  final betweenSpace = 1.0;
 
   List<Legend> legends = [
-    Legend('1주차', const Color.fromARGB(255, 23, 14, 192).withOpacity(0.9)),
-    Legend('2주차', const Color.fromARGB(255, 135, 74, 248).withOpacity(1)),
-    Legend('3주차', const Color.fromARGB(255, 80, 49, 205).withOpacity(0.9)),
-    Legend('4주차', const Color.fromARGB(255, 110, 102, 252).withOpacity(1)),
+    Legend('1주차', const Color(0xff84B1ED)),
+    Legend('2주차', const Color(0xffC89EC4)),
+    Legend('3주차', const Color(0xffEE7785)),
+    Legend('4주차', const Color(0xff67D5B5)),
   ];
 
   BarChartGroupData generateGroupData(
@@ -79,7 +84,7 @@ class WeeklyBarChart extends StatelessWidget {
   }
 
   Widget bottomTitles(double value, TitleMeta meta) {
-    const style = TextStyle(fontSize: 15, fontWeight: FontWeight.w600);
+    var style = GoogleFonts.jua(fontSize: 15, fontWeight: FontWeight.w600);
     String text;
     switch (value.toInt()) {
       case 0:
@@ -114,8 +119,39 @@ class WeeklyBarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var scoreList = context.read<CloudData>().month();
-
+    List<dynamic> scoreList = [];
+    if (context.watch<CloudData>().scoreList[name] != null) {
+      if (context.watch<CloudData>().scoreList[name].length - 1 > 27) {
+        for (var i = 0; i < 28; i++) {
+          scoreList.add(context
+              .watch<CloudData>()
+              .scoreList[name]
+                  [context.watch<CloudData>().scoreList[name].length - 28 + i]
+              .toDouble());
+        }
+      } else {
+        for (var i = 0;
+            i < context.watch<CloudData>().scoreList[name].length;
+            i++) {
+          scoreList
+              .add(context.watch<CloudData>().scoreList[name][i].toDouble());
+        }
+      }
+    }
+    List<dynamic> score = [[], [], [], [], [], [], []];
+    int cnt = 0;
+    for (var i = 0; i < scoreList.length; i++) {
+      if (cnt == 7) cnt = 0;
+      score[cnt].add(scoreList[i].toDouble());
+      cnt += 1;
+    }
+    for (var i = 0; i < 7; i++) {
+      if (score[i].length < 4) {
+        for (var j = 0; j < 4; j++) {
+          score[i].add(0.0);
+        }
+      }
+    }
     return Padding(
       padding: const EdgeInsets.all(25),
       child: Column(
@@ -146,55 +182,15 @@ class WeeklyBarChart extends StatelessWidget {
                 //key : context.watch<CloudData>().myScore.score['능률 VOCA : DAY1'][길이].keys.elementAt(0)
                 //접근 context.watch<CloudData>().myScore.score['능률 VOCA : DAY1'][길이][key][0]
                 barGroups: [
-                  generateGroupData(
-                    0,
-                    scoreList[0],
-                    scoreList[7],
-                    scoreList[14],
-                    scoreList[21], //Mon\
-                  ),
-                  generateGroupData(
-                    1,
-                    scoreList[1],
-                    scoreList[8],
-                    scoreList[15],
-                    scoreList[22], //Tue
-                  ),
-                  generateGroupData(
-                    2,
-                    scoreList[2],
-                    scoreList[9],
-                    scoreList[16],
-                    scoreList[23], //Wed
-                  ),
-                  generateGroupData(
-                    3,
-                    scoreList[3],
-                    scoreList[10],
-                    scoreList[17],
-                    scoreList[24], //Thu
-                  ),
-                  generateGroupData(
-                    4,
-                    scoreList[4],
-                    scoreList[11],
-                    scoreList[18],
-                    scoreList[25],
-                  ), //Fri
-                  generateGroupData(
-                    5,
-                    scoreList[5],
-                    scoreList[12],
-                    scoreList[19],
-                    scoreList[26],
-                  ), //Sat
-                  generateGroupData(
-                    6,
-                    scoreList[6],
-                    scoreList[13],
-                    scoreList[20],
-                    scoreList[27],
-                  ), //Sun
+                  for (var i = 0; i < 7; i++) ...[
+                    generateGroupData(
+                      i,
+                      score[i][0],
+                      score[i][1],
+                      score[i][2],
+                      score[i][3],
+                    ),
+                  ],
                 ],
                 maxY: 400 + (betweenSpace * 3),
                 extraLinesData: ExtraLinesData(
@@ -234,9 +230,9 @@ class WeeklyBarChart extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          // const SizedBox(
+          //   height: 20,
+          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: legends.map((legend) {
@@ -254,7 +250,7 @@ class WeeklyBarChart extends StatelessWidget {
                   const SizedBox(width: 4),
                   Text(
                     legend.name,
-                    style: const TextStyle(
+                    style: GoogleFonts.jua(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),

@@ -1,16 +1,15 @@
-import 'dart:ffi';
-import 'dart:math';
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:studycat/database/db.dart';
 import 'package:studycat/provider/provider.dart';
 import 'package:studycat/widgets/indicator.dart';
 
 class _LineChart extends StatefulWidget {
-  _LineChart({
+  final String name;
+  const _LineChart({
     required this.isShowingMainData,
+    required this.name,
   });
 
   final bool isShowingMainData;
@@ -86,7 +85,7 @@ class _LineChartState extends State<_LineChart> {
       );
 
   Widget leftTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(
+    var style = GoogleFonts.jua(
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );
@@ -125,35 +124,35 @@ class _LineChartState extends State<_LineChart> {
       );
 
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(
+    var style = GoogleFonts.jua(
       fontWeight: FontWeight.w600,
       fontSize: 15,
     );
     Widget text;
     switch (value.toInt()) {
       case 1:
-        text = const Text('M', style: style);
+        text = Text('M', style: style);
         break;
       case 3:
-        text = const Text('T', style: style);
+        text = Text('T', style: style);
         break;
       case 5:
-        text = const Text('W', style: style);
+        text = Text('W', style: style);
         break;
       case 7:
-        text = const Text('T', style: style);
+        text = Text('T', style: style);
         break;
       case 9:
-        text = const Text('F', style: style);
+        text = Text('F', style: style);
         break;
       case 11:
-        text = const Text('S', style: style);
+        text = Text('S', style: style);
         break;
       case 13:
-        text = const Text('S', style: style);
+        text = Text('S', style: style);
         break;
       default:
-        text = const Text('');
+        text = Text('');
         break;
     }
 
@@ -185,77 +184,164 @@ class _LineChartState extends State<_LineChart> {
 
   LineChartBarData get lineChartBarData1_1 => LineChartBarData(
         isCurved: true,
-        color: const Color.fromARGB(255, 23, 14, 192).withOpacity(0.9),
+        color: const Color(0xff84B1ED),
         barWidth: 4,
         isStrokeCapRound: true,
         dotData: FlDotData(show: true),
         belowBarData: BarAreaData(show: false),
         spots: [
-          //1~5
-          //context.watch<CloudData>().myScore.score['section1'][0]['2023-05-01'],
-          //for (double i = 0; i < 7; i++)
-          // FlSpot(
-          //     context.watch<CloudData>().myScore.score['section1'][0]
-          //         ['2023-05-01'][1],
-          //     context.watch<CloudData>().myScore.score['section1'][0]
-          //         ['2023-05-01'][0])
-          //FlSpot(1 + (2 * i), Random().nextInt(99 + 1).toDouble()),
-          for (var i = 0; i < 7; i++)
-            FlSpot(
-              1 + (i * 2),
-              context.read<CloudData>().month()[i].toDouble(),
-            ),
+          if (context.watch<CloudData>().scoreList[widget.name] != null) ...[
+            if (context.watch<CloudData>().scoreList[widget.name].length >=
+                7) ...[
+              for (var i = 0; i < 7; i++) ...[
+                FlSpot(
+                    1 + (i * 2),
+                    context
+                        .watch<CloudData>()
+                        .scoreList[widget.name][context
+                                .watch<CloudData>()
+                                .scoreList[widget.name]
+                                .length -
+                            7 +
+                            i]
+                        .toDouble())
+              ]
+            ] else ...[
+              for (var i = 0;
+                  i < context.watch<CloudData>().scoreList[widget.name].length;
+                  i++)
+                FlSpot(
+                    1 + (i * 2),
+                    context
+                        .watch<CloudData>()
+                        .scoreList[widget.name][i]
+                        .toDouble())
+            ]
+          ]
         ],
       );
   LineChartBarData get lineChartBarData1_2 => LineChartBarData(
         isCurved: true,
-        color: const Color.fromARGB(255, 135, 74, 248).withOpacity(1),
+        color: const Color(0xffC89EC4),
         barWidth: 4,
         isStrokeCapRound: true,
         dotData: FlDotData(show: true),
         belowBarData: BarAreaData(show: false),
         spots: [
-          for (var i = 0; i < 7; i++)
-            FlSpot(
-              1 + (i * 2),
-              context.read<CloudData>().month()[i + 7].toDouble(),
-            ),
+          if (context.watch<CloudData>().scoreList[widget.name] != null) ...[
+            if (context.watch<CloudData>().scoreList[widget.name].length >=
+                14) ...[
+              for (var i = 0; i < 7; i++) ...[
+                FlSpot(
+                    1 + (i * 2),
+                    context
+                        .watch<CloudData>()
+                        .scoreList[widget.name][context
+                                .watch<CloudData>()
+                                .scoreList[widget.name]
+                                .length -
+                            14 +
+                            i]
+                        .toDouble())
+              ]
+            ] else ...[
+              for (var i = 0;
+                  i < context.watch<CloudData>().scoreList[widget.name].length;
+                  i++)
+                FlSpot(
+                    1 + (i * 2),
+                    context
+                        .watch<CloudData>()
+                        .scoreList[widget.name][i]
+                        .toDouble())
+            ]
+          ]
         ],
       );
   LineChartBarData get lineChartBarData1_3 => LineChartBarData(
         isCurved: true,
-        color: const Color.fromARGB(255, 80, 49, 205).withOpacity(0.9),
+        color: const Color(0xffEE7785),
         barWidth: 4,
         isStrokeCapRound: true,
         dotData: FlDotData(show: true),
         belowBarData: BarAreaData(show: false),
         spots: [
-          for (var i = 0; i < 7; i++)
-            FlSpot(
-              1 + (i * 2),
-              context.read<CloudData>().month()[i + 14].toDouble(),
-            ),
+          if (context.watch<CloudData>().scoreList[widget.name] != null) ...[
+            if (context.watch<CloudData>().scoreList[widget.name].length >=
+                21) ...[
+              for (var i = 0; i < 7; i++) ...[
+                FlSpot(
+                    1 + (i * 2),
+                    context
+                        .watch<CloudData>()
+                        .scoreList[widget.name][context
+                                .watch<CloudData>()
+                                .scoreList[widget.name]
+                                .length -
+                            21 +
+                            i]
+                        .toDouble())
+              ]
+            ] else ...[
+              for (var i = 0;
+                  i < context.watch<CloudData>().scoreList[widget.name].length;
+                  i++)
+                FlSpot(
+                    1 + (i * 2),
+                    context
+                        .watch<CloudData>()
+                        .scoreList[widget.name][i]
+                        .toDouble())
+            ]
+          ]
         ],
       );
   LineChartBarData get lineChartBarData1_4 => LineChartBarData(
         isCurved: true,
-        color: const Color.fromARGB(255, 110, 102, 252).withOpacity(1),
+        color: const Color(0xff67D5B5),
         barWidth: 4,
         isStrokeCapRound: true,
         dotData: FlDotData(show: true),
         belowBarData: BarAreaData(show: false),
         spots: [
-          for (var i = 0; i < 7; i++)
-            FlSpot(
-              1 + (i * 2),
-              context.read<CloudData>().month()[i + 21].toDouble(),
-            ),
+          if (context.watch<CloudData>().scoreList[widget.name] != null) ...[
+            if (context.watch<CloudData>().scoreList[widget.name].length >=
+                28) ...[
+              for (var i = 0; i < 7; i++) ...[
+                FlSpot(
+                    1 + (i * 2),
+                    context
+                        .watch<CloudData>()
+                        .scoreList[widget.name][context
+                                .watch<CloudData>()
+                                .scoreList[widget.name]
+                                .length -
+                            28 +
+                            i]
+                        .toDouble())
+              ]
+            ] else ...[
+              for (var i = 0;
+                  i < context.watch<CloudData>().scoreList[widget.name].length;
+                  i++)
+                FlSpot(
+                    1 + (i * 2),
+                    context
+                        .watch<CloudData>()
+                        .scoreList[widget.name][i]
+                        .toDouble())
+            ]
+          ]
         ],
       );
 }
 
 class WeeklyLineChart extends StatefulWidget {
-  const WeeklyLineChart({super.key});
+  final String name;
+  const WeeklyLineChart({
+    super.key,
+    required this.name,
+  });
 
   @override
   State<StatefulWidget> createState() => WeeklyLineChartState();
@@ -274,9 +360,9 @@ class WeeklyLineChartState extends State<WeeklyLineChart> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 390,
-      height: 420,
+      height: 400,
       child: FutureBuilder(
-        future: setGraphData('001'),
+        future: context.watch<CloudData>().month(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return Stack(
@@ -284,49 +370,45 @@ class WeeklyLineChartState extends State<WeeklyLineChart> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    const Padding(
-                      padding: EdgeInsets.all(15),
+                    Padding(
+                      padding: const EdgeInsets.all(15),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[],
+                        children: const <Widget>[],
                       ),
                     ),
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(right: 14, left: 6),
                         child: _LineChart(
-                          isShowingMainData: isShowingMainData,
-                        ),
+                            isShowingMainData: isShowingMainData,
+                            name: widget.name),
                       ),
                     ),
                     const SizedBox(height: 25),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
+                      children: const <Widget>[
                         Indicator(
-                            color: const Color.fromARGB(255, 23, 14, 192)
-                                .withOpacity(0.9),
+                            color: Color(0xff84B1ED),
                             text: '1주차',
                             isSquare: false,
                             //size: touchedIndex == 0?18:16,
                             textColor: Colors.black),
                         Indicator(
-                          color: const Color.fromARGB(255, 135, 74, 248)
-                              .withOpacity(1),
+                          color: Color(0xffC89EC4),
                           text: '2주차',
                           isSquare: false,
                           textColor: Colors.black,
                         ),
                         Indicator(
-                          color: const Color.fromARGB(255, 80, 49, 205)
-                              .withOpacity(0.9),
+                          color: Color(0xffEE7785),
                           text: '3주차',
                           isSquare: false,
                           textColor: Colors.black,
                         ),
                         Indicator(
-                          color: const Color.fromARGB(255, 110, 102, 252)
-                              .withOpacity(1),
+                          color: Color(0xff67D5B5),
                           text: '4주차',
                           isSquare: false,
                           textColor: Colors.black,

@@ -1,12 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/question/select_question_screen.dart';
+import 'package:studycat/widgets/alert_widget.dart';
 import 'package:studycat/widgets/background_widget.dart';
 import 'package:studycat/widgets/textfield_widget.dart';
-import 'package:transition/transition.dart';
 
 class InputQuestion extends StatefulWidget {
   const InputQuestion({super.key});
@@ -24,6 +26,7 @@ class _InputQuestionState extends State<InputQuestion> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode;
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     var color = context.watch<ThemeColor>();
@@ -46,16 +49,10 @@ class _InputQuestionState extends State<InputQuestion> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          Transition(
-                            child: const SelectQuestion(),
-                            transitionEffect: TransitionEffect.FADE,
-                          ),
-                        );
+                        Navigator.pop(context);
                       },
                       icon: Icon(
-                        Icons.home,
+                        Icons.arrow_back,
                         color: color.text,
                         size: 40,
                       ),
@@ -63,7 +60,7 @@ class _InputQuestionState extends State<InputQuestion> {
                     Text(
                       '단어장 추가',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: GoogleFonts.jua(
                         color: color.text,
                         fontSize: width * 0.1,
                       ),
@@ -79,7 +76,7 @@ class _InputQuestionState extends State<InputQuestion> {
                 Center(
                   child: Text(
                     '나만의 새로운 단어장을 만들 수 있어요!',
-                    style: TextStyle(
+                    style: GoogleFonts.jua(
                       color: color.text,
                       fontSize: width * 0.05,
                     ),
@@ -110,7 +107,8 @@ class _InputQuestionState extends State<InputQuestion> {
                     padding: EdgeInsets.symmetric(
                         horizontal: width * 0.08, vertical: height * 0.05),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Card(
                           shape: RoundedRectangleBorder(
@@ -118,14 +116,28 @@ class _InputQuestionState extends State<InputQuestion> {
                           ),
                           child: TextField(
                             controller: inputController,
-                            decoration:
-                                TextFieldDeco('과목을 입력해주세요', '기존 과목이나 새 과목 입력'),
-                            style: TextStyle(
+                            decoration: TextFieldDeco(
+                                '단어장 이름을 입력해주세요', '기존 단어장이나 새 단어장 입력'),
+                            style: GoogleFonts.jua(
                               fontSize: 20,
                               color: color.box,
                             ),
                           ),
                         ),
+                        Text(
+                            '\n**입력 방법**\n 새로운 이름을 입력하면 새로운 단어장이 생깁니다.\n 기존 단어장을 입력하면 기존 단어장에 단어가 추가됩니다.',
+                            textAlign: TextAlign.start,
+                            style: GoogleFonts.jua(
+                              color: color.background,
+                              fontSize: width * 0.05,
+                            )),
+                        Text(
+                            '\n**주의할 점**\n 새 단어장을 입력할때는 단어를 4개이상 입력해주세요.\n 단어나 뜻은 .(점)으로 구분합니다.\n',
+                            textAlign: TextAlign.start,
+                            style: GoogleFonts.jua(
+                              color: color.background,
+                              fontSize: width * 0.05,
+                            )),
                         Center(
                           child: TextButton(
                             style: ButtonStyle(
@@ -139,14 +151,14 @@ class _InputQuestionState extends State<InputQuestion> {
                             onPressed: () {
                               inputText = inputController.text;
                               if (inputText.isEmpty) {
-                                nullAlert(context, true);
+                                nullAlert(context, '과목을 입력한 후 선택해주세요');
                               } else {
                                 questionMenu(context, inputText);
                               }
                             },
                             child: AutoSizeText(
                               '    단어 추가하기    ',
-                              style: TextStyle(
+                              style: GoogleFonts.jua(
                                 color: context.watch<ThemeColor>().text,
                                 fontSize: 30,
                               ),
@@ -154,37 +166,6 @@ class _InputQuestionState extends State<InputQuestion> {
                           ),
                         ),
                       ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: height * 0.87),
-              child: Center(
-                child: Container(
-                  width: width * 0.9,
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [
-                        Color.fromARGB(255, 127, 134, 220),
-                        Color.fromARGB(255, 125, 135, 222),
-                        Color.fromARGB(255, 157, 164, 232),
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: TextButton(
-                    onPressed: () {},
-                    child: AutoSizeText(
-                      '확인',
-                      style: TextStyle(
-                        color: color.text,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                      ),
                     ),
                   ),
                 ),
@@ -223,7 +204,7 @@ void questionMenu(
           children: [
             Text(
               '어떤 단어를 넣을까요??',
-              style: TextStyle(
+              style: GoogleFonts.jua(
                 color: context.watch<ThemeColor>().box,
                 fontWeight: FontWeight.bold,
               ),
@@ -233,12 +214,12 @@ void questionMenu(
         content: SingleChildScrollView(
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.7,
-            height: MediaQuery.of(context).size.height * 0.34,
+            height: MediaQuery.of(context).size.height * 0.4,
             child: Column(
               children: [
-                const Text(
+                Text(
                   '여러 개를 넣으려면 점으로 구분해주세요. \n 예시 : apple.banana.melon',
-                  style: TextStyle(
+                  style: GoogleFonts.jua(
                     color: Color.fromARGB(255, 156, 120, 255),
                     fontSize: 15,
                   ),
@@ -253,7 +234,7 @@ void questionMenu(
                     '영단어를 입력해주세요',
                     'apple',
                   ),
-                  style: const TextStyle(
+                  style: GoogleFonts.jua(
                     fontSize: 20,
                     color: Colors.red,
                   ),
@@ -267,7 +248,7 @@ void questionMenu(
                     '뜻을 입력해주세요',
                     '사과',
                   ),
-                  style: const TextStyle(
+                  style: GoogleFonts.jua(
                     fontSize: 20,
                     color: Colors.red,
                   ),
@@ -287,14 +268,14 @@ void questionMenu(
                     if (eng.length != kor.length ||
                         engController.text.isEmpty ||
                         korController.text.isEmpty) {
-                      nullAlert(context, false);
+                      nullAlert(context, '영단어 갯수와\n뜻의 갯수를 맞춰주세요');
                     } else {
                       checkAlert(context, eng, kor, sub);
                     }
                   },
                   child: AutoSizeText(
                     '    단어 등록    ',
-                    style: TextStyle(
+                    style: GoogleFonts.jua(
                       color: context.watch<ThemeColor>().text,
                       fontSize: 30,
                     ),
@@ -304,39 +285,6 @@ void questionMenu(
             ),
           ),
         ),
-      );
-    }),
-  );
-}
-
-void nullAlert(BuildContext context, bool sub) async {
-  showDialog(
-    context: context,
-    barrierDismissible: true,
-    builder: ((context) {
-      return AlertDialog(
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-            color: context.watch<ThemeColor>().box,
-            width: 10.0,
-          ),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        backgroundColor: context.watch<ThemeColor>().text,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              sub ? '과목을 입력한 후 선택해주세요' : '영단어 갯수와\n뜻의 갯수를 맞춰주세요',
-              style: TextStyle(
-                color: context.watch<ThemeColor>().box,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-        content: const SingleChildScrollView(),
       );
     }),
   );
@@ -362,7 +310,7 @@ void checkAlert(BuildContext context, List eng, List kor, String sub) async {
             Text(
               "추가할 단어를 확인해주세요!!\n $sub에 추가됩니다!",
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: GoogleFonts.jua(
                 color: context.watch<ThemeColor>().box,
                 fontWeight: FontWeight.bold,
               ),
@@ -374,7 +322,7 @@ void checkAlert(BuildContext context, List eng, List kor, String sub) async {
             for (var i = 0; i < eng.length; i++)
               Text(
                 '${i + 1}. 단어 : ${eng[i]}, 뜻 :${kor[i]}',
-                style: TextStyle(
+                style: GoogleFonts.jua(
                   color: context.watch<ThemeColor>().box,
                   fontSize: 20,
                 ),
@@ -383,6 +331,7 @@ void checkAlert(BuildContext context, List eng, List kor, String sub) async {
               height: MediaQuery.of(context).size.height * 0.01,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
                   style: ButtonStyle(
@@ -437,13 +386,19 @@ void checkAlert(BuildContext context, List eng, List kor, String sub) async {
                           .update({'question': list1});
                     }
                     context.read<CloudData>().fetchData();
-                    Navigator.pop(context);
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, '/', (_) => false);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SelectQuestion()),
+                    );
                   },
                   child: Text(
                     '    확인    ',
-                    style: TextStyle(
+                    style: GoogleFonts.jua(
                       color: context.watch<ThemeColor>().text,
-                      fontSize: 30,
+                      fontSize: MediaQuery.of(context).size.width * 0.07,
                     ),
                   ),
                 ),
@@ -459,9 +414,9 @@ void checkAlert(BuildContext context, List eng, List kor, String sub) async {
                   },
                   child: Text(
                     '    취소    ',
-                    style: TextStyle(
+                    style: GoogleFonts.jua(
                       color: context.watch<ThemeColor>().text,
-                      fontSize: 30,
+                      fontSize: MediaQuery.of(context).size.width * 0.07,
                     ),
                   ),
                 ),

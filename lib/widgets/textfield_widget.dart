@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 InputDecoration TextFieldDeco(
   String label,
@@ -7,7 +8,7 @@ InputDecoration TextFieldDeco(
   return InputDecoration(
     labelText: label,
     hintText: hint,
-    labelStyle: const TextStyle(
+    labelStyle: GoogleFonts.jua(
       fontSize: 20,
       color: Color.fromARGB(255, 156, 120, 255),
       fontWeight: FontWeight.bold,

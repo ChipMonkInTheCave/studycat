@@ -1,15 +1,16 @@
 //import 'package:fl_chart/fl_chart.dart';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/models/dailybarchart.dart';
 import 'package:studycat/models/dailylinechart.dart';
-import 'package:studycat/models/piechart.dart';
 import 'package:studycat/models/weeklybarchart.dart';
 import 'package:studycat/models/weeklylinechart.dart';
 import 'package:studycat/provider/provider.dart';
 import 'package:studycat/widgets/background_widget.dart';
+import 'package:transition/transition.dart';
 
 class Graph extends StatefulWidget {
   const Graph({Key? key}) : super(key: key);
@@ -23,9 +24,13 @@ class _GraphState extends State<Graph> {
   bool isBarSelected = false;
   bool isDailySelected = true;
   bool isWeeklySelected = false;
-
+  String select = "능률 VOCA : DAY1";
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -33,7 +38,7 @@ class _GraphState extends State<Graph> {
           SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 60),
+                SizedBox(height: height * 0.07),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -44,11 +49,11 @@ class _GraphState extends State<Graph> {
                       selectedColor: Colors.white.withOpacity(0.8),
                       fillColor: const Color.fromARGB(255, 107, 45, 213)
                           .withOpacity(1),
-                      children: const [
+                      children: [
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 14),
                           child: Text('꺾은선',
-                              style: TextStyle(
+                              style: GoogleFonts.jua(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
                               )),
@@ -56,7 +61,7 @@ class _GraphState extends State<Graph> {
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           child: Text('막대',
-                              style: TextStyle(
+                              style: GoogleFonts.jua(
                                 fontSize: 19,
                                 fontWeight: FontWeight.w500,
                               )),
@@ -73,11 +78,11 @@ class _GraphState extends State<Graph> {
                       selectedColor: Colors.white.withOpacity(0.8),
                       fillColor: const Color.fromARGB(255, 107, 45, 213)
                           .withOpacity(1),
-                      children: const [
+                      children: [
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8),
                           child: Text('D',
-                              style: TextStyle(
+                              style: GoogleFonts.jua(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
                               )),
@@ -86,7 +91,7 @@ class _GraphState extends State<Graph> {
                           padding: EdgeInsets.symmetric(horizontal: 8),
                           child: Text(
                             'W',
-                            style: TextStyle(
+                            style: GoogleFonts.jua(
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
                             ),
@@ -99,14 +104,14 @@ class _GraphState extends State<Graph> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.all(15),
+                    Padding(
+                      padding: const EdgeInsets.all(15),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Text(
                             '성적 그래프',
-                            style: TextStyle(
+                            style: GoogleFonts.jua(
                               color: Color.fromARGB(255, 46, 5, 77),
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -115,7 +120,7 @@ class _GraphState extends State<Graph> {
                           SizedBox(height: 4),
                           Text(
                             '일주일 기록',
-                            style: TextStyle(
+                            style: GoogleFonts.jua(
                               color: Color.fromARGB(255, 104, 70, 200),
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -124,14 +129,73 @@ class _GraphState extends State<Graph> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 10),
                     if (isLineSelected && isDailySelected)
-                      const DailyLineChart(),
-                    if (isBarSelected && isDailySelected) DailyBarChart(),
-                    if (isBarSelected && isWeeklySelected) WeeklyBarChart(),
+                      DailyLineChart(
+                        name: select,
+                      ),
+                    if (isBarSelected && isDailySelected)
+                      DailyBarChart(
+                        name: select,
+                      ),
+                    if (isBarSelected && isWeeklySelected)
+                      WeeklyBarChart(
+                        name: select,
+                      ),
                     if (isLineSelected && isWeeklySelected)
-                      const WeeklyLineChart(),
+                      WeeklyLineChart(
+                        name: select,
+                      ),
                   ],
+                ),
+                Container(
+                  width: width * 0.8,
+                  height: height * 0.1,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      for (var i = 0;
+                          i <
+                              context
+                                  .read<CloudData>()
+                                  .myScore
+                                  .score
+                                  .keys
+                                  .length;
+                          i++)
+                        TextButton(
+                          onPressed: () {
+                            setState(() {
+                              select = context
+                                  .read<CloudData>()
+                                  .myQuestion
+                                  .question[i]
+                                  .keys
+                                  .elementAt(0)
+                                  .toString();
+                            });
+                          },
+                          child: Text(
+                              context
+                                  .read<CloudData>()
+                                  .myQuestion
+                                  .question[i]
+                                  .keys
+                                  .elementAt(0)
+                                  .toString(),
+                              style: GoogleFonts.jua(
+                                color: Colors.black,
+                              )),
+                          style: ButtonStyle(
+                            fixedSize: MaterialStateProperty.all(
+                              Size(
+                                width * 0.22,
+                                height * 0.1,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
               ],
             ),

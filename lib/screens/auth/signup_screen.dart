@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/auth/login_screen.dart';
@@ -27,6 +28,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 140, 97, 213),
         leading: CloseButton(
           onPressed: () => Navigator.pop(context),
         ),
@@ -39,16 +41,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: TextField(
+                cursorColor: const Color.fromARGB(255, 140, 97, 213),
                 controller: _emailInputText,
-                decoration: const InputDecoration(hintText: 'Email'),
+                decoration: const InputDecoration(
+                  hintText: 'Email',
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromARGB(255, 140, 97, 213),
+                    ),
+                  ),
+                ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: TextField(
+                cursorColor: const Color.fromARGB(255, 140, 97, 213),
                 controller: _passInputText,
                 obscureText: true,
-                decoration: const InputDecoration(hintText: 'Password'),
+                decoration: const InputDecoration(
+                  hintText: 'Password',
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromARGB(255, 140, 97, 213),
+                    ),
+                  ),
+                ),
               ),
             ),
             Container(
@@ -156,7 +174,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         }
                       ],
                       'score': {},
-                      'userdata': {'exp': 0, 'level': 1}
+                      'userdata': {
+                        'exp': 0,
+                        'level': 1,
+                        'recentScore': 0,
+                        'recentWordnote': "정보없음",
+                        'highscore': {
+                          "능률 VOCA : DAY1": 0,
+                          "능률 VOCA : DAY2": 0,
+                          "능률 VOCA : DAY3": 0
+                        }
+                      }
                     });
                     print(context.read<CloudData>().id);
                     Navigator.push(
@@ -168,7 +196,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     print('an error occured $e');
                   }
                 },
-                child: const Text('이메일 회원가입'),
+                child: Text(
+                  '이메일 회원가입',
+                  style: GoogleFonts.jua(
+                    color: const Color.fromARGB(255, 140, 97, 213),
+                  ),
+                ),
               ),
             ),
           ],

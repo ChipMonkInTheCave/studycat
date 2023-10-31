@@ -1,7 +1,12 @@
+// ignore_for_file: unused_local_variable, prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/provider/provider.dart';
 import 'package:studycat/screens/home_screen.dart';
+import 'package:studycat/widgets/background_widget.dart';
+import 'package:transition/transition.dart';
 
 class TestScore extends StatefulWidget {
   const TestScore({Key? key}) : super(key: key);
@@ -29,36 +34,13 @@ class TestScoreState extends State<TestScore> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: context.watch<ThemeColor>().color,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const HomeScreen()),
-              );
-            },
-          ),
-        ),
-        body: ListView(children: [
-          SizedBox(height: height * 0.015),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                SizedBox(width: width * 0.01),
-                buildButton1(0),
-                buildButton1(1),
-                buildButton1(2),
-                buildButton1(3),
-                SizedBox(width: width * 0.01),
-              ],
-            ),
-          ),
-          SizedBox(height: height * 0.037),
-          if (selectedButtonIndex == 0)
+        body: Stack(children: [
+      SingleChildScrollView(
+        child: Column(children: [
+          if (selectedButtonIndex == 0) ...[
             Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              SizedBox(height: height * 0.23),
+              SizedBox(width: width * 1),
               buildButton2(0),
               SizedBox(height: height * 0.012),
               buildButton2(1),
@@ -71,10 +53,13 @@ class TestScoreState extends State<TestScore> {
               SizedBox(height: height * 0.012),
               buildButton2(5),
               SizedBox(height: height * 0.012),
-              buildButton2(6)
-            ]),
-          if (selectedButtonIndex == 1)
+              buildButton2(6),
+              SizedBox(height: height * 0.012),
+            ])
+          ] else if (selectedButtonIndex == 1)
             Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              SizedBox(height: height * 0.23),
+              SizedBox(width: width * 1),
               buildButton3(0),
               SizedBox(height: height * 0.012),
               buildButton3(1),
@@ -87,10 +72,13 @@ class TestScoreState extends State<TestScore> {
               SizedBox(height: height * 0.012),
               buildButton3(5),
               SizedBox(height: height * 0.012),
-              buildButton3(6)
-            ]),
-          if (selectedButtonIndex == 2)
+              buildButton3(6),
+              SizedBox(height: height * 0.012),
+            ])
+          else if (selectedButtonIndex == 2)
             Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              SizedBox(height: height * 0.23),
+              SizedBox(width: width * 1),
               buildButton4(0),
               SizedBox(height: height * 0.012),
               buildButton4(1),
@@ -103,10 +91,13 @@ class TestScoreState extends State<TestScore> {
               SizedBox(height: height * 0.012),
               buildButton4(5),
               SizedBox(height: height * 0.012),
-              buildButton4(6)
-            ]),
-          if (selectedButtonIndex == 3)
+              buildButton4(6),
+              SizedBox(height: height * 0.012),
+            ])
+          else if (selectedButtonIndex == 3)
             Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              SizedBox(height: height * 0.23),
+              SizedBox(width: width * 1),
               buildButton5(0),
               SizedBox(height: height * 0.012),
               buildButton5(1),
@@ -119,10 +110,49 @@ class TestScoreState extends State<TestScore> {
               SizedBox(height: height * 0.012),
               buildButton5(5),
               SizedBox(height: height * 0.012),
-              buildButton5(6)
-            ]),
-          SizedBox(height: height * 0.08)
-        ]));
+              buildButton5(6),
+              SizedBox(height: height * 0.012),
+            ])
+        ]),
+      ),
+      const BackgroundWidget(num: 0.19),
+      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        SizedBox(height: height * 0.03),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  Transition(
+                      child: const HomeScreen(),
+                      transitionEffect: TransitionEffect.FADE),
+                );
+              },
+              icon: const Icon(
+                Icons.home,
+                color: Colors.white,
+                size: 40,
+              )),
+          Text("나의 공부 기록표",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.jua(
+                color: Colors.white,
+                fontSize: width * 0.1,
+              )),
+          SizedBox(width: width * 0.1)
+        ]),
+        SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(children: [
+              SizedBox(width: width * 0.02),
+              buildButton1(0),
+              buildButton1(1),
+              buildButton1(2),
+              buildButton1(3),
+              SizedBox(width: width * 0.02)
+            ]))
+      ]),
+    ]));
   }
 
   Widget buildButton1(int index) {
@@ -152,7 +182,7 @@ class TestScoreState extends State<TestScore> {
             ),
             child: Text(
               buttonLabels[index],
-              style: const TextStyle(fontSize: 30),
+              style: GoogleFonts.jua(fontSize: 30, color: Colors.white),
             )));
   }
 
@@ -160,8 +190,8 @@ class TestScoreState extends State<TestScore> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     var data = context.watch<CloudData>().myScore.score;
-    // ignore: unused_local_variable
     var list1 = data['능률 VOCA : DAY1'][index2].values.first;
+    var text;
     return Column(children: [
       SizedBox(
           height: height * 0.076,
@@ -173,19 +203,23 @@ class TestScoreState extends State<TestScore> {
                 });
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
+                backgroundColor: Color.fromARGB(255, 173, 134, 239),
               ),
               child: Text(
                   data['능률 VOCA : DAY1'][index2].keys.elementAt(0).toString(),
-                  style: const TextStyle(fontSize: 30)))),
+                  style: GoogleFonts.jua(fontSize: 30, color: Colors.white)))),
       SizedBox(height: height * 0.002),
       if (showDetails1[index2])
         Container(
             height: height * 0.115,
             width: width * 0.96,
-            color: Colors.blue,
-            child: Text("Score : ${list1[0].toString()}",
-                style: const TextStyle(fontSize: 30)))
+            color: Color.fromARGB(255, 173, 134, 239),
+            child: Text('Score : ${list1[0].toString()}',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.jua(
+                  color: Colors.white,
+                  fontSize: width * 0.1,
+                )))
     ]);
   }
 
@@ -206,24 +240,27 @@ class TestScoreState extends State<TestScore> {
                 });
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
+                backgroundColor: Color.fromARGB(255, 153, 98, 248),
               ),
               child: Text(
                   data['능률 VOCA : DAY1'][index3 + 7]
                       .keys
                       .elementAt(0)
                       .toString(),
-                  style: const TextStyle(fontSize: 30))),
+                  style: GoogleFonts.jua(fontSize: 30, color: Colors.white))),
         ),
         SizedBox(height: height * 0.002),
         if (showDetails2[index3])
           Container(
-            height: height * 0.115,
-            width: width * 0.96,
-            color: Colors.red,
-            child: Text("Score : ${list2[0].toString()}",
-                style: const TextStyle(fontSize: 30)),
-          ),
+              height: height * 0.115,
+              width: width * 0.96,
+              color: Color.fromARGB(255, 153, 98, 248),
+              child: Text("Score : ${list2[0].toString()}",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.jua(
+                    color: Colors.white,
+                    fontSize: width * 0.1,
+                  ))),
       ],
     );
   }
@@ -245,19 +282,25 @@ class TestScoreState extends State<TestScore> {
                 });
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black,
+                backgroundColor: Color.fromARGB(255, 126, 62, 238),
               ),
-              child: Text(data['능률 VOCA : DAY1'][index4 + 14],
-                  style: const TextStyle(fontSize: 30))),
+              child: Text(
+                  data['능률 VOCA : DAY1'][index4 + 14]
+                      .keys
+                      .elementAt(0)
+                      .toString(),
+                  style: GoogleFonts.jua(fontSize: 30, color: Colors.white))),
         ),
         SizedBox(height: height * 0.002),
-        Container(
-          height: height * 0.115,
-          width: width * 0.96,
-          color: Colors.black,
-          child: Text("Score : ${list3[0].toString()}",
-              style: const TextStyle(fontSize: 30)),
-        ),
+        if (showDetails3[index4])
+          Container(
+              height: height * 0.115,
+              width: width * 0.96,
+              color: Color.fromARGB(255, 126, 62, 238),
+              child: Text("Score : ${list3[0].toString()}",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.jua(
+                      color: Colors.white, fontSize: width * 0.1))),
       ],
     );
   }
@@ -279,24 +322,25 @@ class TestScoreState extends State<TestScore> {
                 });
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
+                backgroundColor: Color.fromARGB(255, 111, 34, 245),
               ),
               child: Text(
                   data['능률 VOCA : DAY1'][index5 + 21]
                       .keys
                       .elementAt(0)
                       .toString(),
-                  style: const TextStyle(fontSize: 30))),
+                  style: GoogleFonts.jua(fontSize: 30, color: Colors.white))),
         ),
         SizedBox(height: height * 0.002),
         if (showDetails4[index5])
           Container(
-            height: height * 0.115,
-            width: width * 0.96,
-            color: Colors.green,
-            child: Text("Score : ${list4[0].toString()}",
-                style: const TextStyle(fontSize: 30)),
-          ),
+              height: height * 0.115,
+              width: width * 0.96,
+              color: Color.fromARGB(255, 111, 34, 245),
+              child: Text("Score : ${list4[0].toString()}",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.jua(
+                      color: Colors.white, fontSize: width * 0.1))),
       ],
     );
   }

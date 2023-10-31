@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:studycat/main.dart';
@@ -92,9 +93,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       print('an error occured $e');
                     }
                   },
-                  child: const Text(
+                  child: Text(
                     '이메일 로그인',
-                    style: TextStyle(
+                    style: GoogleFonts.jua(
                       color: Color.fromARGB(255, 140, 97, 213),
                     ),
                   ),
@@ -157,9 +158,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                   },
                   // width: double.infinity,
-                  child: const Text(
+                  child: Text(
                     '회원가입 하러가기',
-                    style: TextStyle(
+                    style: GoogleFonts.jua(
                       color: Color.fromARGB(255, 140, 97, 213),
                     ),
                   ),
