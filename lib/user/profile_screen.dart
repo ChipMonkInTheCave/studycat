@@ -13,6 +13,12 @@ import 'dart:io';
 
 import 'package:studycat/widgets/textfield_widget.dart';
 import 'package:transition/transition.dart';
+<<<<<<< HEAD
+=======
+
+class ImageProviderModel extends ChangeNotifier {
+  XFile? _image;
+>>>>>>> f6cd64bc18a2a2014245d2aa2d9ac10ea4a5ab1a
 
 class ImageProviderModel extends ChangeNotifier {
    XFile? _image;
@@ -103,7 +109,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     Consumer<ImageProviderModel>(
                       builder: (context, imageProvider, _) {
+<<<<<<< HEAD
                         imageProvider.loadImageFromStorage();
+=======
+>>>>>>> f6cd64bc18a2a2014245d2aa2d9ac10ea4a5ab1a
                         return CircleAvatar(
                           radius: 100,
                           backgroundImage: imageProvider.image != null

@@ -148,7 +148,11 @@ class _HomeState extends State<HomeScreen> {
                 color: Colors.grey[850],
               ),
               title: Text(
+<<<<<<< HEAD
                 '학습추천',
+=======
+                '학습기록',
+>>>>>>> f6cd64bc18a2a2014245d2aa2d9ac10ea4a5ab1a
                 style: GoogleFonts.jua(
                   fontSize: 20,
                 ),
@@ -276,7 +280,11 @@ class Page extends StatelessWidget {
       bas += value;
       cnt += 1;
     });
+<<<<<<< HEAD
     aver = bas ~/ cnt;
+=======
+    aver = (bas / cnt).toInt();
+>>>>>>> f6cd64bc18a2a2014245d2aa2d9ac10ea4a5ab1a
 
     return FutureBuilder(
         future: context.watch<CloudData>().fetchData(),
@@ -323,7 +331,10 @@ class Page extends StatelessWidget {
                                   children: [
                                     Consumer<ImageProviderModel>(
                                       builder: (context, imageProvider, _) {
+<<<<<<< HEAD
                                         imageProvider.loadImageFromStorage();
+=======
+>>>>>>> f6cd64bc18a2a2014245d2aa2d9ac10ea4a5ab1a
                                         return CircleAvatar(
                                           radius: 100,
                                           backgroundImage: imageProvider
@@ -461,7 +472,11 @@ class Page extends StatelessWidget {
                                           MainAxisAlignment.center,
                                       children: [
                                         Text(
+<<<<<<< HEAD
                                           "$aver점",
+=======
+                                          aver.toString() + "점",
+>>>>>>> f6cd64bc18a2a2014245d2aa2d9ac10ea4a5ab1a
                                           style: GoogleFonts.jua(
                                             fontSize: 30,
                                             color: Colors.black,
@@ -526,8 +541,12 @@ class Page extends StatelessWidget {
                                             Navigator.push(
                                                 context,
                                                 Transition(
+<<<<<<< HEAD
                                                     child:
                                                         const SelectQuestion(),
+=======
+                                                    child: SelectQuestion(),
+>>>>>>> f6cd64bc18a2a2014245d2aa2d9ac10ea4a5ab1a
                                                     transitionEffect:
                                                         TransitionEffect.FADE));
                                           },
@@ -574,13 +593,21 @@ class Page extends StatelessWidget {
             return Scaffold(
                 backgroundColor: color.background,
                 body: Center(
+<<<<<<< HEAD
                   child: SizedBox(
+=======
+                  child: Container(
+>>>>>>> f6cd64bc18a2a2014245d2aa2d9ac10ea4a5ab1a
                       width: width * 0.4,
                       height: height * 0.2,
                       child: Image.asset('assets/roading.png')),
                 ));
           } else {
+<<<<<<< HEAD
             return const Scaffold(
+=======
+            return Scaffold(
+>>>>>>> f6cd64bc18a2a2014245d2aa2d9ac10ea4a5ab1a
                 body: Center(
               child: Text('앱을 재시작해주세요'),
             ));
